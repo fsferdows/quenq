@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Play Flappy Bird Online - Classic 2013 Edition | Quenq Apps</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Play the original Flappy Bird directly in your browser. Complete faithful recreation with authentic physics, score tracking, sound, and mobile touch support." name="description"/>
+<meta content="quenq, flappy bird, arcade, retro gaming, browser games, html5 games" name="keywords"/>
+<meta content="index,follow" name="robots"/>
+<link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<meta content="#43515e" name="theme-color"/>
+<link href="/apps/flappy-bird/" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded&display=swap" rel="stylesheet"/>
+<link href="/css/styles.css" rel="stylesheet" type="text/css"/>
+<style>
+  #flappy-canvas {
+    display: block;
+    margin: 0 auto;
+    background: #70c5ce;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    max-width: 100%;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="global-loader" id="global-loader">
+  <img alt="Loading..." class="loader-logo" draggable="false" src="/logo.svg"/>
+</div>
+<div id="wrapper">
+<div id="head">
+  <div id="logo">
+    <a href="/"><img alt="Quenq Logo" draggable="false" src="/logo.svg" title="Home"/></a>
+  </div>
+  <div id="head-mid">
+    <p class="header-line1">Quenq</p>
+    <p class="header-line2">Where the Web Comes to Play.</p>
+  </div>
+</div>
+<div id="nav-H">
+  <div id="nav-H-Box">
+    <div id="butn-block">
+      <ul>
+        <li><a class="Butn1" href="/">Home</a></li>
+        <li><a class="Butn1" href="/arcade/">Arcade</a></li>
+        <li><a class="Butn1 active-nav" href="/apps/">Apps</a></li>
+        <li><a class="Butn1" href="/directory/">Directory</a></li>
+        <li><a class="Butn1" href="/blog/">Archives</a></li>
+        <li><a class="Butn1" href="/about/">About</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="main">
+  <div style="text-align: center; margin-bottom: 15px;">
+    <div style="display: inline-block; background: linear-gradient(180deg, #fefefe 0%, #e8eef4 100%); border: 1px solid #7f9db9; border-radius: 4px; padding: 6px 18px; font-size: 13px; color: #223e65; font-family: Tahoma, sans-serif; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+      ✦ Quenq Museum — Preserving Classic Web Culture, Flash Games & Retro Software ✦
+    </div>
+  </div>
+
+  <div class="app-container" style="max-width: 480px; margin: 10px auto 25px auto;">
+    <canvas id="flappy-canvas" width="360" height="540"></canvas>
+    <div class="player-controls">
+      <a class="action-btn" href="#" id="restart-btn">Restart Game</a>
+      <a class="action-btn" href="#" id="fullscreen-btn">
+        <svg viewBox="0 0 24 24"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17H7V14H5V19H10V17Z"></path></svg>
+        Fullscreen
+      </a>
+    </div>
+  </div>
+
+  <div id="col-L">
+    <div class="cnt-box">
+      <div class="cnt-head"><h1>About Flappy Bird</h1></div>
+      <div class="cnt-filler">
+        <div class="cnt-info">
+          <p>Released in May 2013 by Vietnamese developer Dong Nguyen, <em>Flappy Bird</em> became one of the most viral mobile sensations in video game history before its sudden removal from app stores in February 2014.</p>
+          <p>This web edition brings back the pure, addicting, pixel-perfect experience. Tap the screen, press the Spacebar, or click your mouse to flap your wings and navigate between green pipe obstacles.</p>
+          <p><strong>Controls:</strong> Spacebar, Up Arrow, or Mouse Click / Screen Tap.</p>
+        </div>
+      </div>
+      <div class="cnt-ft"></div>
+    </div>
+  </div>
+
+  <div id="col-R">
+    <div class="nav-box">
+      <div class="nav-head"><h5>Featured Apps</h5></div>
+      <div class="nav-filler">
+        <div class="nav-links">
+          <ul id="dynamic-apps-list">
+            <li><a href="/apps/">Loading Apps...</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-ft"></div>
+    </div>
+
+    <div class="nav-box">
+      <div class="nav-head"><h5>Community</h5></div>
+      <div class="nav-filler">
+        <div class="nav-links">
+          <ul>
+            <li><a href="https://kwenk.com" target="_blank">Kwenk</a></li>
+            <li><a href="/about/">About Quenq</a></li>
+            <li><a href="/contact/">Contact Us</a></li>
+            <li><a href="https://dsc.gg/quenq" target="_blank">Join our Discord</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-ft"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="footer">
+  <div id="foot-info">
+    <div class="footer-column">
+      <div class="ft-title">Quick Links</div>
+      <div class="ft-links">
+        <ul>
+          <li><a href="/arcade/">The Flash Arcade</a></li>
+          <li><a href="/apps/">The Apps Library</a></li>
+          <li><a href="/directory/">The Directory</a></li>
+          <li><a href="/blog/">The Archives</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="foot-mid">
+    <p>Quenq is an interactive digital museum of internet culture featuring classic games, preserved software, and browser emulators.</p>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/apps.js"></script>
+<script>
+// Standalone High-Fidelity Flappy Bird Engine
+(function() {
+  const canvas = document.getElementById('flappy-canvas');
+  const ctx = canvas.getContext('2d');
+  const restartBtn = document.getElementById('restart-btn');
+
+  // Web Audio Synth for authentic sounds
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  let audioCtx = null;
+  function playSound(type) {
+    try {
+      if (!audioCtx) audioCtx = new AudioCtx();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+      if (type === 'flap') {
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.1);
+        osc.start(now);
+        osc.stop(now + 0.1);
+      } else if (type === 'score') {
+        osc.frequency.setValueAtTime(900, now);
+        osc.frequency.setValueAtTime(1200, now + 0.08);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.18);
+        osc.start(now);
+        osc.stop(now + 0.18);
+      } else if (type === 'hit') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.linearRampToValueAtTime(80, now + 0.2);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      }
+    } catch(e) {}
+  }
+
+  let state = 'START'; // START, PLAYING, GAMEOVER
+  let score = 0;
+  let highScore = parseInt(localStorage.getItem('flappy_best') || '0', 10);
+  let frames = 0;
+
+  const bird = {
+    x: 70,
+    y: 200,
+    w: 32,
+    h: 24,
+    gravity: 0.28,
+    jump: 5.5,
+    velocity: 0,
+    rotation: 0,
+    reset() {
+      this.y = 200;
+      this.velocity = 0;
+      this.rotation = 0;
+    },
+    flap() {
+      this.velocity = -this.jump;
+      playSound('flap');
+    },
+    update() {
+      this.velocity += this.gravity;
+      this.y += this.velocity;
+      if (this.velocity < 0) {
+        this.rotation = -0.35;
+      } else {
+        this.rotation = Math.min(Math.PI / 2, this.rotation + 0.04);
+      }
+      if (this.y + this.h >= canvas.height - 70) {
+        this.y = canvas.height - 70 - this.h;
+        if (state === 'PLAYING') gameOver();
+      }
+    },
+    draw() {
+      ctx.save();
+      ctx.translate(this.x + this.w / 2, this.y + this.h / 2);
+      ctx.rotate(this.rotation);
+      // Bird body
+      ctx.fillStyle = '#f7d02c';
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 16, 12, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#222';
+      ctx.stroke();
+
+      // Wing
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.ellipse(-6, 2, 8, 5, 0.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Eye
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(8, -4, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#000000';
+      ctx.beginPath();
+      ctx.arc(10, -4, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Beak
+      ctx.fillStyle = '#e74c3c';
+      ctx.beginPath();
+      ctx.moveTo(10, 0);
+      ctx.lineTo(20, 3);
+      ctx.lineTo(10, 7);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    }
+  };
+
+  const pipes = {
+    items: [],
+    gap: 120,
+    w: 52,
+    dx: 2,
+    reset() {
+      this.items = [];
+    },
+    update() {
+      if (frames % 90 === 0) {
+        const top = 50 + Math.random() * (canvas.height - 70 - this.gap - 100);
+        this.items.push({ x: canvas.width, top: top, passed: false });
+      }
+      for (let i = 0; i < this.items.length; i++) {
+        const p = this.items[i];
+        p.x -= this.dx;
+
+        // Collision
+        if (bird.x + bird.w > p.x && bird.x < p.x + this.w) {
+          if (bird.y < p.top || bird.y + bird.h > p.top + this.gap) {
+            gameOver();
+          }
+        }
+
+        // Score
+        if (!p.passed && p.x + this.w < bird.x) {
+          p.passed = true;
+          score++;
+          if (score > highScore) {
+            highScore = score;
+            localStorage.setItem('flappy_best', highScore);
+          }
+          playSound('score');
+        }
+      }
+      this.items = this.items.filter(p => p.x + this.w > 0);
+    },
+    draw() {
+      for (const p of this.items) {
+        // Top Pipe
+        ctx.fillStyle = '#73bf2e';
+        ctx.strokeStyle = '#2d5a10';
+        ctx.lineWidth = 2.5;
+
+        ctx.fillRect(p.x, 0, this.w, p.top);
+        ctx.strokeRect(p.x, 0, this.w, p.top);
+        ctx.fillRect(p.x - 3, p.top - 20, this.w + 6, 20);
+        ctx.strokeRect(p.x - 3, p.top - 20, this.w + 6, 20);
+
+        // Bottom Pipe
+        const bTop = p.top + this.gap;
+        const bHeight = canvas.height - 70 - bTop;
+        ctx.fillRect(p.x, bTop, this.w, bHeight);
+        ctx.strokeRect(p.x, bTop, this.w, bHeight);
+        ctx.fillRect(p.x - 3, bTop, this.w + 6, 20);
+        ctx.strokeRect(p.x - 3, bTop, this.w + 6, 20);
+      }
+    }
+  };
+
+  function gameOver() {
+    state = 'GAMEOVER';
+    playSound('hit');
+  }
+
+  function resetGame() {
+    bird.reset();
+    pipes.reset();
+    score = 0;
+    frames = 0;
+    state = 'START';
+  }
+
+  function drawBackground() {
+    // Ground
+    ctx.fillStyle = '#ded895';
+    ctx.fillRect(0, canvas.height - 70, canvas.width, 70);
+    ctx.strokeStyle = '#555';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height - 70);
+    ctx.lineTo(canvas.width, canvas.height - 70);
+    ctx.stroke();
+
+    // Grass on ground
+    ctx.fillStyle = '#73bf2e';
+    ctx.fillRect(0, canvas.height - 70, canvas.width, 12);
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (state === 'PLAYING') {
+      bird.update();
+      pipes.update();
+      frames++;
+    }
+
+    pipes.draw();
+    drawBackground();
+    bird.draw();
+
+    // UI & Text
+    if (state === 'START') {
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 4;
+      ctx.font = 'bold 26px Tahoma, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.strokeText('FLAPPY BIRD', canvas.width / 2, 160);
+      ctx.fillText('FLAPPY BIRD', canvas.width / 2, 160);
+
+      ctx.font = '16px Tahoma, sans-serif';
+      ctx.lineWidth = 3;
+      ctx.strokeText('Click or Space to Flap', canvas.width / 2, 280);
+      ctx.fillText('Click or Space to Flap', canvas.width / 2, 280);
+    } else if (state === 'PLAYING') {
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 4;
+      ctx.font = 'bold 36px Tahoma, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.strokeText(score, canvas.width / 2, 60);
+      ctx.fillText(score, canvas.width / 2, 60);
+    } else if (state === 'GAMEOVER') {
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 4;
+      ctx.font = 'bold 30px Tahoma, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.strokeText('GAME OVER', canvas.width / 2, 150);
+      ctx.fillText('GAME OVER', canvas.width / 2, 150);
+
+      ctx.font = 'bold 20px Tahoma, sans-serif';
+      ctx.strokeText('Score: ' + score, canvas.width / 2, 210);
+      ctx.fillText('Score: ' + score, canvas.width / 2, 210);
+
+      ctx.strokeText('Best: ' + highScore, canvas.width / 2, 245);
+      ctx.fillText('Best: ' + highScore, canvas.width / 2, 245);
+
+      ctx.font = '15px Tahoma, sans-serif';
+      ctx.lineWidth = 3;
+      ctx.strokeText('Click or Press Restart to Play Again', canvas.width / 2, 310);
+      ctx.fillText('Click or Press Restart to Play Again', canvas.width / 2, 310);
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  function handleAction(e) {
+    if (e) e.preventDefault();
+    if (state === 'START') {
+      state = 'PLAYING';
+      bird.flap();
+    } else if (state === 'PLAYING') {
+      bird.flap();
+    } else if (state === 'GAMEOVER') {
+      resetGame();
+    }
+  }
+
+  canvas.addEventListener('pointerdown', handleAction);
+  restartBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    resetGame();
+  });
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' || e.code === 'ArrowUp') {
+      handleAction(e);
+    }
+  });
+
+  loop();
+})();
+</script>
+</body>
+</html>

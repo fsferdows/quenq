@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Play 2048 Online - Classic Number Puzzle | Quenq Apps</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Play the original 2048 puzzle game online for free. Join the numbers and get to the 2048 tile! Full keyboard and touch support." name="description"/>
+<meta content="quenq, 2048, puzzle game, retro gaming, math puzzle, browser games" name="keywords"/>
+<meta content="index,follow" name="robots"/>
+<link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<meta content="#43515e" name="theme-color"/>
+<link href="/apps/2048/" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded&display=swap" rel="stylesheet"/>
+<link href="/css/styles.css" rel="stylesheet" type="text/css"/>
+<style>
+  .game-2048-wrap {
+    width: 360px;
+    max-width: 100%;
+    margin: 0 auto;
+    background: #faf8ef;
+    padding: 16px;
+    border-radius: 6px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    user-select: none;
+    font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .header-2048 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .title-2048 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #776e65;
+    margin: 0;
+  }
+  .scores-container {
+    display: flex;
+    gap: 8px;
+  }
+  .score-box {
+    background: #bbada0;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .score-box .val {
+    font-size: 18px;
+    display: block;
+    margin-top: 2px;
+  }
+  .grid-2048 {
+    width: 320px;
+    height: 320px;
+    margin: 0 auto;
+    background: #bbada0;
+    border-radius: 6px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .tile-cell {
+    background: rgba(238, 228, 218, 0.35);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #776e65;
+    transition: all 0.1s ease;
+  }
+  .tile-2 { background: #eee4da; }
+  .tile-4 { background: #ede0c8; }
+  .tile-8 { background: #f2b179; color: #f9f6f2; }
+  .tile-16 { background: #f59563; color: #f9f6f2; }
+  .tile-32 { background: #f67c5f; color: #f9f6f2; }
+  .tile-64 { background: #f65e3b; color: #f9f6f2; }
+  .tile-128 { background: #edcf72; color: #f9f6f2; font-size: 20px; box-shadow: 0 0 10px rgba(243, 215, 116, 0.4); }
+  .tile-256 { background: #edcc61; color: #f9f6f2; font-size: 20px; box-shadow: 0 0 12px rgba(243, 215, 116, 0.5); }
+  .tile-512 { background: #edc850; color: #f9f6f2; font-size: 20px; box-shadow: 0 0 15px rgba(243, 215, 116, 0.6); }
+  .tile-1024 { background: #edc53f; color: #f9f6f2; font-size: 16px; box-shadow: 0 0 18px rgba(243, 215, 116, 0.7); }
+  .tile-2048 { background: #edc22e; color: #f9f6f2; font-size: 16px; box-shadow: 0 0 20px rgba(243, 215, 116, 0.8); }
+</style>
+</head>
+<body>
+<div class="global-loader" id="global-loader">
+  <img alt="Loading..." class="loader-logo" draggable="false" src="/logo.svg"/>
+</div>
+<div id="wrapper">
+<div id="head">
+  <div id="logo">
+    <a href="/"><img alt="Quenq Logo" draggable="false" src="/logo.svg" title="Home"/></a>
+  </div>
+  <div id="head-mid">
+    <p class="header-line1">Quenq</p>
+    <p class="header-line2">Where the Web Comes to Play.</p>
+  </div>
+</div>
+<div id="nav-H">
+  <div id="nav-H-Box">
+    <div id="butn-block">
+      <ul>
+        <li><a class="Butn1" href="/">Home</a></li>
+        <li><a class="Butn1" href="/arcade/">Arcade</a></li>
+        <li><a class="Butn1 active-nav" href="/apps/">Apps</a></li>
+        <li><a class="Butn1" href="/directory/">Directory</a></li>
+        <li><a class="Butn1" href="/blog/">Archives</a></li>
+        <li><a class="Butn1" href="/about/">About</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="main">
+  <div style="text-align: center; margin-bottom: 15px;">
+    <div style="display: inline-block; background: linear-gradient(180deg, #fefefe 0%, #e8eef4 100%); border: 1px solid #7f9db9; border-radius: 4px; padding: 6px 18px; font-size: 13px; color: #223e65; font-family: Tahoma, sans-serif; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+      ✦ Quenq Museum — Preserving Classic Web Culture, Flash Games & Retro Software ✦
+    </div>
+  </div>
+
+  <div class="app-container" style="max-width: 440px; margin: 10px auto 25px auto;">
+    <div class="game-2048-wrap">
+      <div class="header-2048">
+        <h2 class="title-2048">2048</h2>
+        <div class="scores-container">
+          <div class="score-box">Score<span class="val" id="score-2048">0</span></div>
+          <div class="score-box">Best<span class="val" id="best-2048">0</span></div>
+        </div>
+      </div>
+      <div class="grid-2048" id="grid-2048"></div>
+    </div>
+    <div class="player-controls">
+      <a class="action-btn" href="#" id="new-game-2048">New Game</a>
+      <a class="action-btn" href="#" id="fullscreen-btn">
+        <svg viewBox="0 0 24 24"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17H7V14H5V19H10V17Z"></path></svg>
+        Fullscreen
+      </a>
+    </div>
+  </div>
+
+  <div id="col-L">
+    <div class="cnt-box">
+      <div class="cnt-head"><h1>About 2048</h1></div>
+      <div class="cnt-filler">
+        <div class="cnt-info">
+          <p>Created in March 2014 by 19-year-old Italian web developer Gabriele Cirulli over a single weekend, <em>2048</em> became an overnight worldwide phenomenon.</p>
+          <p><strong>How to Play:</strong> Use your <strong>Arrow Keys</strong> or swipe on touchscreens to slide numbered tiles. When two tiles with the same number collide, they merge into one! Reach the coveted <strong>2048</strong> tile to win.</p>
+        </div>
+      </div>
+      <div class="cnt-ft"></div>
+    </div>
+  </div>
+
+  <div id="col-R">
+    <div class="nav-box">
+      <div class="nav-head"><h5>Featured Apps</h5></div>
+      <div class="nav-filler">
+        <div class="nav-links">
+          <ul id="dynamic-apps-list">
+            <li><a href="/apps/">Loading Apps...</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-ft"></div>
+    </div>
+    <div class="nav-box">
+      <div class="nav-head"><h5>Community</h5></div>
+      <div class="nav-filler">
+        <div class="nav-links">
+          <ul>
+            <li><a href="https://kwenk.com" target="_blank">Kwenk</a></li>
+            <li><a href="/about/">About Quenq</a></li>
+            <li><a href="/contact/">Contact Us</a></li>
+            <li><a href="https://dsc.gg/quenq" target="_blank">Join our Discord</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-ft"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="footer">
+  <div id="foot-info">
+    <div class="footer-column">
+      <div class="ft-title">Quick Links</div>
+      <div class="ft-links">
+        <ul>
+          <li><a href="/arcade/">The Flash Arcade</a></li>
+          <li><a href="/apps/">The Apps Library</a></li>
+          <li><a href="/directory/">The Directory</a></li>
+          <li><a href="/blog/">The Archives</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="foot-mid">
+    <p>Quenq is an interactive digital museum of internet culture featuring classic games, preserved software, and browser emulators.</p>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/apps.js"></script>
+<script>
+// Standalone 2048 Engine
+(function() {
+  const gridEl = document.getElementById('grid-2048');
+  const scoreEl = document.getElementById('score-2048');
+  const bestEl = document.getElementById('best-2048');
+  const newGameBtn = document.getElementById('new-game-2048');
+
+  let board = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0]
+  ];
+  let score = 0;
+  let best = parseInt(localStorage.getItem('2048_best') || '0', 10);
+  bestEl.textContent = best;
+
+  function init() {
+    board = [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0]
+    ];
+    score = 0;
+    scoreEl.textContent = '0';
+    spawnTile();
+    spawnTile();
+    render();
+  }
+
+  function spawnTile() {
+    const empty = [];
+    for (let r = 0; r < 4; r++) {
+      for (let c = 0; c < 4; c++) {
+        if (board[r][c] === 0) empty.push({ r, c });
+      }
+    }
+    if (empty.length > 0) {
+      const spot = empty[Math.floor(Math.random() * empty.length)];
+      board[spot.r][spot.c] = Math.random() < 0.9 ? 2 : 4;
+    }
+  }
+
+  function render() {
+    gridEl.innerHTML = '';
+    for (let r = 0; r < 4; r++) {
+      for (let c = 0; c < 4; c++) {
+        const val = board[r][c];
+        const cell = document.createElement('div');
+        cell.className = 'tile-cell' + (val > 0 ? ' tile-' + val : '');
+        cell.textContent = val > 0 ? val : '';
+        gridEl.appendChild(cell);
+      }
+    }
+    scoreEl.textContent = score;
+    if (score > best) {
+      best = score;
+      bestEl.textContent = best;
+      localStorage.setItem('2048_best', best);
+    }
+  }
+
+  function slide(row) {
+    let arr = row.filter(val => val !== 0);
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i] === arr[i + 1]) {
+        arr[i] *= 2;
+        score += arr[i];
+        arr[i + 1] = 0;
+      }
+    }
+    arr = arr.filter(val => val !== 0);
+    while (arr.length < 4) {
+      arr.push(0);
+    }
+    return arr;
+  }
+
+  function moveLeft() {
+    let changed = false;
+    for (let r = 0; r < 4; r++) {
+      const oldRow = [...board[r]];
+      const newRow = slide(board[r]);
+      board[r] = newRow;
+      if (newRow.some((val, idx) => val !== oldRow[idx])) changed = true;
+    }
+    return changed;
+  }
+
+  function moveRight() {
+    let changed = false;
+    for (let r = 0; r < 4; r++) {
+      const oldRow = [...board[r]];
+      const reversed = [...board[r]].reverse();
+      const newRow = slide(reversed).reverse();
+      board[r] = newRow;
+      if (newRow.some((val, idx) => val !== oldRow[idx])) changed = true;
+    }
+    return changed;
+  }
+
+  function moveUp() {
+    let changed = false;
+    for (let c = 0; c < 4; c++) {
+      const col = [board[0][c], board[1][c], board[2][c], board[3][c]];
+      const newCol = slide(col);
+      for (let r = 0; r < 4; r++) {
+        if (board[r][c] !== newCol[r]) changed = true;
+        board[r][c] = newCol[r];
+      }
+    }
+    return changed;
+  }
+
+  function moveDown() {
+    let changed = false;
+    for (let c = 0; c < 4; c++) {
+      const col = [board[3][c], board[2][c], board[1][c], board[0][c]];
+      const newCol = slide(col).reverse();
+      for (let r = 0; r < 4; r++) {
+        if (board[r][c] !== newCol[r]) changed = true;
+        board[r][c] = newCol[r];
+      }
+    }
+    return changed;
+  }
+
+  function handleKey(e) {
+    let changed = false;
+    if (e.key === 'ArrowLeft' || e.key === 'a') changed = moveLeft();
+    else if (e.key === 'ArrowRight' || e.key === 'd') changed = moveRight();
+    else if (e.key === 'ArrowUp' || e.key === 'w') changed = moveUp();
+    else if (e.key === 'ArrowDown' || e.key === 's') changed = moveDown();
+
+    if (changed) {
+      spawnTile();
+      render();
+    }
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+      e.preventDefault();
+    }
+    handleKey(e);
+  });
+
+  // Touch Swipe Handling
+  let touchStartX = 0;
+  let touchStartY = 0;
+  gridEl.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  gridEl.addEventListener('touchend', e => {
+    const diffX = e.changedTouches[0].screenX - touchStartX;
+    const diffY = e.changedTouches[0].screenY - touchStartY;
+    let changed = false;
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 30) changed = moveRight();
+      else if (diffX < -30) changed = moveLeft();
+    } else {
+      if (diffY > 30) changed = moveDown();
+      else if (diffY < -30) changed = moveUp();
+    }
+    if (changed) {
+      spawnTile();
+      render();
+    }
+  }, { passive: true });
+
+  newGameBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    init();
+  });
+
+  init();
+})();
+</script>
+</body>
+</html>

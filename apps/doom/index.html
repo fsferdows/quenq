@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Play DOOM (1993) Online - id Software Classic | Quenq Apps</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Play the original 1993 id Software classic DOOM directly in your web browser. Experience Episode 1: Knee-Deep in the Dead in full web emulated glory." name="description"/>
+<meta content="quenq, doom, id software, retro gaming, fps, ms-dos, browser games" name="keywords"/>
+<meta content="index,follow" name="robots"/>
+<link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<meta content="#43515e" name="theme-color"/>
+<link href="/apps/doom/" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded&display=swap" rel="stylesheet"/>
+<link href="/css/styles.css" rel="stylesheet" type="text/css"/>
+<style>
+  .doom-iframe-container {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    max-height: 80vh;
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    margin: 0 auto;
+  }
+  .doom-iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+</style>
+</head>
+<body>
+<div class="global-loader" id="global-loader">
+  <img alt="Loading..." class="loader-logo" draggable="false" src="/logo.svg"/>
+</div>
+<div id="wrapper">
+<div id="head">
+  <div id="logo">
+    <a href="/"><img alt="Quenq Logo" draggable="false" src="/logo.svg" title="Home"/></a>
+  </div>
+  <div id="head-mid">
+    <p class="header-line1">Quenq</p>
+    <p class="header-line2">Where the Web Comes to Play.</p>
+  </div>
+</div>
+<div id="nav-H">
+  <div id="nav-H-Box">
+    <div id="butn-block">
+      <ul>
+        <li><a class="Butn1" href="/">Home</a></li>
+        <li><a class="Butn1" href="/arcade/">Arcade</a></li>
+        <li><a class="Butn1 active-nav" href="/apps/">Apps</a></li>
+        <li><a class="Butn1" href="/directory/">Directory</a></li>
+        <li><a class="Butn1" href="/blog/">Archives</a></li>
+        <li><a class="Butn1" href="/about/">About</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="main">
+  <div style="text-align: center; margin-bottom: 15px;">
+    <div style="display: inline-block; background: linear-gradient(180deg, #fefefe 0%, #e8eef4 100%); border: 1px solid #7f9db9; border-radius: 4px; padding: 6px 18px; font-size: 13px; color: #223e65; font-family: Tahoma, sans-serif; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+      ✦ Quenq Museum — Preserving Classic Web Culture, Flash Games & Retro Software ✦
+    </div>
+  </div>
+
+  <div class="app-container" style="max-width: 800px; margin: 10px auto 25px auto;">
+    <div class="doom-iframe-container">
+      <iframe id="app-iframe" src="https://dos.zone/player/?bundleUrl=https%3A%2F%2Fcdn.dos.zone%2Fcustom%2Fdos%2Fdoom.jsdos?anonymous=1" allow="autoplay; fullscreen; gamepad; keyboard" allowfullscreen="true" title="DOOM (1993) Web Player"></iframe>
+    </div>
+    <div class="player-controls">
+      <a class="action-btn" href="#" id="fullscreen-btn">
+        <svg viewBox="0 0 24 24"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17H7V14H5V19H10V17Z"></path></svg>
+        Fullscreen
+      </a>
+    </div>
+  </div>
+
+  <div id="col-L">
+    <div class="cnt-box">
+      <div class="cnt-head"><h1>About DOOM (1993)</h1></div>
+      <div class="cnt-filler">
+        <div class="cnt-info">
+          <p>Released on December 10, 1993 by id Software (John Carmack, John Romero, Adrian Carmack, Kevin Cloud, and Tom Hall), <em>DOOM</em> pioneered immersive 3D graphics, networked multiplayer, and modding culture, redefining gaming forever.</p>
+          <p>Fight your way through Phobos base as the lone Space Marine against legions of hellish demons.</p>
+          <p><strong>Default Controls:</strong> Arrow Keys to move, Ctrl to fire, Spacebar to open doors, 1-7 to select weapons, Alt to strafe.</p>
+        </div>
+      </div>
+      <div class="cnt-ft"></div>
+    </div>
+  </div>
+
+  <div id="col-R">
+    <div class="nav-box">
+      <div class="nav-head"><h5>Featured Apps</h5></div>
+      <div class="nav-filler">
+        <div class="nav-links">
+          <ul id="dynamic-apps-list">
+            <li><a href="/apps/">Loading Apps...</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-ft"></div>
+    </div>
+    <div class="nav-box">
+      <div class="nav-head"><h5>Community</h5></div>
+      <div class="nav-filler">
+        <div class="nav-links">
+          <ul>
+            <li><a href="https://kwenk.com" target="_blank">Kwenk</a></li>
+            <li><a href="/about/">About Quenq</a></li>
+            <li><a href="/contact/">Contact Us</a></li>
+            <li><a href="https://dsc.gg/quenq" target="_blank">Join our Discord</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-ft"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="footer">
+  <div id="foot-info">
+    <div class="footer-column">
+      <div class="ft-title">Quick Links</div>
+      <div class="ft-links">
+        <ul>
+          <li><a href="/arcade/">The Flash Arcade</a></li>
+          <li><a href="/apps/">The Apps Library</a></li>
+          <li><a href="/directory/">The Directory</a></li>
+          <li><a href="/blog/">The Archives</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="foot-mid">
+    <p>Quenq is an interactive digital museum of internet culture featuring classic games, preserved software, and browser emulators.</p>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/apps.js"></script>
+</body>
+</html>

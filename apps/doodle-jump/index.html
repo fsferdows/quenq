@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Play Doodle Jump Online - Classic HTML5 Edition | Quenq Apps</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Play the original Doodle Jump in your web browser. Jump across moving platforms, bounce high on springs, and climb as high as you can!" name="description"/>
+<meta content="quenq, doodle jump, arcade, retro gaming, platformer, browser games" name="keywords"/>
+<meta content="index,follow" name="robots"/>
+<link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<meta content="#43515e" name="theme-color"/>
+<link href="/apps/doodle-jump/" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded&display=swap" rel="stylesheet"/>
+<link href="/css/styles.css" rel="stylesheet" type="text/css"/>
+<style>
+  #doodle-canvas {
+    display: block;
+    margin: 0 auto;
+    background: #fbf7ee;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    max-width: 100%;
+  }
+</style>
+</head>
+<body>
+<div class="global-loader" id="global-loader">
+  <img alt="Loading..." class="loader-logo" draggable="false" src="/logo.svg"/>
+</div>
+<div id="wrapper">
+<div id="head">
+  <div id="logo">
+    <a href="/"><img alt="Quenq Logo" draggable="false" src="/logo.svg" title="Home"/></a>
+  </div>
+  <div id="head-mid">
+    <p class="header-line1">Quenq</p>
+    <p class="header-line2">Where the Web Comes to Play.</p>
+  </div>
+</div>
+<div id="nav-H">
+  <div id="nav-H-Box">
+    <div id="butn-block">
+      <ul>
+        <li><a class="Butn1" href="/">Home</a></li>
+        <li><a class="Butn1" href="/arcade/">Arcade</a></li>
+        <li><a class="Butn1 active-nav" href="/apps/">Apps</a></li>
+        <li><a class="Butn1" href="/directory/">Directory</a></li>
+        <li><a class="Butn1" href="/blog/">Archives</a></li>
+        <li><a class="Butn1" href="/about/">About</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="main">
+  <div style="text-align: center; margin-bottom: 15px;">
+    <div style="display: inline-block; background: linear-gradient(180deg, #fefefe 0%, #e8eef4 100%); border: 1px solid #7f9db9; border-radius: 4px; padding: 6px 18px; font-size: 13px; color: #223e65; font-family: Tahoma, sans-serif; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+      ✦ Quenq Museum — Preserving Classic Web Culture, Flash Games & Retro Software ✦
+    </div>
+  </div>
+
+  <div class="app-container" style="max-width: 440px; margin: 10px auto 25px auto;">
+    <canvas id="doodle-canvas" width="360" height="540"></canvas>
+    <div class="player-controls">
+      <a class="action-btn" href="#" id="doodle-restart">Restart</a>
+      <a class="action-btn" href="#" id="fullscreen-btn">
+        <svg viewBox="0 0 24 24"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17H7V14H5V19H10V17Z"></path></svg>
+        Fullscreen
+      </a>
+    </div>
+  </div>
+
+  <div id="col-L">
+    <div class="cnt-box">
+      <div class="cnt-head"><h1>About Doodle Jump</h1></div>
+      <div class="cnt-filler">
+        <div class="cnt-info">
+          <p>Released in April 2009 by Lima Sky, <em>Doodle Jump</em> captured the hearts of millions with its cheerful hand-drawn graphics and endless vertical platforming action.</p>
+          <p><strong>Controls:</strong> Left and Right Arrow keys (or A and D) to move. On touch devices, tap the left or right side of the canvas.</p>
+        </div>
+      </div>
+      <div class="cnt-ft"></div>
+    </div>
+  </div>
+
+  <div id="col-R">
+    <div class="nav-box">
+      <div class="nav-head"><h5>Featured Apps</h5></div>
+      <div class="nav-filler">
+        <div class="nav-links">
+          <ul id="dynamic-apps-list">
+            <li><a href="/apps/">Loading Apps...</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-ft"></div>
+    </div>
+    <div class="nav-box">
+      <div class="nav-head"><h5>Community</h5></div>
+      <div class="nav-filler">
+        <div class="nav-links">
+          <ul>
+            <li><a href="https://kwenk.com" target="_blank">Kwenk</a></li>
+            <li><a href="/about/">About Quenq</a></li>
+            <li><a href="/contact/">Contact Us</a></li>
+            <li><a href="https://dsc.gg/quenq" target="_blank">Join our Discord</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-ft"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="footer">
+  <div id="foot-info">
+    <div class="footer-column">
+      <div class="ft-title">Quick Links</div>
+      <div class="ft-links">
+        <ul>
+          <li><a href="/arcade/">The Flash Arcade</a></li>
+          <li><a href="/apps/">The Apps Library</a></li>
+          <li><a href="/directory/">The Directory</a></li>
+          <li><a href="/blog/">The Archives</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="foot-mid">
+    <p>Quenq is an interactive digital museum of internet culture featuring classic games, preserved software, and browser emulators.</p>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/apps.js"></script>
+<script>
+// Standalone Doodle Jump Engine
+(function() {
+  const canvas = document.getElementById('doodle-canvas');
+  const ctx = canvas.getContext('2d');
+  const restartBtn = document.getElementById('doodle-restart');
+
+  let state = 'PLAY'; // PLAY, DEAD
+  let score = 0;
+  let maxScore = parseInt(localStorage.getItem('doodle_best') || '0', 10);
+
+  const player = {
+    x: 160,
+    y: 400,
+    w: 36,
+    h: 36,
+    vx: 0,
+    vy: -10,
+    speed: 5,
+    reset() {
+      this.x = 160;
+      this.y = 400;
+      this.vx = 0;
+      this.vy = -10;
+    }
+  };
+
+  let platforms = [];
+  function createPlatforms() {
+    platforms = [];
+    platforms.push({ x: 150, y: 500, w: 65, h: 14 });
+    for (let i = 0; i < 7; i++) {
+      platforms.push({
+        x: Math.random() * (canvas.width - 65),
+        y: 450 - i * 75,
+        w: 65,
+        h: 14
+      });
+    }
+  }
+
+  const keys = {};
+  window.addEventListener('keydown', e => { keys[e.key] = true; });
+  window.addEventListener('keyup', e => { keys[e.key] = false; });
+
+  canvas.addEventListener('pointerdown', e => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    if (state === 'DEAD') {
+      restart();
+    } else {
+      if (x < canvas.width / 2) player.vx = -player.speed;
+      else player.vx = player.speed;
+    }
+  });
+  canvas.addEventListener('pointerup', () => { player.vx = 0; });
+
+  function restart() {
+    player.reset();
+    createPlatforms();
+    score = 0;
+    state = 'PLAY';
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw graph paper grid lines
+    ctx.strokeStyle = '#e6dfd1';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < canvas.width; x += 20) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvas.height);
+      ctx.stroke();
+    }
+    for (let y = 0; y < canvas.height; y += 20) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvas.width, y);
+      ctx.stroke();
+    }
+
+    if (state === 'PLAY') {
+      if (keys['ArrowLeft'] || keys['a']) player.vx = -player.speed;
+      else if (keys['ArrowRight'] || keys['d']) player.vx = player.speed;
+      else if (!window.matchMedia('(pointer: coarse)').matches) player.vx *= 0.8;
+
+      player.x += player.vx;
+      if (player.x < -player.w) player.x = canvas.width;
+      if (player.x > canvas.width) player.x = -player.w;
+
+      player.vy += 0.32; // gravity
+      player.y += player.vy;
+
+      // Camera scrolling up
+      if (player.y < 220) {
+        const diff = 220 - player.y;
+        player.y = 220;
+        score += Math.floor(diff);
+        if (score > maxScore) {
+          maxScore = score;
+          localStorage.setItem('doodle_best', maxScore);
+        }
+        platforms.forEach(p => {
+          p.y += diff;
+          if (p.y > canvas.height) {
+            p.y = 0;
+            p.x = Math.random() * (canvas.width - 65);
+          }
+        });
+      }
+
+      // Platform bounce collision
+      if (player.vy > 0) {
+        platforms.forEach(p => {
+          if (
+            player.x + player.w > p.x &&
+            player.x < p.x + p.w &&
+            player.y + player.h >= p.y &&
+            player.y + player.h <= p.y + 15
+          ) {
+            player.vy = -10.5; // bounce
+          }
+        });
+      }
+
+      // Fall off screen
+      if (player.y > canvas.height) {
+        state = 'DEAD';
+      }
+    }
+
+    // Draw Platforms
+    platforms.forEach(p => {
+      ctx.fillStyle = '#6ab04c';
+      ctx.fillRect(p.x, p.y, p.w, p.h);
+      ctx.strokeStyle = '#487e32';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(p.x, p.y, p.w, p.h);
+    });
+
+    // Draw Doodler Character
+    ctx.save();
+    ctx.translate(player.x, player.y);
+    ctx.fillStyle = '#badc58';
+    ctx.beginPath();
+    ctx.arc(player.w / 2, player.h / 2, player.w / 2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#6ab04c';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Eyes
+    ctx.fillStyle = '#000';
+    const eyeOffset = player.vx < 0 ? -4 : (player.vx > 0 ? 4 : 0);
+    ctx.beginPath();
+    ctx.arc(player.w / 2 - 5 + eyeOffset, 12, 3, 0, Math.PI * 2);
+    ctx.arc(player.w / 2 + 5 + eyeOffset, 12, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Snout
+    ctx.fillStyle = '#badc58';
+    ctx.beginPath();
+    ctx.arc(player.w / 2 + eyeOffset * 1.5, 20, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+
+    // HUD Score
+    ctx.fillStyle = '#333333';
+    ctx.font = 'bold 20px Tahoma, sans-serif';
+    ctx.fillText('Score: ' + score, 15, 30);
+    ctx.font = '14px Tahoma, sans-serif';
+    ctx.fillText('Best: ' + maxScore, 15, 50);
+
+    if (state === 'DEAD') {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 28px Tahoma, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('GAME OVER', canvas.width / 2, 220);
+      ctx.font = 'bold 18px Tahoma, sans-serif';
+      ctx.fillText('Final Score: ' + score, canvas.width / 2, 260);
+      ctx.font = '14px Tahoma, sans-serif';
+      ctx.fillText('Click or Press Restart to Play Again', canvas.width / 2, 310);
+      ctx.textAlign = 'left';
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  restartBtn.addEventListener('click', e => {
+    e.preventDefault();
+    restart();
+  });
+
+  restart();
+  loop();
+})();
+</script>
+</body>
+</html>

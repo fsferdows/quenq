@@ -19,6 +19,11 @@
     { name: "Hacker Simulator", url: "/apps/hacker-simulator/" },
     { name: "Angry Birds Chrome", url: "/apps/angry-birds-chrome/" },
     { name: "Fake Updates", url: "/apps/fake-updates/" },
+    { name: "Flappy Bird", url: "/apps/flappy-bird/" },
+    { name: "2048", url: "/apps/2048/" },
+    { name: "Doodle Jump", url: "/apps/doodle-jump/" },
+    { name: "Cookie Clicker", url: "/apps/cookie-clicker/" },
+    { name: "DOOM (1993)", url: "/apps/doom/" },
     { name: "Rickroller", url: "/apps/rickroller/" }
   ];
 

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Play Dr. Driving Online - Full Web Edition</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Play the complete Dr. Driving directly in your browser using WebAssembly. Includes touch and keyboard controls, all vehicles, online multiplayer, and Unlimited Money mod." name="description"/>
+<meta content="quenq, reborn xp, interactive, simulator, arcade, games, retro gaming, flash games, browser games, windows xp, emulator, hobby, tech, nostalgia" name="keywords"/>
+<meta content="index,follow" name="robots"/>
+<link href="https://quenq.com/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="https://quenq.com/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://quenq.com/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="https://quenq.com/favicon.ico" rel="icon" type="image/x-icon"/>
+<meta content="#43515e" name="theme-color"/>
+<link href="https://quenq.com/apps/dr-driving/" rel="canonical">
+<meta content="Play Dr. Driving Online - Full Web Edition" property="og:title">
+<meta content="Experience the full Dr. Driving game directly in your web browser. Online multiplayer, keyboard and touch support, and built-in Unlimited Money mod." property="og:description"/>
+<meta content="https://quenq.com/apps/dr-driving/og.jpg" property="og:image"/>
+<meta content="https://quenq.com/apps/dr-driving/" property="og:url"/>
+<style>
+    .app-container {
+        width: 95% !important;
+    }
+    #app-iframe {
+        width: 100% !important;
+        aspect-ratio: 16 / 9 !important;
+        max-height: 90vh !important;
+        background-color: #171c20;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 0 auto;
+        border: none;
+        display: block;
+    }
+</style>
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
+
+
+
+<!-- Google tag (gtag.js) -->
+
+
+<!-- Service Worker Cleanup (Unregisters legacy push service workers and unsubscribes) -->
+
+<!-- Google Fonts Preconnect & Stylesheet -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded&amp;display=swap" rel="stylesheet"/>
+<link href="/css/styles.css" rel="stylesheet" type="text/css">
+<!-- Schema.org WebSite JSON-LD -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Quenq",
+    "url": "https://quenq.com/",
+    "description": "An interactive digital museum of internet culture featuring classic games, preserved software, and browser emulators.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://quenq.com/arcade/?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+</link></meta></link></head>
+<body>
+
+
+<div class="global-loader" id="global-loader">
+<img alt="Loading..." class="loader-logo" draggable="false" src="/logo.svg"/>
+</div>
+<div id="wrapper">
+<div id="head">
+<div id="logo"><a href="/"><img alt="Quenq Logo" draggable="false" src="/logo.svg" title="Home"/></a></div>
+<div id="head-mid">
+<p class="header-line1">Dr. Driving Web</p>
+<p class="header-line2">The 2013 mobile classic, running directly in your browser.</p>
+</div>
+</div>
+<div id="nav-H">
+<div id="nav-H-Box">
+<div id="butn-block">
+<ul>
+<li>
+<a class="Butn1" href="/">Home</a>
+</li>
+<li>
+<a class="Butn1" href="/arcade/">Arcade</a>
+</li>
+<li>
+<a class="Butn1 active-nav" href="/apps/">Apps</a>
+</li>
+<li>
+<a class="Butn1" href="/directory/">Directory</a>
+</li>
+<li>
+<a class="Butn1" href="/blog/">Archives</a>
+</li>
+<li>
+<a class="Butn1" href="/about/">About</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="main">
+<div style="text-align: center; margin-bottom: 15px;"><div style="display: inline-block; background: linear-gradient(180deg, #fefefe 0%, #e8eef4 100%); border: 1px solid #7f9db9; border-radius: 4px; padding: 6px 18px; font-size: 13px; color: #223e65; font-family: Tahoma, sans-serif; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">✦ Quenq Museum — Preserving Classic Web Culture, Flash Games &amp; Retro Software ✦</div></div>
+<div class="app-container">
+<iframe allow="accelerometer; autoplay; bluetooth; camera; clipboard-read; clipboard-write; cross-origin-isolated; display-capture; encrypted-media; fullscreen; gamepad; geolocation; gyroscope; hid; identity-credentials-get; idle-detection; local-fonts; magnetometer; microphone; midi; payment; picture-in-picture; publickey-credentials-get; screen-wake-lock; serial; usb; web-share; window-management; xr-spatial-tracking; keyboard-map" allowfullscreen="true" id="app-iframe" src="https://static.quenq.com/apps/dr-driving/app.html" title="Dr. Driving Full Game"></iframe>
+<div class="player-controls">
+<a class="action-btn" href="#" id="share-btn">
+<svg viewbox="0 0 24 24"><path d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.2C16.5,7.69 17.21,8 18,8C19.66,8 21,6.66 21,5C21,3.34 19.66,2 18,2C16.34,2 15,3.34 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.8C7.5,9.31 6.79,9 6,9C4.34,9 3,10.34 3,12C3,13.66 4.34,15 6,15C6.79,15 7.5,14.69 8.04,14.2L15.17,18.35C15.12,18.58 15.08,18.79 15.08,19C15.08,20.66 16.42,22 18,22C19.66,22 21,20.66 21,19C21,17.34 19.66,16.08 18,16.08Z"></path></svg>
+Share</a>
+<a class="action-btn" href="#" id="fullscreen-btn">
+<svg viewbox="0 0 24 24"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17H7V14H5V19H10V17Z"></path></svg>
+Fullscreen</a>
+</div>
+</div>
+<div id="col-L">
+<div class="cnt-box">
+<div class="cnt-head"><h1>About Dr. Driving</h1></div>
+<div class="cnt-filler">
+<div class="cnt-info">
+<p><strong>Dr. Driving</strong> is the popular urban driving simulation game developed by SUD Inc., originally released in 2013. Unlike conventional racing games focused purely on top speed, Dr. Driving tests your precision, patience, and traffic navigation across busy city streets.</p>
+<p>During the early smartphone boom, Dr. Driving became a global sensation passed around school buses, college dorms, and family road trips. Its memorable, upbeat jazz-funk soundtrack, rhythmic turn-signal clicks, and tight parking challenges made every near-miss and clean lane change deeply nostalgic for millions of players worldwide.</p>
+<p>This WebAssembly port preserves the full original mobile title to run directly in your browser with no downloads, APKs, or third-party emulators required.</p>
+<p><strong>Key Features:</strong></p>
+<ul style="margin-bottom: 20px;">
+<li><strong>Built-in Unlimited Money Mod:</strong> Toggle the Unlimited Money mod in the launcher to instantly access max Gold and Coins, or reset to a clean save anytime.</li>
+<li><strong>Real Online Multiplayer:</strong> Includes full matchmaking support. Jump into Quick Matches against other players or start a Friendly Match with room codes.</li>
+<li><strong>Full Control Options:</strong> Play using WASD or Arrow keys on desktop, or steer using the authentic on-screen steering wheel and pedals on touchscreen devices.</li>
+<li><strong>All Vehicles and Game Modes:</strong> Access every car, upgrade path, and mission type including Highway, Speed, Drift, Fuel Efficiency, VIP Escort, and Parking.</li>
+</ul>
+<p><strong>Controls:</strong></p>
+<ul style="margin-bottom: 20px;">
+<li><strong>Steer Left / Right:</strong> <kbd>A</kbd> / <kbd>D</kbd> or <kbd>Left</kbd> / <kbd>Right Arrow</kbd> (or touch steering wheel)</li>
+<li><strong>Accelerate:</strong> <kbd>W</kbd> or <kbd>Up Arrow</kbd> (or touch Gas pedal)</li>
+<li><strong>Brake / Reverse:</strong> <kbd>S</kbd> or <kbd>Down Arrow</kbd> (or touch Brake pedal)</li>
+<li><strong>Gear Selection:</strong> Shift between Drive (D) and Reverse (R) on the in-game dashboard</li>
+</ul>
+</div>
+</div>
+<div class="cnt-ft"></div>
+</div>
+<div class="cnt-box">
+<div class="cnt-head">
+<h2>Discussion</h2>
+</div>
+<div class="cnt-filler" style="text-align:center;">
+<div class="cnt-info">
+<div id="disqus_thread"></div>
+<script>
+                /**
+                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+                /*
+                var disqus_config = function () {
+                this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                };
+                */
+                (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://quenq-com.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+            </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+<div class="cnt-ft"></div>
+</div>
+<div class="cnt-box">
+<div class="cnt-head"><h2>Frequently Asked Questions</h2></div>
+<div class="cnt-filler">
+<div class="cnt-info">
+<div class="faq-item">
+<button class="faq-question">How does the Unlimited Money mod work?</button>
+<div class="faq-answer"><p>Click the green <strong>MOD: UNLIMITED MONEY</strong> button in the launcher before starting the game. When you enter the garage, your balance will be topped up with maximum Gold and Coins so you can unlock and upgrade every vehicle instantly. You can clear the mod anytime by clicking Reset Progress.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-question">Does online multiplayer work in the browser?</button>
+<div class="faq-answer"><p>Yes. The game connects to live multiplayer servers. You can select Quick Match to pair with online drivers immediately or create a Friendly Match to race against friends using a custom room code.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-question">What are the controls on desktop vs mobile?</button>
+<div class="faq-answer"><p>On PC and laptops, drive using your keyboard (WASD or Arrow keys). On mobile phones and tablets, the game provides the classic on-screen interactive steering wheel, accelerator, and brake pedals with full multi-touch support.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-question">Is my progress saved automatically?</button>
+<div class="faq-answer"><p>Yes. Your unlocked cars, tuned upgrades, and records are stored in your browser's persistent local storage automatically, so your garage remains intact across sessions.</p></div>
+</div>
+</div>
+</div>
+<div class="cnt-ft"></div>
+</div>
+</div>
+<div id="col-R">
+<div class="nav-box">
+<div class="nav-head"><h5>Featured Apps</h5></div>
+<div class="nav-filler">
+<div class="nav-links">
+<ul id="dynamic-apps-list">
+<li><a href="/apps/">Loading Apps...</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-ft"></div>
+</div>
+
+<div class="nav-box">
+<div class="nav-head"><h5>Community</h5></div>
+<div class="nav-filler">
+<div class="nav-links">
+<ul>
+<li><a href="https://kwenk.com" target="_blank">Kwenk</a></li>
+<li><a href="/about/">About Quenq</a></li>
+<li><a href="/contact/">Contact Us</a></li>
+<li><a href="https://dsc.gg/quenq" target="_blank">Join our Discord</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-ft"></div>
+</div>
+
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="foot-info">
+<div class="footer-column">
+<div class="ft-title">Quick Links</div>
+<div class="ft-links">
+<ul>
+<li><a href="/arcade/">The Flash Arcade</a></li>
+<li><a href="/apps/">The Apps Library</a></li>
+<li><a href="/directory/">The Directory</a></li>
+<li><a href="/blog/">The Archives</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-column">
+<div class="ft-title">Community</div>
+<div class="ft-links">
+<ul>
+<li><a href="https://kwenk.com" target="_blank">Kwenk</a></li>
+<li><a href="/about/">About Us</a></li>
+<li><a href="/contact/">Contact</a></li>
+<li><a href="https://dsc.gg/quenq" rel="noopener noreferrer" target="_blank">Join Our Discord</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-column">
+<p class="ft-title">Project Quenq</p>
+<div class="ft-links legal-links">
+<ul>
+<li><a href="/privacy-policy/">Privacy Policy</a></li>
+<li><a href="/terms-of-service/">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const iframe = document.getElementById('app-iframe');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const shareBtn = document.getElementById('share-btn');
+
+        function focusGame() {
+            if (iframe && iframe.contentWindow) {
+                try { iframe.contentWindow.focus(); } catch(e) {}
+            }
+        }
+
+        document.querySelector('.app-container').addEventListener('click', focusGame);
+
+        fullscreenBtn.addEventListener('click', e => {
+            e.preventDefault();
+            if (iframe.requestFullscreen) { iframe.requestFullscreen(); } 
+            else if (iframe.webkitRequestFullscreen) { iframe.webkitRequestFullscreen(); }
+            
+            if ('keyboard' in navigator && 'lock' in navigator.keyboard) {
+                navigator.keyboard.lock(['Escape']).catch(err => {});
+            }
+            setTimeout(focusGame, 100);
+        });
+
+        async function copyUrl(url) {
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(url);
+                    alert('Link copied to clipboard!');
+                    return;
+                }
+            } catch (e) { }
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = url;
+                ta.style.position = 'fixed';
+                ta.style.left = '-9999px';
+                ta.style.top = '0';
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                alert('Link copied to clipboard!');
+            } catch (e) {
+                alert('Link: ' + url);
+            }
+        }
+
+        if (shareBtn) {
+            shareBtn.addEventListener('click', async e => {
+                e.preventDefault();
+                const shareUrl = window.location.href;
+                const shareData = {
+                    title: 'Play Dr. Driving Online | Quenq Apps',
+                    text: 'Play Dr. Driving directly in your browser with zero downloads!',
+                    url: shareUrl
+                };
+                if (navigator.share) {
+                    try {
+                        await navigator.share(shareData);
+                        return;
+                    } catch (err) {
+                        if (err.name === 'AbortError') return;
+                    }
+                }
+                await copyUrl(shareUrl);
+            });
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                if ('keyboard' in navigator && 'unlock' in navigator.keyboard) {
+                    navigator.keyboard.unlock();
+                }
+            }
+        });
+
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            question.addEventListener('click', () => {
+                const is_open = item.classList.toggle('open');
+                answer.style.maxHeight = is_open ? answer.scrollHeight + "px" : null;
+            });
+        });
+    });
+</script>
+
+<script src="/js/common.js"></script><script src="/js/apps.js"></script></body>
+</html>

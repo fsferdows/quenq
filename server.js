@@ -13,7 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 
-const PORT = process.env.PORT || 3000;
+let PORT = parseInt(process.env.PORT, 10) || 3000;
 const ROOT_DIR = __dirname;
 
 const MIME_TYPES = {
@@ -111,10 +111,24 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(PORT, () => {
-  console.log(`[Quenq Museum Server] Running at http://localhost:${PORT}/`);
-  console.log(`- Home:      http://localhost:${PORT}/`);
-  console.log(`- Arcade:    http://localhost:${PORT}/arcade/`);
-  console.log(`- Apps:      http://localhost:${PORT}/apps/`);
-  console.log(`- Directory: http://localhost:${PORT}/directory/`);
+function startServer(portToTry) {
+  server.listen(portToTry, () => {
+    console.log(`[Quenq Museum Server] Running at http://localhost:${portToTry}/`);
+    console.log(`- Home:      http://localhost:${portToTry}/`);
+    console.log(`- Arcade:    http://localhost:${portToTry}/arcade/`);
+    console.log(`- Apps:      http://localhost:${portToTry}/apps/`);
+    console.log(`- Directory: http://localhost:${portToTry}/directory/`);
+  });
+}
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.warn(`[Quenq Museum Server] Port ${PORT} is occupied. Retrying on port ${PORT + 1}...`);
+    PORT++;
+    startServer(PORT);
+  } else {
+    console.error('Server error:', err);
+  }
 });
+
+startServer(PORT);

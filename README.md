@@ -17,15 +17,20 @@ Developed & Maintained by **[FS FERDOWS](https://github.com/fsferdows)**.
 
 ## 🌟 Key Features & Capabilities
 
+- **CrazyGames Portal Interface (`/arcade/`)**:
+  - Authentic dark-mode gaming portal aesthetic with hero carousel (Moto X3M, Smash Karts, Slope 3D).
+  - Horizontal swipeable featured rows ("Trending Hits", "High-Octane Driving", "Flash Preservation").
+  - Instant live search with keyboard shortcut (`/`) and genre filtering pills.
+  - In-Page Theater Mode player modal with zero-reload launching, fullscreen toggle, link sharing, and Esc closing.
 - **6,100+ Playable Games**:
   - **4,800+ CrazyGames HTML5 Titles**: Moto X3M, Smash Karts, Happy Wheels, Bloxorz, Pacman, Space Invaders, Cut the Rope, Duck Life series, and more.
-  - **1,300+ Classic Flash Games**: Preserved with WebAssembly Ruffle direct execution.
+  - **1,330+ Classic Flash Games**: Preserved with WebAssembly Ruffle direct execution.
   - **Standalone Zero-Dependency Web Apps**: Crossy Road, Slope 3D, Bad Ice-Cream, DOOM (1993), Flappy Bird, 2048, Doodle Jump, Cookie Clicker, Hacker Simulator, SWF Player, and Console Emulator.
 - **Universal Mobile & Tablet Responsiveness**:
   - Seamless layout scaling across small mobile screens (320px–480px), large smartphones (640px), tablets (768px–1024px), laptops, and high-res desktop monitors.
-  - Touch-scrollable responsive navigation bar.
+  - Responsive collapsible sidebar and quick mobile search toggle.
 - **Universal On-Screen Virtual Gamepad**:
-  - Automatically activates on touch devices with D-Pad and Action buttons (A, B, Z, X, Start, Select).
+  - Automatically activates on touch devices and in the Theater Player with D-Pad and Action buttons (A, B, Z, X, Start, Select).
   - Dispatches full synthetic keyboard events directly to game runtimes so keyboard-driven games can be played on mobile.
 - **Zero Broken Games Guarantee**:
   - Built-in alias resolution and automatic fallback between WebAssembly, iframe embeds, and native canvas apps.

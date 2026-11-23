@@ -72,6 +72,21 @@ try {
   console.warn('[Quenq Museum Server] Could not load crazygames-catalog.json:', e.message);
 }
 
+// Load Flash Preservation catalog
+const flashGamesMap = new Map();
+try {
+  const fgPath = path.join(ROOT_DIR, 'flash-catalog.json');
+  if (fs.existsSync(fgPath)) {
+    const fgData = JSON.parse(fs.readFileSync(fgPath, 'utf8'));
+    fgData.forEach(g => {
+      flashGamesMap.set(g.id.toLowerCase(), g);
+    });
+    console.log(`[Quenq Museum Server] Loaded ${flashGamesMap.size} Flash classic titles.`);
+  }
+} catch (e) {
+  console.warn('[Quenq Museum Server] Could not load flash-catalog.json:', e.message);
+}
+
 // Cache for arcade template
 let arcadeTemplate = '';
 try {
@@ -87,7 +102,7 @@ function renderGamePlayer(rawGameId) {
   const targetId = GAME_ALIASES[gameId] || gameId;
 
   const isCrazyGame = crazyGamesMap.has(targetId);
-  const cg = isCrazyGame ? crazyGamesMap.get(targetId) : null;
+  const cg = isCrazyGame ? crazyGamesMap.get(targetId) : (flashGamesMap.get(targetId) || null);
 
   const displayName = cg ? cg.name : gameId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   const genre = cg ? cg.genre : 'arcade';

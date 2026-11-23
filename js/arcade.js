@@ -1,420 +1,532 @@
 /**
- * Quenq Arcade - Unified Game Engine & High-Performance Virtual Catalog
- * Powered by 6,100+ preserved games (Quenq Classic Flash + CrazyGames HTML5 Archive).
- * Supports real-time instant search, multi-provider filtering, lazy thumbnails,
- * mobile responsive pagination, and local game saving.
+ * Quenq CrazyGames Arcade Engine
+ * Inspired by https://www.crazygames.com/
+ * Powers the 6,100+ game catalog, hero carousel, horizontal sliders,
+ * live instant search, category filtering, and in-page theater player.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  const gameGrid = document.getElementById('game-grid');
-  const searchBar = document.getElementById('search-bar');
-  const genreFilterButtons = document.querySelectorAll('.genre-btn');
-  const noGamesMessage = document.getElementById('no-games-found');
-  const noPinnedMessage = document.getElementById('no-pinned-found');
+  // DOM Elements
+  const searchInput = document.getElementById('arcade-search-input');
+  const mainGrid = document.getElementById('main-arcade-grid');
+  const countDisplay = document.getElementById('catalog-count-display');
+  const gridTitle = document.getElementById('grid-header-title');
   const paginationContainer = document.getElementById('arcade-pagination');
-  const addCustomBtn = document.getElementById('add-custom-game-btn');
+  const pinnedCountElem = document.getElementById('pinned-count');
+  const sidebar = document.getElementById('arcade-sidebar');
+  const sidebarToggle = document.getElementById('sidebar-toggle-btn');
+  const randomGameBtn = document.getElementById('random-game-btn');
+  const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+  const headerSearchContainer = document.getElementById('header-search-container');
 
+  // Theater Player Elements
+  const theaterModal = document.getElementById('theater-modal');
+  const theaterIframe = document.getElementById('theater-iframe');
+  const theaterTitle = document.getElementById('theater-game-title');
+  const theaterCloseBtn = document.getElementById('theater-close-btn');
+  const theaterFsBtn = document.getElementById('theater-fs-btn');
+  const theaterShareBtn = document.getElementById('theater-share-btn');
+  const theaterPopoutBtn = document.getElementById('theater-popout-btn');
+  const theaterControlsBtn = document.getElementById('theater-controls-btn');
+  const theaterVpad = document.getElementById('theater-virtual-gamepad');
+
+  // Rows
+  const trendingTrack = document.getElementById('trending-track');
+  const drivingTrack = document.getElementById('driving-track');
+  const flashTrack = document.getElementById('flash-track');
+
+  // Catalog State
+  let allGames = [];
+  let currentGenre = 'all';
+  let currentSearch = '';
+  let currentPage = 1;
   const gamesPerPage = 48;
+  let pinnedGames = JSON.parse(localStorage.getItem('pinnedGames') || '[]');
 
-  // Extract base Flash games from DOM once
-  const baseCards = Array.from(document.querySelectorAll('#game-grid .game-card'));
-  const allGameRecords = [];
+  // Featured Blockbuster Definitions
+  const FEATURED_HITS = [
+    { id: 'moto-x3m', name: 'Moto X3M', genre: 'driving', thumb: 'https://imgs.crazygames.com/moto-x3m_16x9/20241004045353/moto-x3m_16x9-cover?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/moto-x3m/index.html' },
+    { id: 'smash-karts', name: 'Smash Karts', genre: 'multiplayer', thumb: 'https://imgs.crazygames.com/smash-karts_16x9/20241004045353/smash-karts_16x9-cover?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/smash-karts/index.html' },
+    { id: 'happy-wheels', name: 'Happy Wheels', genre: 'arcade', thumb: 'https://imgs.crazygames.com/happywheels.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/happy-wheels/index.html' },
+    { id: 'slope', name: 'Slope 3D', genre: 'driving', thumb: 'thumbnails/slope.jpg', embedUrl: '/apps/slope/' },
+    { id: 'crossy-road', name: 'Crossy Road', genre: 'arcade', thumb: 'thumbnails/crossy-road.jpg', embedUrl: '/apps/crossy-road/' },
+    { id: 'bad-ice-cream', name: 'Bad Ice-Cream', genre: 'puzzle', thumb: 'thumbnails/bad-ice-cream.jpg', embedUrl: '/apps/bad-ice-cream/' },
+    { id: 'bloxorz', name: 'Bloxorz', genre: 'puzzle', thumb: 'https://imgs.crazygames.com/bloxorz.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/bloxorz/index.html' },
+    { id: 'pacman', name: 'Pacman', genre: 'arcade', thumb: 'https://imgs.crazygames.com/pacman.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/pacman/index.html' },
+    { id: 'space-invaders', name: 'Space Invaders', genre: 'arcade', thumb: 'https://imgs.crazygames.com/games/space-invaders/cover_16x9-1714708168967.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/space-invaders/index.html' },
+    { id: 'geometry-dash-online', name: 'Geometry Dash', genre: 'action', thumb: 'https://imgs.crazygames.com/games/geometry-dash-online/cover-1587042571253.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/geometry-dash-online/index.html' },
+    { id: 'cut-the-rope-ebx', name: 'Cut the Rope', genre: 'puzzle', thumb: 'https://imgs.crazygames.com/cut-the-rope-ebx_16x9/20241004045353/cut-the-rope-ebx_16x9-cover?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/cut-the-rope-ebx/index.html' },
+    { id: 'ducklife-4', name: 'Duck Life 4', genre: 'sports', thumb: 'https://imgs.crazygames.com/games/ducklife-4/cover-1583236005740.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/ducklife-4/index.html' },
+    { id: 'stick-war', name: 'Stick War', genre: 'strategy', thumb: 'https://imgs.crazygames.com/games/stick-war/cover-1659084995058.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/stick-war/index.html' },
+    { id: 'age-of-war', name: 'Age of War', genre: 'strategy', thumb: 'https://imgs.crazygames.com/ageofwar.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/age-of-war/index.html' },
+    { id: 'cubefield', name: 'Cubefield', genre: 'arcade', thumb: 'https://imgs.crazygames.com/cubefield.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/cubefield/index.html' }
+  ];
 
-  baseCards.forEach(card => {
-    allGameRecords.push({
-      id: card.dataset.gameId,
-      name: card.dataset.gameName,
-      displayName: card.querySelector('h2') ? card.querySelector('h2').textContent : card.dataset.gameName,
-      genre: (card.dataset.gameGenre || 'arcade') + ',flash',
-      bg: card.dataset.bg || '',
-      url: card.getAttribute('href'),
-      provider: 'flash'
-    });
-  });
+  const FLASH_CLASSICS = [
+    { id: 'bear-in-the-big-blue-house-help-bear-bake', name: 'Bear in Big Blue House', genre: 'simulation', thumb: 'https://static.quenq.com/thumbnails/bear-in-the-big-blue-house-help-bear-bake.jpg', embedUrl: '/arcade/bear-in-the-big-blue-house-help-bear-bake/' },
+    { id: 'antbuster', name: 'Antbuster Defense', genre: 'strategy', thumb: 'https://static.quenq.com/thumbnails/antbuster.jpg', embedUrl: '/arcade/antbuster/' },
+    { id: 'feedme', name: 'Feed Me', genre: 'puzzle', thumb: 'https://static.quenq.com/thumbnails/feedme.jpg', embedUrl: '/arcade/feedme/' },
+    { id: 'pandemic', name: 'Pandemic', genre: 'strategy', thumb: 'https://static.quenq.com/thumbnails/pandemic.jpg', embedUrl: '/arcade/pandemic/' },
+    { id: 'sonic-on-angel-island', name: 'Sonic on Angel Island', genre: 'action', thumb: 'https://static.quenq.com/thumbnails/sonic-on-angel-island.jpg', embedUrl: '/arcade/sonic-on-angel-island/' },
+    { id: 'ufomania', name: 'UfoMania', genre: 'arcade', thumb: 'https://static.quenq.com/thumbnails/ufomania.jpg', embedUrl: '/arcade/ufomania/' },
+    { id: 'cow-and-chicken-ballet-parking', name: 'Ballet Parking', genre: 'driving', thumb: 'https://static.quenq.com/thumbnails/cow-and-chicken-ballet-parking.jpg', embedUrl: '/arcade/cow-and-chicken-ballet-parking/' },
+    { id: 'epicbattlefantasy2', name: 'Epic Battle Fantasy 2', genre: 'action', thumb: 'https://static.quenq.com/thumbnails/epicbattlefantasy2.jpg', embedUrl: '/arcade/epicbattlefantasy2/' }
+  ];
 
-  // Load custom saved games from localStorage
-  const customGames = JSON.parse(localStorage.getItem('customArcadeGames') || '[]');
-  customGames.forEach(cg => {
-    allGameRecords.unshift({
-      id: cg.id,
-      name: cg.name.toLowerCase(),
-      displayName: cg.name,
-      genre: (cg.genre || 'arcade') + ',custom',
-      bg: cg.bg || '',
-      url: cg.url,
-      provider: 'custom'
-    });
-  });
-
-  // URL State
-  const getUrlParams = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return {
-      genre: urlParams.get('genre') || 'all',
-      search: urlParams.get('search') || '',
-      page: parseInt(urlParams.get('page'), 10) || 1
-    };
-  };
-
-  let { genre: currentGenre, search: currentSearch, page: currentPage } = getUrlParams();
-  let pinnedGames = JSON.parse(localStorage.getItem('pinnedGames')) || [];
-
-  if (currentSearch && searchBar) {
-    searchBar.value = currentSearch;
-  }
-
-  const buildNavUrl = (targetPage, targetGenre = currentGenre, targetSearch = currentSearch) => {
-    const params = new URLSearchParams();
-    if (targetGenre && targetGenre !== 'all') params.set('genre', targetGenre);
-    if (targetSearch && targetSearch.trim() !== '') params.set('search', targetSearch.trim());
-    if (targetPage > 1) params.set('page', targetPage);
-
-    const queryString = params.toString();
-    return window.location.pathname + (queryString ? '?' + queryString : '');
-  };
-
-  // Thumbnail Lazy Loader
-  const lazyBackgroundObserver = new IntersectionObserver((entries, observer) => {
+  // Lazy Thumbnail Observer
+  const lazyObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const card = entry.target;
-        if (card.dataset.bg && !card.style.backgroundImage) {
-          const bgUrl = card.dataset.bg.startsWith('http')
-            ? card.dataset.bg
-            : `https://static.quenq.com/${card.dataset.bg}`;
-          card.style.backgroundImage = `url('${bgUrl}')`;
+        const img = card.querySelector('img');
+        if (img && img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
           observer.unobserve(card);
         }
       }
     });
-  }, { rootMargin: '200px 0px' });
+  }, { rootMargin: '250px 0px' });
+
+  // Update Pin Counter
+  function updatePinCount() {
+    if (pinnedCountElem) pinnedCountElem.textContent = pinnedGames.length;
+  }
+  updatePinCount();
+
+  // Create Card Element
+  function renderCard(game) {
+    const card = document.createElement('div');
+    card.className = 'cg-card';
+    if (pinnedGames.includes(game.id)) card.classList.add('pinned');
+    card.dataset.id = game.id;
+
+    const isHttp = game.thumb && game.thumb.startsWith('http');
+    const thumbUrl = isHttp ? game.thumb : `/${game.thumb.replace(/^\/+/, '')}`;
+
+    card.innerHTML = `
+      <img class="cg-card-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23191f33'/%3E%3C/svg%3E" data-src="${thumbUrl}" alt="${game.name}" loading="lazy"/>
+      <button class="cg-card-pin" title="Pin Game">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16,12V4H17V2H7V4H8V12L6,14V16H11.5V22H12.5V16H18V14L16,12Z"></path></svg>
+      </button>
+      <div class="cg-card-overlay">
+        <div class="cg-card-title">${game.name}</div>
+        <div class="cg-card-tag">${game.genre || 'arcade'}</div>
+      </div>
+    `;
+
+    // Click to Open Theater Player
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.cg-card-pin')) return;
+      e.preventDefault();
+      openTheaterGame(game);
+    });
+
+    // Pin Toggle
+    const pinBtn = card.querySelector('.cg-card-pin');
+    pinBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isPinned = pinnedGames.includes(game.id);
+      if (isPinned) {
+        pinnedGames = pinnedGames.filter(id => id !== game.id);
+        card.classList.remove('pinned');
+      } else {
+        pinnedGames.push(game.id);
+        card.classList.add('pinned');
+      }
+      localStorage.setItem('pinnedGames', JSON.stringify(pinnedGames));
+      updatePinCount();
+      if (currentGenre === 'pinned') updateGrid();
+    });
+
+    lazyObserver.observe(card);
+    return card;
+  }
+
+  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+  // Mobile Search Toggle
+  if (mobileSearchToggle && headerSearchContainer) {
+    mobileSearchToggle.addEventListener('click', () => {
+      headerSearchContainer.classList.toggle('mobile-search-active');
+      if (headerSearchContainer.classList.contains('mobile-search-active')) {
+        searchInput.focus();
+      }
+    });
+  }
+
+  // Open Theater Player
+  function openTheaterGame(game) {
+    if (!game) return;
+    theaterTitle.textContent = game.name;
+    const playerUrl = game.embedUrl || (game.id ? `/arcade/${game.id}/` : '#');
+    theaterIframe.src = playerUrl;
+    theaterPopoutBtn.href = playerUrl;
+    theaterModal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    if (isTouchDevice && window.innerWidth < 1024 && theaterVpad) {
+      theaterVpad.style.display = 'flex';
+      if (theaterControlsBtn) theaterControlsBtn.classList.add('primary');
+    }
+    window.history.pushState({ modalOpen: true }, '', `/arcade/${game.id}/`);
+  }
+
+  function closeTheater() {
+    theaterModal.classList.remove('is-open');
+    theaterIframe.src = 'about:blank';
+    document.body.style.overflow = '';
+    if (theaterVpad) theaterVpad.style.display = 'none';
+    if (theaterControlsBtn) theaterControlsBtn.classList.remove('primary');
+    window.history.pushState({}, '', '/arcade/');
+  }
+
+  theaterCloseBtn.addEventListener('click', closeTheater);
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && theaterModal.classList.contains('is-open')) {
+      closeTheater();
+    }
+  });
+
+  theaterFsBtn.addEventListener('click', () => {
+    const frame = document.getElementById('theater-frame-container');
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      if (frame.requestFullscreen) frame.requestFullscreen();
+      else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
+    }
+  });
+
+  theaterShareBtn.addEventListener('click', async () => {
+    const shareData = { title: theaterTitle.textContent, text: 'Play ' + theaterTitle.textContent + ' free on Quenq Arcade!', url: window.location.href };
+    try {
+      if (navigator.share) await navigator.share(shareData);
+      else {
+        await navigator.clipboard.writeText(window.location.href);
+        alert('Game link copied to clipboard!');
+      }
+    } catch(e) {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  });
+
+  // Theater Touch Gamepad Controls
+  if (theaterControlsBtn && theaterVpad) {
+    theaterControlsBtn.addEventListener('click', () => {
+      const isVis = theaterVpad.style.display !== 'none';
+      theaterVpad.style.display = isVis ? 'none' : 'flex';
+      theaterControlsBtn.classList.toggle('primary', !isVis);
+    });
+
+    function dispatchTheaterKey(type, btn) {
+      const key = btn.dataset.key;
+      const code = btn.dataset.code;
+      const keyCode = parseInt(btn.dataset.keycode, 10);
+      const eventInit = {
+        key: key, code: code, keyCode: keyCode, which: keyCode, bubbles: true, cancelable: true, composed: true
+      };
+      const event = new KeyboardEvent(type, eventInit);
+      document.dispatchEvent(event);
+      window.dispatchEvent(event);
+      if (theaterIframe && theaterIframe.contentWindow) {
+        try {
+          theaterIframe.contentWindow.dispatchEvent(new KeyboardEvent(type, eventInit));
+        } catch (e) {}
+      }
+    }
+
+    theaterVpad.querySelectorAll('.vpad-btn').forEach(btn => {
+      const start = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        btn.classList.add('vpad-active');
+        dispatchTheaterKey('keydown', btn);
+      };
+      const end = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        btn.classList.remove('vpad-active');
+        dispatchTheaterKey('keyup', btn);
+      };
+      btn.addEventListener('touchstart', start, { passive: false });
+      btn.addEventListener('touchend', end, { passive: false });
+      btn.addEventListener('touchcancel', end, { passive: false });
+      btn.addEventListener('mousedown', start);
+      btn.addEventListener('mouseup', end);
+      btn.addEventListener('mouseleave', end);
+    });
+  }
+
+  // Populate Horizontal Tracks
+  function populateTrack(trackElem, gameList) {
+    if (!trackElem) return;
+    trackElem.innerHTML = '';
+    gameList.forEach(g => {
+      trackElem.appendChild(renderCard(g));
+    });
+  }
+
+  populateTrack(trendingTrack, FEATURED_HITS);
+  populateTrack(drivingTrack, FEATURED_HITS.filter(g => g.genre === 'driving' || ['moto-x3m', 'smash-karts', 'slope', 'crossy-road'].includes(g.id)));
+  populateTrack(flashTrack, FLASH_CLASSICS);
+
+  // Row Slider Scroll Navigation Buttons
+  document.querySelectorAll('.cg-slider-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target;
+      const track = document.getElementById(targetId);
+      if (!track) return;
+      const amount = track.clientWidth * 0.75;
+      track.scrollBy({ left: btn.classList.contains('prev-btn') ? -amount : amount, behavior: 'smooth' });
+    });
+  });
+
+  // Hero Carousel Logic
+  const slides = document.querySelectorAll('.cg-hero-slide');
+  const dots = document.querySelectorAll('.cg-dot');
+  let currentSlide = 0;
+  let carouselTimer = null;
+
+  function setSlide(index) {
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    setSlide((currentSlide + 1) % slides.length);
+  }
+
+  function startCarousel() {
+    clearInterval(carouselTimer);
+    carouselTimer = setInterval(nextSlide, 5000);
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      setSlide(parseInt(dot.dataset.index, 10));
+      startCarousel();
+    });
+  });
+  startCarousel();
+
+  document.querySelectorAll('.hero-play-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const slug = btn.dataset.slug;
+      const name = btn.dataset.name;
+      const hit = FEATURED_HITS.find(h => h.id === slug) || { id: slug, name: name };
+      openTheaterGame(hit);
+    });
+  });
+
+  // Random Game Button
+  if (randomGameBtn) {
+    randomGameBtn.addEventListener('click', () => {
+      if (allGames.length > 0) {
+        const randomIndex = Math.floor(Math.random() * allGames.length);
+        openTheaterGame(allGames[randomIndex]);
+      } else {
+        const randomIndex = Math.floor(Math.random() * FEATURED_HITS.length);
+        openTheaterGame(FEATURED_HITS[randomIndex]);
+      }
+    });
+  }
+
+  // Sidebar Toggle for Mobile
+  if (sidebarToggle && sidebar) {
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('mobile-open');
+    });
+  }
 
   // Pagination Controls
-  const getPageNumbers = (current, total) => {
-    if (total <= 7) {
-      return Array.from({ length: total }, (_, i) => i + 1);
-    }
-    const pages = [];
-    pages.push(1);
-    if (current > 3) pages.push('...');
-    const start = Math.max(2, current - 1);
-    const end = Math.min(total - 1, current + 1);
-    for (let i = start; i <= end; i++) pages.push(i);
-    if (current < total - 2) pages.push('...');
-    pages.push(total);
-    return pages;
-  };
-
-  const renderPaginationControls = (totalPages) => {
+  function renderPagination(totalCount) {
     if (!paginationContainer) return;
     paginationContainer.innerHTML = '';
+    const totalPages = Math.ceil(totalCount / gamesPerPage);
     if (totalPages <= 1) return;
 
     if (currentPage > 1) {
-      const prevBtn = document.createElement('a');
-      prevBtn.className = 'action-btn';
-      prevBtn.innerHTML = '&larr; Prev';
-      prevBtn.href = buildNavUrl(currentPage - 1);
-      prevBtn.addEventListener('click', (e) => {
-        e.preventDefault();
+      const prevBtn = document.createElement('button');
+      prevBtn.className = 'cg-nav-btn';
+      prevBtn.innerHTML = '‹ Prev';
+      prevBtn.addEventListener('click', () => {
         currentPage--;
-        window.history.pushState({}, '', buildNavUrl(currentPage));
-        updateFiltersAndSort();
-        window.scrollTo({ top: 300, behavior: 'smooth' });
+        updateGrid();
+        window.scrollTo({ top: mainGrid.offsetTop - 100, behavior: 'smooth' });
       });
       paginationContainer.appendChild(prevBtn);
     }
 
-    const pageRange = getPageNumbers(currentPage, totalPages);
-    pageRange.forEach(page => {
-      if (page === '...') {
-        const span = document.createElement('span');
-        span.className = 'pagination-ellipsis';
-        span.textContent = '...';
-        paginationContainer.appendChild(span);
-      } else {
-        const btn = document.createElement('a');
-        btn.className = 'action-btn';
-        if (page === currentPage) btn.classList.add('active');
-        btn.textContent = page;
-        btn.href = buildNavUrl(page);
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          currentPage = page;
-          window.history.pushState({}, '', buildNavUrl(currentPage));
-          updateFiltersAndSort();
-          window.scrollTo({ top: 300, behavior: 'smooth' });
-        });
-        paginationContainer.appendChild(btn);
-      }
-    });
+    const maxButtons = 7;
+    let startPage = Math.max(1, currentPage - 3);
+    let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+    if (endPage - startPage < maxButtons - 1) {
+      startPage = Math.max(1, endPage - maxButtons + 1);
+    }
+
+    for (let p = startPage; p <= endPage; p++) {
+      const pageBtn = document.createElement('button');
+      pageBtn.className = `cg-nav-btn ${p === currentPage ? 'primary' : ''}`;
+      pageBtn.textContent = p;
+      const pageNum = p;
+      pageBtn.addEventListener('click', () => {
+        currentPage = pageNum;
+        updateGrid();
+        window.scrollTo({ top: mainGrid.offsetTop - 100, behavior: 'smooth' });
+      });
+      paginationContainer.appendChild(pageBtn);
+    }
 
     if (currentPage < totalPages) {
-      const nextBtn = document.createElement('a');
-      nextBtn.className = 'action-btn';
-      nextBtn.innerHTML = 'Next &rarr;';
-      nextBtn.href = buildNavUrl(currentPage + 1);
-      nextBtn.addEventListener('click', (e) => {
-        e.preventDefault();
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'cg-nav-btn';
+      nextBtn.innerHTML = 'Next ›';
+      nextBtn.addEventListener('click', () => {
         currentPage++;
-        window.history.pushState({}, '', buildNavUrl(currentPage));
-        updateFiltersAndSort();
-        window.scrollTo({ top: 300, behavior: 'smooth' });
+        updateGrid();
+        window.scrollTo({ top: mainGrid.offsetTop - 100, behavior: 'smooth' });
       });
       paginationContainer.appendChild(nextBtn);
     }
-  };
+  }
 
-  // Card Element Builder
-  const createCardElement = (item) => {
-    const card = document.createElement('a');
-    card.className = 'game-card';
-    card.dataset.bg = item.bg;
-    card.dataset.gameGenre = item.genre;
-    card.dataset.gameId = item.id;
-    card.dataset.gameName = item.name;
-    card.href = item.url;
-    if (pinnedGames.includes(item.id)) card.classList.add('pinned');
-
-    card.innerHTML = `
-      <h2>${item.displayName}</h2>
-      <span class="pin-button" title="Pin Game">
-        <svg viewBox="0 0 24 24"><path d="M16,12V4H17V2H7V4H8V12L6,14V16H11.5V22H12.5V16H18V14L16,12Z"></path></svg>
-      </span>
-    `;
-
-    const pinBtn = card.querySelector('.pin-button');
-    pinBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      togglePin(item.id, card);
-    });
-
-    lazyBackgroundObserver.observe(card);
-    return card;
-  };
-
-  const togglePin = (gameId, cardElement) => {
-    const isPinned = pinnedGames.includes(gameId);
-    if (isPinned) {
-      pinnedGames = pinnedGames.filter(id => id !== gameId);
-      if (cardElement) cardElement.classList.remove('pinned');
-    } else {
-      pinnedGames.push(gameId);
-      if (cardElement) cardElement.classList.add('pinned');
-    }
-    localStorage.setItem('pinnedGames', JSON.stringify(pinnedGames));
-    if (currentGenre === 'pinned') updateFiltersAndSort();
-  };
-
-  // Render Grid
-  const updateFiltersAndSort = () => {
+  // Main Grid Update
+  function updateGrid() {
     const query = currentSearch.toLowerCase().trim();
 
-    const matched = allGameRecords.filter(item => {
-      const searchMatch = query === '' || item.name.includes(query) || item.id.includes(query);
+    const filtered = allGames.filter(game => {
+      const matchSearch = query === '' || game.name.toLowerCase().includes(query) || game.id.includes(query);
 
-      let genreMatch = false;
+      let matchGenre = false;
       if (currentGenre === 'all') {
-        genreMatch = true;
+        matchGenre = true;
       } else if (currentGenre === 'pinned') {
-        genreMatch = pinnedGames.includes(item.id);
+        matchGenre = pinnedGames.includes(game.id);
       } else if (currentGenre === 'crazygames') {
-        genreMatch = item.provider === 'crazygames';
+        matchGenre = game.source === 'crazygames';
       } else if (currentGenre === 'flash') {
-        genreMatch = item.provider === 'flash';
+        matchGenre = game.source === 'flash';
       } else {
-        genreMatch = item.genre && item.genre.includes(currentGenre);
+        matchGenre = game.genre && game.genre.includes(currentGenre);
       }
 
-      return searchMatch && genreMatch;
+      return matchSearch && matchGenre;
     });
 
-    if (noGamesMessage) noGamesMessage.style.display = 'none';
-    if (noPinnedMessage) noPinnedMessage.style.display = 'none';
+    // Update Counts & Headers
+    countDisplay.textContent = `Showing ${Math.min(filtered.length, gamesPerPage)} of ${filtered.length} games`;
+    gridTitle.textContent = currentSearch
+      ? `Search results for "${currentSearch}" (${filtered.length})`
+      : currentGenre === 'all' ? '🎮 All Games' : `Filtered: ${currentGenre.toUpperCase()}`;
 
-    if (matched.length === 0) {
-      if (currentGenre === 'pinned' && query === '') {
-        if (noPinnedMessage) noPinnedMessage.style.display = 'block';
-      } else {
-        if (noGamesMessage) noGamesMessage.style.display = 'block';
-      }
+    // Slice for current page
+    const startIndex = (currentPage - 1) * gamesPerPage;
+    const pageItems = filtered.slice(startIndex, startIndex + gamesPerPage);
+
+    mainGrid.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+    pageItems.forEach(game => {
+      fragment.appendChild(renderCard(game));
+    });
+    mainGrid.appendChild(fragment);
+
+    renderPagination(filtered.length);
+  }
+
+  // Filter Selection Handler
+  function selectGenre(genre) {
+    currentGenre = genre;
+    currentPage = 1;
+
+    // Update sidebar items
+    document.querySelectorAll('.cg-nav-item[data-genre]').forEach(el => {
+      el.classList.toggle('active', el.dataset.genre === genre);
+    });
+
+    // Update pill tags
+    document.querySelectorAll('.cg-tag-pill[data-genre]').forEach(el => {
+      el.classList.toggle('active', el.dataset.genre === genre);
+    });
+
+    // On mobile, close sidebar after clicking
+    if (window.innerWidth < 980 && sidebar) {
+      sidebar.classList.remove('mobile-open');
     }
 
-    const totalGames = matched.length;
-    const totalPages = Math.ceil(totalGames / gamesPerPage);
-    if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
-
-    const startIndex = (currentPage - 1) * gamesPerPage;
-    const endIndex = startIndex + gamesPerPage;
-    const pageItems = matched.slice(startIndex, endIndex);
-
-    gameGrid.innerHTML = '';
-    const fragment = document.createDocumentFragment();
-    pageItems.forEach(item => {
-      fragment.appendChild(createCardElement(item));
-    });
-    gameGrid.appendChild(fragment);
-
-    // Update active filter button state
-    document.querySelectorAll('.genre-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.genre === currentGenre);
-    });
-
-    renderPaginationControls(totalPages);
-  };
-
-  // Event Listeners for Filters & Search
-  if (searchBar) {
-    let debounceTimer = null;
-    searchBar.addEventListener('input', () => {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        currentSearch = searchBar.value.toLowerCase().trim();
-        currentPage = 1;
-        updateFiltersAndSort();
-      }, 150);
-    });
+    updateGrid();
   }
 
-  const attachGenreFilterClicks = () => {
-    document.querySelectorAll('.genre-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        currentGenre = btn.dataset.genre;
-        currentPage = 1;
-        const newUrl = buildNavUrl(1, currentGenre);
-        window.history.pushState({}, '', newUrl);
-        updateFiltersAndSort();
-      });
-    });
-  };
-  attachGenreFilterClicks();
-
-  // Load CrazyGames catalog asynchronously
-  fetch('/crazygames-catalog.json')
-    .then(r => r.json())
-    .then(cgList => {
-      cgList.forEach(cg => {
-        allGameRecords.push({
-          id: cg.id,
-          name: cg.name.toLowerCase(),
-          displayName: cg.name,
-          genre: (cg.genre || 'arcade') + ',crazygames,html5',
-          bg: cg.thumb,
-          url: `/arcade/${cg.id}/`,
-          provider: 'crazygames'
-        });
-      });
-      console.log(`[Quenq Arcade] Integrated ${cgList.length} CrazyGames titles. Total library: ${allGameRecords.length}`);
-      updateFiltersAndSort();
-    })
-    .catch(err => {
-      console.warn('Failed to load CrazyGames catalog:', err);
-    });
-
-  // Custom Game Modal Handler
-  if (addCustomBtn) {
-    const modal = document.createElement('div');
-    modal.id = 'custom-game-modal';
-    modal.style.cssText = `
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6); z-index: 99999; justify-content: center; align-items: center;
-    `;
-    modal.innerHTML = `
-      <div style="background: #ece9d8; border: 3px solid #0055ea; border-radius: 6px 6px 0 0; width: 480px; max-width: 92%; box-shadow: 0 8px 24px rgba(0,0,0,0.5); font-family: Tahoma, sans-serif; overflow: hidden;">
-        <div style="background: linear-gradient(180deg, #0058ee 0%, #3a93ff 8%, #0055ea 40%, #0045c4 88%, #0036a4 100%); color: #fff; padding: 6px 10px; font-weight: bold; font-size: 13px; display: flex; justify-content: space-between; align-items: center;">
-          <span>🕹️ Quenq Game Loader — Add or Play Any Game</span>
-          <button id="close-modal-btn" style="background: #c75050; color: #fff; border: 1px solid #fff; border-radius: 3px; font-weight: bold; cursor: pointer; padding: 0 6px;">✕</button>
-        </div>
-        <div style="padding: 16px; font-size: 13px; color: #333;">
-          <p style="margin-top:0;">Load any custom Flash game (<strong>.SWF</strong>) or web game into your Quenq Arcade:</p>
-          
-          <div style="background: #fff; border: 1px solid #7f9db9; padding: 12px; border-radius: 4px; margin-bottom: 12px;">
-            <label style="font-weight: bold; display: block; margin-bottom: 6px;">Option 1: Play Local .SWF or .HTML File</label>
-            <input type="file" id="swf-file-input" accept=".swf,.html" style="font-size: 12px; width: 100%;"/>
-            <div id="player-mount-point" style="margin-top: 10px;"></div>
-          </div>
-
-          <div style="background: #fff; border: 1px solid #7f9db9; padding: 12px; border-radius: 4px;">
-            <label style="font-weight: bold; display: block; margin-bottom: 6px;">Option 2: Add Web Game by URL</label>
-            <input type="text" id="custom-game-name" placeholder="Game Name (e.g. Super Smash Flash)" style="width: 95%; margin-bottom: 8px; padding: 5px;"/>
-            <input type="text" id="custom-game-url" placeholder="Play URL or Embed link" style="width: 95%; margin-bottom: 8px; padding: 5px;"/>
-            <select id="custom-game-genre" style="width: 98%; margin-bottom: 10px; padding: 5px;">
-              <option value="action">Action</option>
-              <option value="adventure">Adventure</option>
-              <option value="arcade">Arcade</option>
-              <option value="puzzle">Puzzle</option>
-              <option value="shooter">Shooter</option>
-              <option value="racing">Racing</option>
-              <option value="sports">Sports</option>
-              <option value="strategy">Strategy</option>
-            </select>
-            <button id="save-custom-game-btn" class="action-btn" style="background: #2b78e4; color: #fff; font-weight: bold; border-color: #1a56a7; cursor: pointer; padding: 6px 14px;">Save to My Arcade</button>
-          </div>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(modal);
-
-    addCustomBtn.addEventListener('click', (e) => {
+  document.querySelectorAll('[data-genre]').forEach(el => {
+    el.addEventListener('click', (e) => {
       e.preventDefault();
-      modal.style.display = 'flex';
+      selectGenre(el.dataset.genre);
+    });
+  });
+
+  // Search Input Listener
+  let searchDebounce = null;
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => {
+        currentSearch = searchInput.value;
+        currentPage = 1;
+        updateGrid();
+      }, 120);
     });
 
-    modal.querySelector('#close-modal-btn').addEventListener('click', () => {
-      modal.style.display = 'none';
-    });
-
-    // File input handler with Ruffle
-    const fileInput = modal.querySelector('#swf-file-input');
-    const mountPoint = modal.querySelector('#player-mount-point');
-
-    fileInput.addEventListener('change', () => {
-      const file = fileInput.files[0];
-      if (!file) return;
-
-      const fileUrl = URL.createObjectURL(file);
-      if (file.name.endsWith('.swf')) {
-        mountPoint.innerHTML = '<p style="color:#0055ea;">Loading Flash Game with Ruffle WebAssembly...</p>';
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/@ruffle-rs/ruffle';
-        script.onload = () => {
-          mountPoint.innerHTML = '';
-          const ruffle = window.RufflePlayer.newest();
-          const player = ruffle.createPlayer();
-          player.style.width = '100%';
-          player.style.height = '320px';
-          mountPoint.appendChild(player);
-          player.load(fileUrl);
-        };
-        document.head.appendChild(script);
-      } else {
-        mountPoint.innerHTML = `<iframe src="${fileUrl}" style="width: 100%; height: 320px; border: 1px solid #999;"></iframe>`;
+    // Hotkey: press '/' to focus search
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
       }
-    });
-
-    // Save custom game to localStorage
-    const saveBtn = modal.querySelector('#save-custom-game-btn');
-    saveBtn.addEventListener('click', () => {
-      const name = modal.querySelector('#custom-game-name').value.trim();
-      const url = modal.querySelector('#custom-game-url').value.trim();
-      const genre = modal.querySelector('#custom-game-genre').value;
-
-      if (!name || !url) {
-        alert('Please provide both Game Name and Play URL!');
-        return;
-      }
-
-      const id = 'custom-' + Date.now();
-      const customGames = JSON.parse(localStorage.getItem('customArcadeGames') || '[]');
-      customGames.push({ id, name, url, genre });
-      localStorage.setItem('customArcadeGames', JSON.stringify(customGames));
-
-      alert(`"${name}" has been added to your Arcade! The page will now reload.`);
-      window.location.reload();
     });
   }
 
-  updateFiltersAndSort();
+  // Load Combined Catalog
+  allGames = [...FEATURED_HITS, ...FLASH_CLASSICS];
+  updateGrid();
+
+  Promise.all([
+    fetch('/crazygames-catalog.json').then(r => r.json()).catch(() => []),
+    fetch('/flash-catalog.json').then(r => r.json()).catch(() => [])
+  ]).then(([cgCatalog, flashCatalog]) => {
+    const existingIds = new Set(allGames.map(g => g.id));
+    
+    // Add Flash Preservation Classics
+    flashCatalog.forEach(fg => {
+      if (!existingIds.has(fg.id)) {
+        allGames.push(fg);
+        existingIds.add(fg.id);
+      }
+    });
+
+    // Add CrazyGames HTML5 Catalog
+    cgCatalog.forEach(cg => {
+      if (!existingIds.has(cg.id)) {
+        allGames.push(cg);
+        existingIds.add(cg.id);
+      }
+    });
+
+    console.log(`[Quenq CrazyGames] Total catalog ready: ${allGames.length} games.`);
+    updateGrid();
+  }).catch(err => {
+    console.warn('Could not load game catalogs:', err);
+  });
+
+  // Check if a direct game was requested in the URL path (e.g. /arcade/moto-x3m/)
+  const currentPath = window.location.pathname;
+  const match = currentPath.match(/^\/arcade\/([a-zA-Z0-9_\-]+)\/?$/);
+  if (match && match[1] && match[1] !== 'index') {
+    const slug = match[1];
+    setTimeout(() => {
+      const targetGame = allGames.find(g => g.id === slug) || { id: slug, name: slug.replace(/-/g, ' ').toUpperCase() };
+      openTheaterGame(targetGame);
+    }, 300);
+  }
 });

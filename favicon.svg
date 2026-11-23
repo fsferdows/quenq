@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Modern Cyber Radial Background -->
+    <radialGradient id="bgGlow" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#070a12" />
+    </radialGradient>
+
+    <!-- Electric Border Gradient -->
+    <linearGradient id="cyberBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="45%" stop-color="#38bdf8" />
+      <stop offset="75%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+
+    <!-- Controller Body Gradient -->
+    <linearGradient id="padBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#24324a" />
+      <stop offset="40%" stop-color="#172133" />
+      <stop offset="100%" stop-color="#0c121e" />
+    </linearGradient>
+
+    <!-- Electric Cyan Glow Gradient -->
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a5f3fc" />
+      <stop offset="50%" stop-color="#00f0ff" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+
+    <!-- Neon Pink Glow Gradient -->
+    <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbcfe8" />
+      <stop offset="50%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#be185d" />
+    </linearGradient>
+
+    <!-- Stream Play Arrow Gradient -->
+    <linearGradient id="playGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#00f0ff" flood-opacity="0.35" />
+    </filter>
+
+    <filter id="pinkDrop" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#ec4899" flood-opacity="0.5" />
+    </filter>
+
+    <filter id="cyanDrop" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#00f0ff" flood-opacity="0.6" />
+    </filter>
+  </defs>
+
+  <!-- Squircle Base Frame -->
+  <rect x="20" y="20" width="472" height="472" rx="118" fill="url(#bgGlow)" stroke="url(#cyberBorder)" stroke-width="16" />
+
+  <!-- Upper Broadcast / Stream Waves -->
+  <path d="M 172 136 A 110 110 0 0 1 340 136" fill="none" stroke="#00f0ff" stroke-width="12" stroke-linecap="round" opacity="0.35" />
+  <path d="M 206 166 A 65 65 0 0 1 306 166" fill="none" stroke="#a855f7" stroke-width="10" stroke-linecap="round" opacity="0.5" />
+
+  <!-- Gamepad Silhouette Group -->
+  <g filter="url(#neonGlow)">
+    <!-- Controller Outer Chamfer Base -->
+    <path d="M 172 195 
+             C 210 195, 230 210, 256 210 
+             C 282 210, 302 195, 340 195 
+             C 390 195, 424 235, 424 286 
+             C 424 338, 388 385, 348 385 
+             C 328 385, 310 365, 290 338 
+             C 276 320, 266 314, 256 314 
+             C 246 314, 236 320, 222 338 
+             C 202 365, 184 385, 164 385 
+             C 124 385, 88 338, 88 286 
+             C 88 235, 122 195, 172 195 Z" 
+          fill="url(#padBody)" 
+          stroke="#334155" 
+          stroke-width="5" />
+
+    <!-- Controller Upper Accent Glow Line -->
+    <path d="M 176 206 C 210 206, 230 220, 256 220 C 282 220, 302 206, 336 206" 
+          fill="none" 
+          stroke="#475569" 
+          stroke-width="3" 
+          stroke-linecap="round" />
+
+    <!-- D-Pad (Left - Electric Cyan) -->
+    <g filter="url(#cyanDrop)">
+      <!-- Cross horizontal bar -->
+      <rect x="134" y="272" width="60" height="20" rx="6" fill="url(#cyanGrad)" />
+      <!-- Cross vertical bar -->
+      <rect x="154" y="252" width="20" height="60" rx="6" fill="url(#cyanGrad)" />
+      <!-- Center indent -->
+      <circle cx="164" cy="282" r="4.5" fill="#0f172a" opacity="0.75" />
+    </g>
+
+    <!-- Action Buttons (Right - Diamond in Neon Pink / Magenta) -->
+    <g filter="url(#pinkDrop)">
+      <!-- Top Button (Y) -->
+      <circle cx="348" cy="254" r="10.5" fill="url(#pinkGrad)" />
+      <!-- Left Button (X) -->
+      <circle cx="326" cy="282" r="10.5" fill="url(#pinkGrad)" />
+      <!-- Right Button (B) -->
+      <circle cx="370" cy="282" r="10.5" fill="url(#pinkGrad)" />
+      <!-- Bottom Button (A) -->
+      <circle cx="348" cy="310" r="10.5" fill="url(#pinkGrad)" />
+    </g>
+
+    <!-- Center Stream / Play Icon (Luminous Forward Triangle) -->
+    <polygon points="248,260 274,276 248,292" fill="url(#playGrad)" />
+  </g>
+
+  <!-- Bottom Brand Dot Accents -->
+  <circle cx="236" cy="425" r="5" fill="#00f0ff" opacity="0.8" />
+  <circle cx="256" cy="425" r="7" fill="#a855f7" />
+  <circle cx="276" cy="425" r="5" fill="#ec4899" opacity="0.8" />
+</svg>

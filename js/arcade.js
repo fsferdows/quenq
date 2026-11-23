@@ -47,19 +47,42 @@ document.addEventListener('DOMContentLoaded', () => {
   // Known High-Res Local Thumbnail Registry
   const POPULAR_THUMB_MAP = {
     'gta-san-andreas': '/images/thumbnails/gta-san-andreas.jpg',
+    'san-andreas': '/images/thumbnails/gta-san-andreas.jpg',
     'gta-vice-city': '/apps/vice-city/preview.jpg',
     'vice-city': '/apps/vice-city/preview.jpg',
     'gta-3': '/apps/gta-3/preview.jpg',
+    'gta-iii': '/apps/gta-3/preview.jpg',
+    'gta-4': '/images/thumbnails/gta-4.jpg',
+    'gta-iv': '/images/thumbnails/gta-4.jpg',
     'gta-5': '/images/thumbnails/gta-5.jpg',
+    'gta-v': '/images/thumbnails/gta-5.jpg',
     'gta-advance': '/images/thumbnails/gta-advance.jpg',
     'gta-1': '/images/thumbnails/gta-1.jpg',
     'gta-2': '/images/thumbnails/gta-2.jpg',
     'bully': '/images/thumbnails/bully.jpg',
     'midnight-club': '/images/thumbnails/midnight-club.jpg',
     'max-payne': '/images/thumbnails/max-payne.jpg',
+    'red-dead': '/images/thumbnails/red-dead.jpg',
+    'red-dead-redemption': '/images/thumbnails/red-dead.jpg',
+    'subway-surfers': '/images/thumbnails/subway-surfers.jpg',
+    'subway-surfers-ny': '/images/thumbnails/subway-surfers.jpg',
+    'cut-the-rope': '/images/thumbnails/cut-the-rope.jpg',
+    'cut-the-rope-ebx': '/images/thumbnails/cut-the-rope.jpg',
+    'geometry-dash': '/images/thumbnails/geometry-dash.jpg',
+    'geometry-dash-online': '/images/thumbnails/geometry-dash.jpg',
     'slope': '/images/thumbnails/slope.jpg',
     'crossy-road': '/images/thumbnails/crossy-road.jpg',
     'bad-ice-cream': '/images/thumbnails/bad-ice-cream.jpg',
+    'bad-ice-cream-2': '/images/thumbnails/bad-ice-cream-2.jpg',
+    'bad-ice-cream-3': '/images/thumbnails/bad-ice-cream-3.jpg',
+    'duck-life': '/images/thumbnails/duck-life.jpg',
+    'duck-life-2': '/images/thumbnails/duck-life-2.jpg',
+    'duck-life-3': '/images/thumbnails/duck-life-3.jpg',
+    'duck-life-4': '/images/thumbnails/duck-life-4.jpg',
+    'ducklife': '/images/thumbnails/duck-life.jpg',
+    'ducklife-2': '/images/thumbnails/duck-life-2.jpg',
+    'ducklife-3': '/images/thumbnails/duck-life-3.jpg',
+    'ducklife-4': '/images/thumbnails/duck-life-4.jpg',
     'doom': '/images/thumbnails/doom.jpg',
     'doom-1993': '/images/thumbnails/doom.jpg',
     'flappy-bird': '/images/thumbnails/flappy-bird.jpg',
@@ -67,15 +90,20 @@ document.addEventListener('DOMContentLoaded', () => {
     'cookie-clicker': '/images/thumbnails/cookie-clicker.jpg',
     'antbuster': '/images/thumbnails/antbuster.jpg',
     'sonic-on-angel-island': '/images/thumbnails/sonic.jpg',
-    'ducklife': 'https://imgs.crazygames.com/ducklife.png?metadata=none&quality=85&width=540&resizer=covers',
-    'ducklife-2': 'https://imgs.crazygames.com/ducklife2.png?metadata=none&quality=85&width=540&resizer=covers',
-    'ducklife-4': 'https://imgs.crazygames.com/games/ducklife-4/cover-1583236005740.png?metadata=none&quality=85&width=540&resizer=covers',
+    'feedme': '/images/thumbnails/feed-me.jpg',
+    'feed-me': '/images/thumbnails/feed-me.jpg',
+    'epicbattlefantasy2': '/images/thumbnails/epic-battle-fantasy-2.jpg',
+    'epic-battle-fantasy-2': '/images/thumbnails/epic-battle-fantasy-2.jpg',
+    'pandemic': '/images/thumbnails/pandemic.jpg',
+    'ufomania': '/images/thumbnails/ufomania.jpg',
+    'bear-in-the-big-blue-house-help-bear-bake': '/images/thumbnails/bear-in-big-blue-house.jpg',
+    'cow-and-chicken-ballet-parking': '/images/thumbnails/ballet-parking.jpg',
     'pacman': 'https://imgs.crazygames.com/pacman.png?metadata=none&quality=85&width=540&resizer=covers',
     'bloxorz': 'https://imgs.crazygames.com/games/bloxorz/cover-1669373098527.png?metadata=none&quality=85&width=540&resizer=covers',
     '2048': 'https://imgs.crazygames.com/games/2048/cover_16x9-1707828856995.png?metadata=none&quality=85&width=540&resizer=covers'
   };
 
-  // High-Resolution Procedural SVG Card Cover Generator (Zero 404s)
+  // High-Resolution Procedural Poster Card Cover Generator (Zero Initials, Stylized Arcade Artwork)
   function getProceduralThumbnail(name, genre) {
     const safeName = (name || 'Game').replace(/[<>&"']/g, '');
     const cleanGenre = (genre || 'arcade').toLowerCase();
@@ -87,39 +115,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const themes = {
-      gta: ['#200122', '#6f0000', '#f1c40f', '🚗'],
-      driving: ['#1a0826', '#e65c00', '#f9d423', '🏎️'],
-      action: ['#141E30', '#c0392b', '#e74c3c', '💥'],
-      puzzle: ['#0f2027', '#203a43', '#00d2ff', '🧩'],
-      sports: ['#0a192f', '#11998e', '#38ef7d', '🏀'],
-      strategy: ['#1f1c2c', '#928DAB', '#ffd200', '👑'],
-      multiplayer: ['#14052b', '#7047eb', '#a855f7', '⚔️'],
-      simulation: ['#281404', '#d35400', '#f39c12', '🍪'],
-      retro: ['#2b1055', '#7597de', '#47d7ff', '⚡'],
-      arcade: ['#0b0e17', '#7047eb', '#47d7ff', '🕹️']
+      gta: ['#1c040d', '#58081f', '#f1c40f', '🚗'],
+      driving: ['#120826', '#3b185f', '#f9d423', '🏎️'],
+      action: ['#180808', '#441414', '#e74c3c', '💥'],
+      puzzle: ['#081926', '#123c5a', '#00d2ff', '🧩'],
+      sports: ['#051c14', '#0d4a34', '#38ef7d', '🏀'],
+      strategy: ['#141026', '#382e6b', '#ffd200', '👑'],
+      multiplayer: ['#12052b', '#411c75', '#a855f7', '⚔️'],
+      simulation: ['#1c1005', '#57330d', '#f39c12', '🍪'],
+      retro: ['#1a0b2e', '#482082', '#47d7ff', '⚡'],
+      arcade: ['#0c1020', '#253366', '#00e5ff', '🕹️']
     };
 
     const themeKey = Object.keys(themes).find(k => cleanGenre.includes(k)) || 'arcade';
     const [c1, c2, accent, icon] = themes[themeKey];
 
-    const words = safeName.split(/\s+/).filter(Boolean);
-    const initials = words.slice(0, 2).map(w => w[0]).join('').toUpperCase() || 'Q';
-    const displayTitle = safeName.length > 22 ? safeName.substring(0, 20) + '...' : safeName;
+    const displayTitle = safeName.length > 24 ? safeName.substring(0, 22) + '...' : safeName;
 
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 270" width="480" height="270">
       <defs>
-        <linearGradient id="g_${Math.abs(hash)}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="bg_${Math.abs(hash)}" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="${c1}"/>
-          <stop offset="60%" stop-color="${c2}"/>
+          <stop offset="50%" stop-color="${c2}"/>
           <stop offset="100%" stop-color="${c1}"/>
         </linearGradient>
+        <pattern id="grid_${Math.abs(hash)}" width="30" height="30" patternUnits="userSpaceOnUse">
+          <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        </pattern>
       </defs>
-      <rect width="480" height="270" fill="url(#g_${Math.abs(hash)})"/>
-      <circle cx="240" cy="100" r="44" fill="rgba(255,255,255,0.08)" stroke="${accent}" stroke-width="2"/>
-      <text x="240" y="112" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle">${initials}</text>
-      <text x="240" y="180" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">${displayTitle}</text>
-      <rect x="170" y="206" width="140" height="26" rx="13" fill="rgba(0,0,0,0.55)" stroke="${accent}" stroke-width="1"/>
-      <text x="240" y="223" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif" font-size="11" font-weight="700" fill="${accent}" text-anchor="middle" letter-spacing="1">${icon} ${themeKey.toUpperCase()}</text>
+      <rect width="480" height="270" fill="url(#bg_${Math.abs(hash)})"/>
+      <rect width="480" height="270" fill="url(#grid_${Math.abs(hash)})"/>
+      <rect x="0" y="0" width="480" height="6" fill="${accent}"/>
+      <rect x="0" y="264" width="480" height="6" fill="${accent}"/>
+      <rect x="36" y="32" width="408" height="206" rx="14" fill="rgba(8,12,22,0.85)" stroke="${accent}" stroke-width="2"/>
+      <rect x="56" y="52" width="130" height="26" rx="13" fill="${accent}"/>
+      <text x="121" y="69" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif" font-size="12" font-weight="900" fill="#000000" text-anchor="middle" letter-spacing="1">${icon} ${themeKey.toUpperCase()}</text>
+      <text x="240" y="132" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif" font-size="24" font-weight="900" fill="#ffffff" text-anchor="middle">${displayTitle}</text>
+      <text x="240" y="165" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif" font-size="13" font-weight="600" fill="rgba(255,255,255,0.7)" text-anchor="middle">Official Web Edition &bull; Play Direct</text>
+      <rect x="140" y="186" width="200" height="32" rx="16" fill="rgba(255,255,255,0.08)" stroke="${accent}" stroke-width="1.5"/>
+      <text x="240" y="207" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif" font-size="12" font-weight="800" fill="${accent}" text-anchor="middle" letter-spacing="1.5">✦ PLAY NOW ✦</text>
     </svg>`;
 
     return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
@@ -127,15 +161,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Grand Theft Auto & Rockstar Premier Collection
   const GTA_ROCKSTAR_COLLECTION = [
-    { id: 'gta-san-andreas', name: 'GTA: San Andreas (3D)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-san-andreas.jpg', embedUrl: 'https://games.crazygames.com/en_US/mad-town-andreas-mafia-storie/index.html' },
+    { id: 'gta-5', name: 'GTA V (Grand Theft Auto V Online)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-5.jpg', embedUrl: '/apps/gta-5/' },
+    { id: 'gta-4', name: 'GTA IV (Liberty City)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-4.jpg', embedUrl: '/apps/gta-4/' },
+    { id: 'gta-san-andreas', name: 'GTA: San Andreas (3D Open World)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-san-andreas.jpg', embedUrl: '/apps/gta-san-andreas/' },
     { id: 'gta-vice-city', name: 'GTA: Vice City Online', genre: 'gta,action,driving', source: 'gta', thumb: '/apps/vice-city/preview.jpg', embedUrl: 'https://vc.quenq.com' },
     { id: 'gta-3', name: 'GTA 3 (Grand Theft Auto III)', genre: 'gta,action,driving', source: 'gta', thumb: '/apps/gta-3/preview.jpg', embedUrl: 'https://iii.quenq.com' },
-    { id: 'gta-5', name: 'GTA V (Los Santos 3D)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-5.jpg', embedUrl: 'https://games.crazygames.com/en_US/gangster-contract-mafia-wars/index.html' },
     { id: 'gta-advance', name: 'GTA Advance (Liberty City)', genre: 'gta,action,retro', source: 'gta', thumb: '/images/thumbnails/gta-advance.jpg', embedUrl: '/apps/gta-advance/' },
     { id: 'gta-2', name: 'Grand Theft Auto 2 (1999)', genre: 'gta,action,retro', source: 'gta', thumb: '/images/thumbnails/gta-2.jpg', embedUrl: '/apps/gta-2/' },
     { id: 'gta-1', name: 'Grand Theft Auto (1997)', genre: 'gta,action,retro', source: 'gta', thumb: '/images/thumbnails/gta-1.jpg', embedUrl: '/apps/gta-1/' },
     { id: 'bully', name: 'Bully (Bullworth Academy)', genre: 'gta,action,adventure', source: 'gta', thumb: '/images/thumbnails/bully.jpg', embedUrl: '/apps/bully/' },
     { id: 'midnight-club', name: 'Midnight Club: Street Racing', genre: 'gta,driving,racing', source: 'gta', thumb: '/images/thumbnails/midnight-club.jpg', embedUrl: '/apps/midnight-club/' },
+    { id: 'max-payne', name: 'Max Payne (Bullet Time Noir)', genre: 'gta,action', source: 'gta', thumb: '/images/thumbnails/max-payne.jpg', embedUrl: '/apps/max-payne/' },
+    { id: 'red-dead', name: 'Red Dead Redemption (Wild West 3D)', genre: 'gta,action,adventure', source: 'gta', thumb: '/images/thumbnails/red-dead.jpg', embedUrl: '/apps/red-dead/' },
     { id: 'gangster-contract-mafia-wars', name: 'Gangster Contract: Mafia Wars', genre: 'gta,action,driving', source: 'crazygames', thumb: 'https://imgs.crazygames.com/games/gangster-contract-mafia-wars/cover-1602145804014.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/gangster-contract-mafia-wars/index.html' },
     { id: 'free-rally-vice', name: 'Free Rally: Vice City Stunts', genre: 'gta,driving,multiplayer', source: 'crazygames', thumb: 'https://imgs.crazygames.com/free-rally-vice_16x9/20250210095941/free-rally-vice_16x9-cover?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/free-rally-vice/index.html' },
     { id: 'madalin-stunt-cars-2', name: 'Madalin Stunt Cars 2', genre: 'gta,driving,multiplayer', source: 'crazygames', thumb: 'https://imgs.crazygames.com/games/madalin-stunt-cars-2/cover_16x9-1695113654654.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/madalin-stunt-cars-2/index.html' }
@@ -143,8 +180,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Featured Blockbuster Definitions
   const FEATURED_HITS = [
-    { id: 'gta-san-andreas', name: 'GTA: San Andreas (3D)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-san-andreas.jpg', embedUrl: 'https://games.crazygames.com/en_US/mad-town-andreas-mafia-storie/index.html' },
+    { id: 'gta-5', name: 'GTA V (Grand Theft Auto V Online)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-5.jpg', embedUrl: '/apps/gta-5/' },
+    { id: 'gta-4', name: 'GTA IV (Liberty City)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-4.jpg', embedUrl: '/apps/gta-4/' },
+    { id: 'gta-san-andreas', name: 'GTA: San Andreas (3D)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-san-andreas.jpg', embedUrl: '/apps/gta-san-andreas/' },
     { id: 'gta-vice-city', name: 'GTA: Vice City Online', genre: 'gta,action,driving', thumb: '/apps/vice-city/preview.jpg', embedUrl: 'https://vc.quenq.com' },
+    { id: 'subway-surfers', name: 'Subway Surfers', genre: 'arcade,action', thumb: '/images/thumbnails/subway-surfers.jpg', embedUrl: 'https://games.crazygames.com/en_US/bus-and-subway-runner/index.html' },
+    { id: 'geometry-dash-online', name: 'Geometry Dash', genre: 'action', thumb: '/images/thumbnails/geometry-dash.jpg', embedUrl: 'https://games.crazygames.com/en_US/geometry-dash-online/index.html' },
+    { id: 'cut-the-rope-ebx', name: 'Cut the Rope', genre: 'puzzle', thumb: '/images/thumbnails/cut-the-rope.jpg', embedUrl: 'https://games.crazygames.com/en_US/cut-the-rope-ebx/index.html' },
+    { id: 'ducklife-4', name: 'Duck Life 4', genre: 'sports', thumb: '/images/thumbnails/duck-life-4.jpg', embedUrl: 'https://games.crazygames.com/en_US/ducklife-4/index.html' },
     { id: 'moto-x3m', name: 'Moto X3M', genre: 'driving', thumb: 'https://imgs.crazygames.com/moto-x3m_16x9/20241004045353/moto-x3m_16x9-cover?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/moto-x3m/index.html' },
     { id: 'smash-karts', name: 'Smash Karts', genre: 'multiplayer', thumb: 'https://imgs.crazygames.com/smash-karts_16x9/20241004045353/smash-karts_16x9-cover?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/smash-karts/index.html' },
     { id: 'slope', name: 'Slope 3D', genre: 'driving', thumb: '/images/thumbnails/slope.jpg', embedUrl: '/apps/slope/' },
@@ -154,22 +197,18 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 'bloxorz', name: 'Bloxorz', genre: 'puzzle', thumb: 'https://imgs.crazygames.com/games/bloxorz/cover-1669373098527.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/bloxorz/index.html' },
     { id: 'pacman', name: 'Pacman', genre: 'arcade', thumb: 'https://imgs.crazygames.com/pacman.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/pacman/index.html' },
     { id: 'space-invaders', name: 'Space Invaders', genre: 'arcade', thumb: 'https://imgs.crazygames.com/games/space-invaders/cover_16x9-1714708168967.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/space-invaders/index.html' },
-    { id: 'geometry-dash-online', name: 'Geometry Dash', genre: 'action', thumb: 'https://imgs.crazygames.com/games/geometry-dash-online/cover-1587042571253.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/geometry-dash-online/index.html' },
-    { id: 'cut-the-rope-ebx', name: 'Cut the Rope', genre: 'puzzle', thumb: 'https://imgs.crazygames.com/cut-the-rope-ebx_16x9/20241004045353/cut-the-rope-ebx_16x9-cover?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/cut-the-rope-ebx/index.html' },
-    { id: 'ducklife-4', name: 'Duck Life 4', genre: 'sports', thumb: 'https://imgs.crazygames.com/games/ducklife-4/cover-1583236005740.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/ducklife-4/index.html' },
-    { id: 'gta-3', name: 'GTA 3 (Liberty City)', genre: 'gta,action,driving', thumb: '/apps/gta-3/preview.jpg', embedUrl: 'https://iii.quenq.com' },
-    { id: 'gta-5', name: 'GTA V (3D Simulator)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-5.jpg', embedUrl: 'https://games.crazygames.com/en_US/gangster-contract-mafia-wars/index.html' }
+    { id: 'gta-3', name: 'GTA 3 (Liberty City)', genre: 'gta,action,driving', thumb: '/apps/gta-3/preview.jpg', embedUrl: 'https://iii.quenq.com' }
   ];
 
   const FLASH_CLASSICS = [
     { id: 'antbuster', name: 'Antbuster Defense', genre: 'strategy', thumb: '/images/thumbnails/antbuster.jpg', embedUrl: '/arcade/antbuster/' },
     { id: 'sonic-on-angel-island', name: 'Sonic on Angel Island', genre: 'action', thumb: '/images/thumbnails/sonic.jpg', embedUrl: '/arcade/sonic-on-angel-island/' },
-    { id: 'feedme', name: 'Feed Me', genre: 'puzzle', thumb: '/images/thumbnails/bad-ice-cream.jpg', embedUrl: '/arcade/feedme/' },
-    { id: 'epicbattlefantasy2', name: 'Epic Battle Fantasy 2', genre: 'action', thumb: '/images/thumbnails/antbuster.jpg', embedUrl: '/arcade/epicbattlefantasy2/' },
-    { id: 'pandemic', name: 'Pandemic', genre: 'strategy', thumb: getProceduralThumbnail('Pandemic', 'strategy'), embedUrl: '/arcade/pandemic/' },
-    { id: 'ufomania', name: 'UfoMania', genre: 'arcade', thumb: getProceduralThumbnail('UfoMania', 'arcade'), embedUrl: '/arcade/ufomania/' },
-    { id: 'bear-in-the-big-blue-house-help-bear-bake', name: 'Bear in Big Blue House', genre: 'simulation', thumb: getProceduralThumbnail('Bear in Big Blue House', 'simulation'), embedUrl: '/arcade/bear-in-the-big-blue-house-help-bear-bake/' },
-    { id: 'cow-and-chicken-ballet-parking', name: 'Ballet Parking', genre: 'driving', thumb: getProceduralThumbnail('Ballet Parking', 'driving'), embedUrl: '/arcade/cow-and-chicken-ballet-parking/' }
+    { id: 'feedme', name: 'Feed Me', genre: 'puzzle', thumb: '/images/thumbnails/feed-me.jpg', embedUrl: '/arcade/feedme/' },
+    { id: 'epicbattlefantasy2', name: 'Epic Battle Fantasy 2', genre: 'action', thumb: '/images/thumbnails/epic-battle-fantasy-2.jpg', embedUrl: '/arcade/epicbattlefantasy2/' },
+    { id: 'pandemic', name: 'Pandemic', genre: 'strategy', thumb: '/images/thumbnails/pandemic.jpg', embedUrl: '/arcade/pandemic/' },
+    { id: 'ufomania', name: 'UfoMania', genre: 'arcade', thumb: '/images/thumbnails/ufomania.jpg', embedUrl: '/arcade/ufomania/' },
+    { id: 'bear-in-the-big-blue-house-help-bear-bake', name: 'Bear in Big Blue House', genre: 'simulation', thumb: '/images/thumbnails/bear-in-big-blue-house.jpg', embedUrl: '/arcade/bear-in-the-big-blue-house-help-bear-bake/' },
+    { id: 'cow-and-chicken-ballet-parking', name: 'Ballet Parking', genre: 'driving', thumb: '/images/thumbnails/ballet-parking.jpg', embedUrl: '/arcade/cow-and-chicken-ballet-parking/' }
   ];
 
   // Lazy Thumbnail Observer
@@ -202,12 +241,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Resolve robust thumbnail URL (Check map -> Check valid web thumb -> Procedural Fallback)
     let thumbUrl = POPULAR_THUMB_MAP[game.id] || null;
-    if (!thumbUrl) {
-      if (game.thumb && !game.thumb.includes('static.quenq.com') && !game.thumb.includes('thumbnails/')) {
+    if (!thumbUrl && game.thumb) {
+      if (!game.thumb.includes('static.quenq.com')) {
         thumbUrl = game.thumb;
-      } else {
-        thumbUrl = getProceduralThumbnail(game.name, game.genre);
       }
+    }
+    if (!thumbUrl) {
+      thumbUrl = getProceduralThumbnail(game.name, game.genre);
     }
 
     card.innerHTML = `
@@ -615,19 +655,19 @@ document.addEventListener('DOMContentLoaded', () => {
   ]).then(([cgCatalog, flashCatalog]) => {
     const existingIds = new Set(allGames.map(g => g.id));
     
-    // Add Flash Preservation Classics
-    flashCatalog.forEach(fg => {
-      if (!existingIds.has(fg.id)) {
-        allGames.push(fg);
-        existingIds.add(fg.id);
-      }
-    });
-
-    // Add CrazyGames HTML5 Catalog
+    // 1. Add CrazyGames HTML5 Catalog FIRST (4,800+ games with 100% verified real CDN covers!)
     cgCatalog.forEach(cg => {
       if (!existingIds.has(cg.id)) {
         allGames.push(cg);
         existingIds.add(cg.id);
+      }
+    });
+
+    // 2. Add Flash Classics afterwards
+    flashCatalog.forEach(fg => {
+      if (!existingIds.has(fg.id)) {
+        allGames.push(fg);
+        existingIds.add(fg.id);
       }
     });
 

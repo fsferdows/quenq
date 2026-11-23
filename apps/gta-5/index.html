@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <title>Play GTA V Online - Los Santos 3D Simulator | Quenq</title>
+  <title>Play GTA V Online - Los Santos 3D Simulator &amp; WebAssembly Engine | Quenq</title>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
-  <meta content="Play GTA V Los Santos 3D Crime Simulator online in your browser. Drive exotic hypercars, execute high-stakes heists, and battle SWAT squads with zero downloads." name="description"/>
-  <meta content="gta v, gta 5 online, los santos, open world, browser games, michael, franklin, trevor, quenq, fs ferdows" name="keywords"/>
+  <meta content="Play Grand Theft Auto V (GTA 5) online in your browser. Powered by native WebAssembly and WebGL engines with multi-mirror failover. Drive hypercars, execute heists, zero downloads." name="description"/>
+  <meta content="gta v, gta 5 online, playgta5, fiveplay, los santos, open world, browser games, michael, franklin, trevor, quenq, fs ferdows" name="keywords"/>
   <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
   <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
   <link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
@@ -14,6 +14,40 @@
   <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
   <style>
     .app-container { width: 95% !important; margin: 0 auto; }
+    .mirror-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+      justify-content: center;
+      background: #191f28;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #303b44;
+    }
+    .mirror-btn {
+      background: #252e3b;
+      color: #e0e6ed;
+      border: 1px solid #4a5a6e;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .mirror-btn:hover {
+      background: #344254;
+      border-color: #7047eb;
+      color: #fff;
+    }
+    .mirror-btn.active {
+      background: linear-gradient(135deg, #7047eb 0%, #00d2ff 100%);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 2px 10px rgba(112, 71, 235, 0.4);
+    }
     #app-iframe {
       width: 100% !important;
       aspect-ratio: 16 / 9 !important;
@@ -25,6 +59,10 @@
       border: 1px solid #303b44;
       display: block;
       box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+    }
+    @media (max-width: 768px) {
+      .mirror-bar { flex-direction: column; align-items: stretch; }
+      .mirror-btn { text-align: center; font-size: 12px; padding: 7px 10px; }
     }
   </style>
 </head>
@@ -38,8 +76,8 @@
     <div id="head">
       <div id="logo"><a href="/"><img alt="Quenq Logo" draggable="false" src="/logo.svg" title="Home"/></a></div>
       <div id="head-mid">
-        <p class="header-line1">GTA V (Los Santos 3D Simulator)</p>
-        <p class="header-line2">Experience the modern metropolis of Los Santos — supercars, armed heists, and tactical open-world combat.</p>
+        <p class="header-line1">GTA V (Grand Theft Auto V Online)</p>
+        <p class="header-line2">Direct browser edition with multi-mirror engine support — supercars, tactical heists, and open-world combat.</p>
       </div>
     </div>
 
@@ -61,12 +99,29 @@
     <div id="main">
       <div style="text-align: center; margin-bottom: 15px;">
         <div style="display: inline-block; background: linear-gradient(180deg, #fefefe 0%, #e8eef4 100%); border: 1px solid #7f9db9; border-radius: 4px; padding: 6px 18px; font-size: 13px; color: #223e65; font-family: Tahoma, sans-serif; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
-          ✦ Quenq Museum — Preserving Grand Theft Auto &amp; Rockstar Classics ✦
+          ✦ Quenq Museum — Reverse Engineered Web Editions of Rockstar &amp; GTA Classics ✦
         </div>
       </div>
 
       <div class="app-container">
-        <iframe id="app-iframe" src="https://games.crazygames.com/en_US/gangster-contract-mafia-wars/index.html" allow="autoplay; fullscreen; gamepad; focus-without-user-activation; screen-wake-lock" allowfullscreen="true" title="GTA V 3D Simulator"></iframe>
+        <!-- Multi-Mirror Server Switcher -->
+        <div class="mirror-bar">
+          <button class="mirror-btn active" data-src="https://playgta5.com" title="Native WebAssembly Engine with Scaleform Startup">
+            ⚡ Mirror 1: PlayGTA5 Web Engine (WASM)
+          </button>
+          <button class="mirror-btn" data-src="https://fiveplay.lol" title="FivePlay High-Speed Web Cluster">
+            🚀 Mirror 2: FivePlay Direct Cluster (WASM)
+          </button>
+          <button class="mirror-btn" data-src="https://games.crazygames.com/en_US/gangster-contract-mafia-wars/index.html" title="3D Los Santos Crime Simulator">
+            🚗 Mirror 3: Los Santos 3D Crime Simulator (WebGL)
+          </button>
+          <button class="mirror-btn" data-src="https://games.crazygames.com/en_US/madalin-stunt-cars-2/index.html" title="Los Santos Supercar Stunt Arena">
+            🏎️ Mirror 4: Los Santos Stunt Physics (WebGL)
+          </button>
+        </div>
+
+        <iframe id="app-iframe" src="https://playgta5.com" allow="autoplay; fullscreen; gamepad; focus-without-user-activation; screen-wake-lock; pointer-lock" allowfullscreen="true" title="GTA V Online Web Engine"></iframe>
+        
         <div class="player-controls">
           <a class="action-btn" href="#" id="share-btn">
             <svg viewBox="0 0 24 24"><path d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.2C16.5,7.69 17.21,8 18,8C19.66,8 21,6.66 21,5C21,3.34 19.66,2 18,2C16.34,2 15,3.34 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.8C7.5,9.31 6.79,9 6,9C4.34,9 3,10.34 3,12C3,13.66 4.34,15 6,15C6.79,15 7.5,14.69 8.04,14.2L15.17,18.35C15.12,18.58 15.08,18.79 15.08,19C15.08,20.66 16.42,22 18,22C19.66,22 21,20.66 21,19C21,17.34 19.66,16.08 18,16.08Z"/></svg>
@@ -76,8 +131,8 @@
             <svg viewBox="0 0 24 24"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17H7V14H5V19H10V17Z"/></svg>
             Fullscreen
           </a>
-          <a class="action-btn" href="/arcade/" style="background: linear-gradient(180deg, #7047eb 0%, #5733d1 100%); color: #fff;">
-            🎮 Browse 6,100+ Arcade Games
+          <a class="action-btn" href="/arcade/?genre=gta" style="background: linear-gradient(180deg, #7047eb 0%, #5733d1 100%); color: #fff;">
+            🚗 All Rockstar &amp; GTA Games
           </a>
         </div>
       </div>
@@ -85,16 +140,22 @@
       <div id="col-L">
         <div class="cnt-box">
           <div class="cnt-head">
-            <h1>About Grand Theft Auto V (Los Santos 3D Simulator)</h1>
+            <h1>About Grand Theft Auto V (Web Edition)</h1>
           </div>
           <div class="cnt-filler">
             <div class="cnt-info">
-              <p>Step into the modern sun-drenched playground of <strong>Grand Theft Auto V</strong>. Set in the bustling sprawl of Southern California's Los Santos and Blaine County, this 3D simulator delivers the ultimate freedom to cruise through skyscrapers, execute daring tactical robberies, and build a criminal reputation.</p>
+              <p>Step into the modern sun-drenched playground of <strong>Grand Theft Auto V</strong>. Set in the bustling sprawl of Southern California's Los Santos and Blaine County, this browser web edition delivers the freedom to cruise through skyscrapers, execute daring tactical robberies, and build a criminal reputation without downloading large installation packages.</p>
               
-              <p>Featuring realistic ragdoll physics, dynamic vehicle handling, a wide selection of military-grade firearms, and an responsive third-person combat system, this browser edition runs instantly across desktop PCs, laptops, tablets, and smartphones.</p>
+              <p>Our reverse engineering implementation features multiple web mirrors:</p>
+              <ul style="margin: 10px 0 15px 20px; line-height: 1.8;">
+                <li><strong>Mirror 1 (PlayGTA5 WASM):</strong> The authentic WebAssembly compiled engine with Scaleform loading screens, pointer lock, and live input mapping.</li>
+                <li><strong>Mirror 2 (FivePlay WASM):</strong> High-availability alternative cluster server.</li>
+                <li><strong>Mirror 3 &amp; 4 (Los Santos 3D WebGL):</strong> High-FPS open-world tactical sandbox with hypercars, SWAT confrontations, and weapon progression.</li>
+              </ul>
 
               <h3>🎮 Controls Guide</h3>
               <ul style="margin: 10px 0 20px 20px; line-height: 1.8;">
+                <li><strong>Click canvas:</strong> Lock mouse pointer (for 3D camera control)</li>
                 <li><strong>W, A, S, D:</strong> Move, Accelerate, Steer Vehicle</li>
                 <li><strong>Mouse:</strong> Look &amp; Aim Crosshairs</li>
                 <li><strong>Left Click:</strong> Fire Weapon / Melee Attack</li>
@@ -103,7 +164,10 @@
                 <li><strong>Spacebar:</strong> Jump / Handbrake</li>
                 <li><strong>Shift:</strong> Sprint</li>
                 <li><strong>R:</strong> Reload Weapon</li>
+                <li><strong>ESC:</strong> Release mouse pointer lock</li>
               </ul>
+
+              <p>Developed &amp; Maintained by <strong><a href="https://github.com/fsferdows" target="_blank">FS FERDOWS</a></strong> as part of the Quenq preservation project.</p>
             </div>
           </div>
           <div class="cnt-ft"></div>
@@ -118,11 +182,14 @@
               <li><a href="/apps/gta-san-andreas/"><strong>GTA: San Andreas (CJ 3D)</strong></a></li>
               <li><a href="/apps/vice-city/"><strong>GTA: Vice City (1986 Miami)</strong></a></li>
               <li><a href="/apps/gta-3/"><strong>GTA 3 (Liberty City)</strong></a></li>
+              <li><a href="/apps/gta-4/"><strong>GTA IV (Liberty City 2008)</strong></a></li>
               <li><a href="/apps/gta-advance/"><strong>GTA Advance (Top-Down)</strong></a></li>
               <li><a href="/apps/gta-2/"><strong>Grand Theft Auto 2 (1999)</strong></a></li>
               <li><a href="/apps/gta-1/"><strong>Grand Theft Auto (1997)</strong></a></li>
               <li><a href="/apps/bully/"><strong>Bully (Bullworth Academy)</strong></a></li>
               <li><a href="/apps/midnight-club/"><strong>Midnight Club: Street Racing</strong></a></li>
+              <li><a href="/apps/max-payne/"><strong>Max Payne (Bullet Time)</strong></a></li>
+              <li><a href="/apps/red-dead/"><strong>Red Dead Redemption (Wild West)</strong></a></li>
             </ul>
           </div>
           <div class="cnt-ft"></div>
@@ -136,5 +203,42 @@
   </div>
 
   <script src="/js/common.js"></script>
+  <script>
+    document.querySelectorAll('.mirror-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mirror-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const iframe = document.getElementById('app-iframe');
+        iframe.src = btn.dataset.src;
+      });
+    });
+
+    const fsBtn = document.getElementById('fullscreen-btn');
+    if (fsBtn) {
+      fsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const iframe = document.getElementById('app-iframe');
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(() => {});
+        } else {
+          if (iframe.requestFullscreen) iframe.requestFullscreen();
+          else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
+        }
+      });
+    }
+
+    const shareBtn = document.getElementById('share-btn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const shareData = { title: 'Play GTA V Online', text: 'Play GTA V Online in your browser on Quenq!', url: window.location.href };
+        if (navigator.share) await navigator.share(shareData).catch(() => {});
+        else {
+          await navigator.clipboard.writeText(window.location.href);
+          alert('Link copied to clipboard!');
+        }
+      });
+    }
+  </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
     "id": "crossy-road",
     "name": "Crossy Road",
     "genre": "arcade,action",
-    "thumb": "https://static.quenq.com/thumbnails/crossy-road.jpg",
+    "thumb": "/images/thumbnails/crossy-road.jpg",
     "source": "flash",
     "embedUrl": "/arcade/crossy-road/"
   },
@@ -11,7 +11,7 @@
     "id": "subway-surfers",
     "name": "Subway Surfers",
     "genre": "arcade,action",
-    "thumb": "https://static.quenq.com/thumbnails/subway-surfers.jpg",
+    "thumb": "/images/thumbnails/subway-surfers.jpg",
     "source": "flash",
     "embedUrl": "/arcade/subway-surfers/"
   },
@@ -19,7 +19,7 @@
     "id": "cut-the-rope",
     "name": "Cut The Rope",
     "genre": "puzzle,logic",
-    "thumb": "https://static.quenq.com/thumbnails/cut-the-rope.jpg",
+    "thumb": "/images/thumbnails/cut-the-rope.jpg",
     "source": "flash",
     "embedUrl": "/arcade/cut-the-rope/"
   },
@@ -27,7 +27,7 @@
     "id": "slope",
     "name": "Slope",
     "genre": "arcade,racing",
-    "thumb": "https://static.quenq.com/thumbnails/slope.jpg",
+    "thumb": "/images/thumbnails/slope.jpg",
     "source": "flash",
     "embedUrl": "/arcade/slope/"
   },
@@ -35,7 +35,7 @@
     "id": "geometry-dash",
     "name": "Geometry Dash",
     "genre": "action,platformer",
-    "thumb": "https://static.quenq.com/thumbnails/geometry-dash.jpg",
+    "thumb": "/images/thumbnails/geometry-dash.jpg",
     "source": "flash",
     "embedUrl": "/arcade/geometry-dash/"
   },
@@ -43,7 +43,7 @@
     "id": "bad-ice-cream-3",
     "name": "Bad Ice-Cream 3",
     "genre": "arcade,puzzle",
-    "thumb": "https://static.quenq.com/thumbnails/bad-ice-cream-3.jpg",
+    "thumb": "/images/thumbnails/bad-ice-cream-3.jpg",
     "source": "flash",
     "embedUrl": "/arcade/bad-ice-cream-3/"
   },
@@ -51,7 +51,7 @@
     "id": "bad-ice-cream-2",
     "name": "Bad Ice-Cream 2",
     "genre": "arcade,puzzle",
-    "thumb": "https://static.quenq.com/thumbnails/bad-ice-cream-2.jpg",
+    "thumb": "/images/thumbnails/bad-ice-cream-2.jpg",
     "source": "flash",
     "embedUrl": "/arcade/bad-ice-cream-2/"
   },
@@ -59,7 +59,7 @@
     "id": "bad-ice-cream",
     "name": "Bad Ice-Cream",
     "genre": "arcade,puzzle",
-    "thumb": "https://static.quenq.com/thumbnails/bad-ice-cream.jpg",
+    "thumb": "/images/thumbnails/bad-ice-cream.jpg",
     "source": "flash",
     "embedUrl": "/arcade/bad-ice-cream/"
   },
@@ -67,7 +67,7 @@
     "id": "duck-life-4",
     "name": "Duck Life 4",
     "genre": "sports,adventure",
-    "thumb": "https://static.quenq.com/thumbnails/duck-life-4.jpg",
+    "thumb": "/images/thumbnails/duck-life-4.jpg",
     "source": "flash",
     "embedUrl": "/arcade/duck-life-4/"
   },
@@ -75,7 +75,7 @@
     "id": "duck-life-3",
     "name": "Duck Life 3: Evolution",
     "genre": "sports,adventure",
-    "thumb": "https://static.quenq.com/thumbnails/duck-life-3.jpg",
+    "thumb": "/images/thumbnails/duck-life-3.jpg",
     "source": "flash",
     "embedUrl": "/arcade/duck-life-3/"
   },
@@ -83,7 +83,7 @@
     "id": "duck-life-2",
     "name": "Duck Life 2: World Champion",
     "genre": "sports,adventure",
-    "thumb": "https://static.quenq.com/thumbnails/duck-life-2.jpg",
+    "thumb": "/images/thumbnails/duck-life-2.jpg",
     "source": "flash",
     "embedUrl": "/arcade/duck-life-2/"
   },
@@ -91,7 +91,7 @@
     "id": "duck-life",
     "name": "Duck Life",
     "genre": "sports,adventure",
-    "thumb": "https://static.quenq.com/thumbnails/duck-life.jpg",
+    "thumb": "/images/thumbnails/duck-life.jpg",
     "source": "flash",
     "embedUrl": "/arcade/duck-life/"
   },
@@ -107,7 +107,7 @@
     "id": "cookie-clicker",
     "name": "Cookie Clicker",
     "genre": "simulation,arcade",
-    "thumb": "https://static.quenq.com/thumbnails/cookie-clicker.jpg",
+    "thumb": "/images/thumbnails/cookie-clicker.jpg",
     "source": "flash",
     "embedUrl": "/arcade/cookie-clicker/"
   },
@@ -115,7 +115,7 @@
     "id": "doodle-jump",
     "name": "Doodle Jump",
     "genre": "arcade,platformer",
-    "thumb": "https://static.quenq.com/thumbnails/doodle-jump.jpg",
+    "thumb": "/images/thumbnails/doodle-jump.jpg",
     "source": "flash",
     "embedUrl": "/arcade/doodle-jump/"
   },
@@ -123,7 +123,7 @@
     "id": "2048",
     "name": "2048",
     "genre": "puzzle,logic",
-    "thumb": "https://static.quenq.com/thumbnails/2048.jpg",
+    "thumb": "https://imgs.crazygames.com/games/2048/cover_16x9-1707828856995.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/2048/"
   },
@@ -131,7 +131,7 @@
     "id": "flappy-bird",
     "name": "Flappy Bird",
     "genre": "arcade,action",
-    "thumb": "https://static.quenq.com/thumbnails/flappy-bird.jpg",
+    "thumb": "/images/thumbnails/flappy-bird.jpg",
     "source": "flash",
     "embedUrl": "/arcade/flappy-bird/"
   },
@@ -339,7 +339,7 @@
     "id": "age-of-war",
     "name": "Age Of War",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/age-of-war.jpg",
+    "thumb": "https://imgs.crazygames.com/ageofwar.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/age-of-war/"
   },
@@ -467,7 +467,7 @@
     "id": "antbuster",
     "name": "Antbuster",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/antbuster.jpg",
+    "thumb": "/images/thumbnails/antbuster.jpg",
     "source": "flash",
     "embedUrl": "/arcade/antbuster/"
   },
@@ -499,7 +499,7 @@
     "id": "apple-shooter",
     "name": "Apple Shooter",
     "genre": "arcade",
-    "thumb": "https://static.quenq.com/thumbnails/apple-shooter.jpg",
+    "thumb": "https://imgs.crazygames.com/games/apple-shooter/cover_16x9-1711357016265.jpeg?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/apple-shooter/"
   },
@@ -971,7 +971,7 @@
     "id": "billiards",
     "name": "Billiards",
     "genre": "sports",
-    "thumb": "https://static.quenq.com/thumbnails/billiards.jpg",
+    "thumb": "https://imgs.crazygames.com/games/billiards/cover-1636047040066.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/billiards/"
   },
@@ -1027,7 +1027,7 @@
     "id": "bloons",
     "name": "Bloons",
     "genre": "arcade",
-    "thumb": "https://static.quenq.com/thumbnails/bloons.jpg",
+    "thumb": "https://imgs.crazygames.com/bloons.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/bloons/"
   },
@@ -1035,7 +1035,7 @@
     "id": "bloons-super-monkey",
     "name": "Bloons Super Monkey",
     "genre": "shooter,action",
-    "thumb": "https://static.quenq.com/thumbnails/bloons-super-monkey.jpg",
+    "thumb": "https://imgs.crazygames.com/games/bloons-super-monkey/cover-1684316965699.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/bloons-super-monkey/"
   },
@@ -1043,7 +1043,7 @@
     "id": "bloons-tower-defense",
     "name": "Bloons Tower Defense",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/bloons-tower-defense.jpg",
+    "thumb": "https://imgs.crazygames.com/games/bloons-tower-defense/cover-1616498907107.jpg?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/bloons-tower-defense/"
   },
@@ -1051,7 +1051,7 @@
     "id": "bloons-tower-defense-2",
     "name": "Bloons Tower Defense 2",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/bloons-tower-defense-2.jpg",
+    "thumb": "https://imgs.crazygames.com/games/bloons-tower-defense-2/cover-1638358840555.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/bloons-tower-defense-2/"
   },
@@ -1059,7 +1059,7 @@
     "id": "bloons-tower-defense-3",
     "name": "Bloons Tower Defense 3",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/bloons-tower-defense-3.jpg",
+    "thumb": "https://imgs.crazygames.com/games/bloons-tower-defense-3/cover-1684226806810.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/bloons-tower-defense-3/"
   },
@@ -1075,7 +1075,7 @@
     "id": "bloons-tower-defense-4-expansion",
     "name": "Bloons Tower Defense 4: Expansion",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/bloons-tower-defense-4-expansion.jpg",
+    "thumb": "https://imgs.crazygames.com/games/bloons-tower-defense-4-expansion/cover-1684313327587.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/bloons-tower-defense-4-expansion/"
   },
@@ -1083,7 +1083,7 @@
     "id": "bloxorz",
     "name": "Bloxorz",
     "genre": "puzzle,logic",
-    "thumb": "https://static.quenq.com/thumbnails/bloxorz.jpg",
+    "thumb": "https://imgs.crazygames.com/games/bloxorz/cover-1669373098527.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/bloxorz/"
   },
@@ -1275,7 +1275,7 @@
     "id": "bubble-spinner",
     "name": "Bubble Spinner",
     "genre": "puzzle",
-    "thumb": "https://static.quenq.com/thumbnails/bubble-spinner.jpg",
+    "thumb": "https://imgs.crazygames.com/games/bubble-spinner/cover-1646744317105.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/bubble-spinner/"
   },
@@ -1555,7 +1555,7 @@
     "id": "castle-wars",
     "name": "Castle Wars",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/castle-wars.jpg",
+    "thumb": "https://imgs.crazygames.com/castle-wars/20230306194036/castle-wars-cover?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/castle-wars/"
   },
@@ -1779,7 +1779,7 @@
     "id": "chibi-knight",
     "name": "Chibi Knight",
     "genre": "adventure,action",
-    "thumb": "https://static.quenq.com/thumbnails/chibi-knight.jpg",
+    "thumb": "https://imgs.crazygames.com/games/chibi-knight/cover-1615909189989.jpg?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/chibi-knight/"
   },
@@ -2475,7 +2475,7 @@
     "id": "dolphin-olympics",
     "name": "Dolphin Olympics",
     "genre": "arcade",
-    "thumb": "https://static.quenq.com/thumbnails/dolphin-olympics.jpg",
+    "thumb": "https://imgs.crazygames.com/games/dolphin-olympics/cover-1674752046770.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/dolphin-olympics/"
   },
@@ -2771,7 +2771,7 @@
     "id": "ducklife",
     "name": "Ducklife",
     "genre": "simulation,arcade",
-    "thumb": "https://static.quenq.com/thumbnails/ducklife.jpg",
+    "thumb": "https://imgs.crazygames.com/ducklife.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/ducklife/"
   },
@@ -2779,7 +2779,7 @@
     "id": "ducklife-4",
     "name": "Ducklife 4",
     "genre": "simulation,arcade",
-    "thumb": "https://static.quenq.com/thumbnails/ducklife-4.jpg",
+    "thumb": "https://imgs.crazygames.com/ducklife4b.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/ducklife-4/"
   },
@@ -3051,7 +3051,7 @@
     "id": "escaping-the-prison",
     "name": "Escaping The Prison",
     "genre": "adventure",
-    "thumb": "https://static.quenq.com/thumbnails/escaping-the-prison.jpg",
+    "thumb": "https://imgs.crazygames.com/games/escaping-the-prison/cover-1657103196147.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/escaping-the-prison/"
   },
@@ -3107,7 +3107,7 @@
     "id": "extreme-pamplona",
     "name": "Extreme Pamplona",
     "genre": "platformer,action",
-    "thumb": "https://static.quenq.com/thumbnails/extreme-pamplona.jpg",
+    "thumb": "https://imgs.crazygames.com/games/extreme-pamplona/cover-1679593145021.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/extreme-pamplona/"
   },
@@ -3779,7 +3779,7 @@
     "id": "gold-miner",
     "name": "Gold Miner",
     "genre": "arcade",
-    "thumb": "https://static.quenq.com/thumbnails/gold-miner.jpg",
+    "thumb": "https://imgs.crazygames.com/games/gold-miner/cover-1600163097975.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/gold-miner/"
   },
@@ -3883,7 +3883,7 @@
     "id": "grow-cube",
     "name": "Grow Cube",
     "genre": "puzzle",
-    "thumb": "https://static.quenq.com/thumbnails/grow-cube.jpg",
+    "thumb": "https://imgs.crazygames.com/games/grow-cube/cover-1617449987641.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/grow-cube/"
   },
@@ -3899,7 +3899,7 @@
     "id": "grow-rpg",
     "name": "Grow Rpg",
     "genre": "adventure",
-    "thumb": "https://static.quenq.com/thumbnails/grow-rpg.jpg",
+    "thumb": "https://imgs.crazygames.com/growrpg.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/grow-rpg/"
   },
@@ -3907,7 +3907,7 @@
     "id": "gun-mayhem",
     "name": "Gun Mayhem",
     "genre": "shooter,action",
-    "thumb": "https://static.quenq.com/thumbnails/gun-mayhem.jpg",
+    "thumb": "https://imgs.crazygames.com/games/gun-mayhem/cover-1638866018644.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/gun-mayhem/"
   },
@@ -3939,7 +3939,7 @@
     "id": "gunblood",
     "name": "Gunblood",
     "genre": "shooter",
-    "thumb": "https://static.quenq.com/thumbnails/gunblood.jpg",
+    "thumb": "https://imgs.crazygames.com/gunblood.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/gunblood/"
   },
@@ -4275,7 +4275,7 @@
     "id": "happy-wheels",
     "name": "Happy Wheels",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/happy-wheels.jpg",
+    "thumb": "https://imgs.crazygames.com/games/happy-wheels/cover-1688034516340.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/happy-wheels/"
   },
@@ -4443,7 +4443,7 @@
     "id": "hex-empire",
     "name": "Hex Empire",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/hex-empire.jpg",
+    "thumb": "https://imgs.crazygames.com/hexempireb.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/hex-empire/"
   },
@@ -4907,7 +4907,7 @@
     "id": "jacksmith",
     "name": "Jacksmith",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/jacksmith.jpg",
+    "thumb": "https://imgs.crazygames.com/games/jacksmith/cover-1684221283970.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/jacksmith/"
   },
@@ -4979,7 +4979,7 @@
     "id": "johnny-rocketfingers",
     "name": "Johnny Rocketfingers",
     "genre": "adventure",
-    "thumb": "https://static.quenq.com/thumbnails/johnny-rocketfingers.jpg",
+    "thumb": "https://imgs.crazygames.com/games/johnny-rocketfingers/cover-1615714308925.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/johnny-rocketfingers/"
   },
@@ -5227,7 +5227,7 @@
     "id": "line-rider",
     "name": "Line Rider",
     "genre": "creative",
-    "thumb": "https://static.quenq.com/thumbnails/line-rider.jpg",
+    "thumb": "https://imgs.crazygames.com/games/line-rider/cover-1608201310534.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/line-rider/"
   },
@@ -5299,7 +5299,7 @@
     "id": "madness-accelerant",
     "name": "Madness Accelerant",
     "genre": "shooter,action",
-    "thumb": "https://static.quenq.com/thumbnails/madness-accelerant.jpg",
+    "thumb": "https://imgs.crazygames.com/games/madness-accelerant/cover-1628076783241.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/madness-accelerant/"
   },
@@ -5323,7 +5323,7 @@
     "id": "madness-deathwish",
     "name": "Madness: Deathwish",
     "genre": "action",
-    "thumb": "https://static.quenq.com/thumbnails/madness-deathwish.jpg",
+    "thumb": "https://imgs.crazygames.com/games/madness-deathwish/cover-1636978677289.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/madness-deathwish/"
   },
@@ -5331,7 +5331,7 @@
     "id": "madness-project-nexus",
     "name": "Madness: Project Nexus",
     "genre": "shooter,action",
-    "thumb": "https://static.quenq.com/thumbnails/madness-project-nexus.jpg",
+    "thumb": "https://imgs.crazygames.com/games/madness-project-nexus/cover-1629361319148.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/madness-project-nexus/"
   },
@@ -5675,7 +5675,7 @@
     "id": "mini-putt",
     "name": "Mini Putt",
     "genre": "sports",
-    "thumb": "https://static.quenq.com/thumbnails/mini-putt.jpg",
+    "thumb": "https://imgs.crazygames.com/games/mini-putt/thumb-1566371313404.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/mini-putt/"
   },
@@ -5811,7 +5811,7 @@
     "id": "monster-truck-rampage",
     "name": "Monster Truck Rampage",
     "genre": "simulation,shooter,action",
-    "thumb": "https://static.quenq.com/thumbnails/monster-truck-rampage.jpg",
+    "thumb": "https://imgs.crazygames.com/monster-truck-rampage_16x9/20250627103518/monster-truck-rampage_16x9-cover?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/monster-truck-rampage/"
   },
@@ -5843,7 +5843,7 @@
     "id": "motherload",
     "name": "Motherload",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/motherload.jpg",
+    "thumb": "https://imgs.crazygames.com/games/motherload/cover-1628861944390.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/motherload/"
   },
@@ -6179,7 +6179,7 @@
     "id": "one-chance",
     "name": "One Chance",
     "genre": "adventure",
-    "thumb": "https://static.quenq.com/thumbnails/one-chance.jpg",
+    "thumb": "https://imgs.crazygames.com/games/one-chance/cover-1635941011516.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/one-chance/"
   },
@@ -6323,7 +6323,7 @@
     "id": "pandemic",
     "name": "Pandemic",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/pandemic.jpg",
+    "thumb": "/images/thumbnails/pandemic.jpg",
     "source": "flash",
     "embedUrl": "/arcade/pandemic/"
   },
@@ -6363,7 +6363,7 @@
     "id": "papas-bakeria",
     "name": "Papa\u2019S Bakeria",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/papas-bakeria.jpg",
+    "thumb": "https://imgs.crazygames.com/games/papas-bakeria/cover-1676900441281.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/papas-bakeria/"
   },
@@ -6379,7 +6379,7 @@
     "id": "papas-cheeseria",
     "name": "Papa\u2019S Cheeseria",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/papas-cheeseria.jpg",
+    "thumb": "https://imgs.crazygames.com/games/papas-cheeseria/cover-1676905476451.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/papas-cheeseria/"
   },
@@ -6387,7 +6387,7 @@
     "id": "papas-cupcakeria",
     "name": "Papa\u2019S Cupcakeria",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/papas-cupcakeria.jpg",
+    "thumb": "https://imgs.crazygames.com/games/papas-cupcakeria/cover-1676906717857.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/papas-cupcakeria/"
   },
@@ -6395,7 +6395,7 @@
     "id": "papas-donuteria",
     "name": "Papa\u2019S Donuteria",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/papas-donuteria.jpg",
+    "thumb": "https://imgs.crazygames.com/games/papas-donuteria/cover-1684307679932.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/papas-donuteria/"
   },
@@ -6403,7 +6403,7 @@
     "id": "papas-freezeria",
     "name": "Papa\u2019S Freezeria",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/papas-freezeria.jpg",
+    "thumb": "https://imgs.crazygames.com/games/papas-freezeria/cover-1673879293069.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/papas-freezeria/"
   },
@@ -6411,7 +6411,7 @@
     "id": "papas-pancakeria",
     "name": "Papa\u2019S Pancakeria",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/papas-pancakeria.jpg",
+    "thumb": "https://imgs.crazygames.com/games/papas-pancakeria/cover-1684228774621.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/papas-pancakeria/"
   },
@@ -6419,7 +6419,7 @@
     "id": "papas-pastaria",
     "name": "Papa\u2019S Pastaria",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/papas-pastaria.jpg",
+    "thumb": "https://imgs.crazygames.com/games/papas-pastaria/cover-1684307877225.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/papas-pastaria/"
   },
@@ -6427,7 +6427,7 @@
     "id": "papas-pizzeria",
     "name": "Papa\u2019S Pizzeria",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/papas-pizzeria.jpg",
+    "thumb": "https://imgs.crazygames.com/games/papas-pizzeria/cover-1628776612329.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/papas-pizzeria/"
   },
@@ -6443,7 +6443,7 @@
     "id": "papas-sushiria",
     "name": "Papa\u2019S Sushiria",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/papas-sushiria.jpg",
+    "thumb": "https://imgs.crazygames.com/games/papas-sushiria/cover-1684263794296.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/papas-sushiria/"
   },
@@ -6451,7 +6451,7 @@
     "id": "papas-wingeria",
     "name": "Papa\u2019S Wingeria",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/papas-wingeria.jpg",
+    "thumb": "https://imgs.crazygames.com/games/papas-wingeria/cover-1684307852237.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/papas-wingeria/"
   },
@@ -7283,7 +7283,7 @@
     "id": "riddle-school",
     "name": "Riddle School",
     "genre": "adventure",
-    "thumb": "https://static.quenq.com/thumbnails/riddle-school.jpg",
+    "thumb": "https://imgs.crazygames.com/riddleschool.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/riddle-school/"
   },
@@ -7371,7 +7371,7 @@
     "id": "robot-unicorn-attack",
     "name": "Robot Unicorn Attack",
     "genre": "action",
-    "thumb": "https://static.quenq.com/thumbnails/robot-unicorn-attack.jpg",
+    "thumb": "https://imgs.crazygames.com/games/robot-unicorn-attack/cover-1613291299449.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/robot-unicorn-attack/"
   },
@@ -8467,7 +8467,7 @@
     "id": "space-invaders",
     "name": "Space Invaders",
     "genre": "arcade",
-    "thumb": "https://static.quenq.com/thumbnails/space-invaders.jpg",
+    "thumb": "https://imgs.crazygames.com/games/space-invaders/cover_16x9-1714708168967.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/space-invaders/"
   },
@@ -8755,7 +8755,7 @@
     "id": "sprinter",
     "name": "Sprinter",
     "genre": "platformer",
-    "thumb": "https://static.quenq.com/thumbnails/sprinter.jpg",
+    "thumb": "https://imgs.crazygames.com/games/sprinter/cover-1618565550455.jpg?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/sprinter/"
   },
@@ -8875,7 +8875,7 @@
     "id": "stealing-the-diamond",
     "name": "Stealing The Diamond",
     "genre": "adventure",
-    "thumb": "https://static.quenq.com/thumbnails/stealing-the-diamond.jpg",
+    "thumb": "https://imgs.crazygames.com/games/stealing-the-diamond/cover-1657103226139.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/stealing-the-diamond/"
   },
@@ -8915,7 +8915,7 @@
     "id": "stick-war",
     "name": "Stick War",
     "genre": "arcade",
-    "thumb": "https://static.quenq.com/thumbnails/stick-war.jpg",
+    "thumb": "https://imgs.crazygames.com/games/stick-war/cover-1659084995039.jpg?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/stick-war/"
   },
@@ -8963,7 +8963,7 @@
     "id": "strike-force-heroes",
     "name": "Strike Force Heroes",
     "genre": "shooter,action",
-    "thumb": "https://static.quenq.com/thumbnails/strike-force-heroes.jpg",
+    "thumb": "https://imgs.crazygames.com/games/strike-force-heroes/cover-1689678123281.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/strike-force-heroes/"
   },
@@ -8971,7 +8971,7 @@
     "id": "strike-force-heroes-2",
     "name": "Strike Force Heroes 2",
     "genre": "shooter,action",
-    "thumb": "https://static.quenq.com/thumbnails/strike-force-heroes-2.jpg",
+    "thumb": "https://imgs.crazygames.com/games/strike-force-heroes-2/cover-1689155575786.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/strike-force-heroes-2/"
   },
@@ -9123,7 +9123,7 @@
     "id": "super-smash-flash",
     "name": "Super Smash Flash",
     "genre": "action",
-    "thumb": "https://static.quenq.com/thumbnails/super-smash-flash.jpg",
+    "thumb": "https://imgs.crazygames.com/games/super-smash-flash/cover-1614524180592.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/super-smash-flash/"
   },
@@ -9187,7 +9187,7 @@
     "id": "swords-souls",
     "name": "Swords &Amp; Souls",
     "genre": "adventure",
-    "thumb": "https://static.quenq.com/thumbnails/swords-souls.jpg",
+    "thumb": "https://imgs.crazygames.com/games/swords-souls/cover-1684467237585.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/swords-souls/"
   },
@@ -9243,7 +9243,7 @@
     "id": "takeover",
     "name": "Takeover",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/takeover.jpg",
+    "thumb": "https://imgs.crazygames.com/takeover_16x9/20260220044336/takeover_16x9-cover?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/takeover/"
   },
@@ -9435,7 +9435,7 @@
     "id": "the-binding-of-isaac-demo",
     "name": "The Binding Of Isaac Demo",
     "genre": "adventure,action",
-    "thumb": "https://static.quenq.com/thumbnails/the-binding-of-isaac-demo.jpg",
+    "thumb": "https://imgs.crazygames.com/thebindingofisaacdemo.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/the-binding-of-isaac-demo/"
   },
@@ -9723,7 +9723,7 @@
     "id": "the-visitor",
     "name": "The Visitor",
     "genre": "adventure",
-    "thumb": "https://static.quenq.com/thumbnails/the-visitor.jpg",
+    "thumb": "https://imgs.crazygames.com/thevisitor.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/the-visitor/"
   },
@@ -9731,7 +9731,7 @@
     "id": "the-waitress",
     "name": "The Waitress",
     "genre": "simulation",
-    "thumb": "https://static.quenq.com/thumbnails/the-waitress.jpg",
+    "thumb": "https://imgs.crazygames.com/games/the-waitress/cover-1634570674724.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/the-waitress/"
   },
@@ -9795,7 +9795,7 @@
     "id": "this-is-the-only-level",
     "name": "This Is The Only Level",
     "genre": "puzzle,platformer",
-    "thumb": "https://static.quenq.com/thumbnails/this-is-the-only-level.jpg",
+    "thumb": "https://imgs.crazygames.com/games/this-is-the-only-level/cover-1637054390560.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/this-is-the-only-level/"
   },
@@ -9915,7 +9915,7 @@
     "id": "toss-the-turtle",
     "name": "Toss The Turtle",
     "genre": "arcade",
-    "thumb": "https://static.quenq.com/thumbnails/toss-the-turtle.jpg",
+    "thumb": "https://imgs.crazygames.com/games/toss-the-turtle/cover-1635771332448.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/toss-the-turtle/"
   },
@@ -9995,7 +9995,7 @@
     "id": "tri-achnid",
     "name": "Tri-Achnid",
     "genre": "puzzle",
-    "thumb": "https://static.quenq.com/thumbnails/tri-achnid.jpg",
+    "thumb": "https://imgs.crazygames.com/games/tri-achnid/cover-1636537977073.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/tri-achnid/"
   },
@@ -10043,7 +10043,7 @@
     "id": "ufomania",
     "name": "Ufomania",
     "genre": "arcade,action",
-    "thumb": "https://static.quenq.com/thumbnails/ufomania.jpg",
+    "thumb": "/images/thumbnails/ufomania.jpg",
     "source": "flash",
     "embedUrl": "/arcade/ufomania/"
   },
@@ -10179,7 +10179,7 @@
     "id": "warfare-1917",
     "name": "Warfare 1917",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/warfare-1917.jpg",
+    "thumb": "https://imgs.crazygames.com/games/warfare-1917/cover_16x9-1746684708324.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/warfare-1917/"
   },
@@ -10187,7 +10187,7 @@
     "id": "warfare-1944",
     "name": "Warfare 1944",
     "genre": "strategy",
-    "thumb": "https://static.quenq.com/thumbnails/warfare-1944.jpg",
+    "thumb": "https://imgs.crazygames.com/warfare1944.png?metadata=none&quality=85&width=540&resizer=covers",
     "source": "flash",
     "embedUrl": "/arcade/warfare-1944/"
   },

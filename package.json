@@ -2,6 +2,7 @@
   "name": "onlinegames-stream",
   "version": "1.0.0",
   "description": "onlinegames.stream - Interactive Museum of Internet Culture. Reconstructed web archive of classic games, preserved software, and digital curiosities.",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",

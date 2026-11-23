@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const shareBtn = document.getElementById('share-btn');
 
     const iframe = document.createElement('iframe');
-    iframe.src = 'https://static.quenq.com/apps/minivmac/MinivMac.htm';
+    iframe.src = '/api/proxy/?app=minivmac';
     iframe.title = 'Minivmac Application';
     iframe.allow = 'fullscreen; pointer-lock; autoplay';
     appContainer.appendChild(iframe);

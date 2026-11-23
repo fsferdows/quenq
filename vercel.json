@@ -27,6 +27,6 @@
     }
   ],
   "rewrites": [
-    { "source": "/arcade/:slug", "destination": "/arcade/index.html" }
+    { "source": "/arcade/:slug*", "destination": "/arcade/index.html" }
   ]
 }

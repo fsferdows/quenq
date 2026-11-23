@@ -257,7 +257,7 @@ Fullscreen</a>
             appContainer.innerHTML = '';
             
             const iframe = document.createElement('iframe');
-            iframe.src = currentMode === 'wasm' ? 'https://static.quenq.com/apps/minecraft/app.html' : 'https://static.quenq.com/apps/minecraft/app-js.html';
+            iframe.src = currentMode === 'wasm' ? '/api/proxy/?app=minecraft' : '/api/proxy/?app=minecraft-js';
             iframe.title = 'Minecraft Browser Application';
             iframe.allow = "fullscreen; pointer-lock";
             

@@ -188,8 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 'gta-5', name: 'GTA V (Grand Theft Auto V Online)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-5.jpg', embedUrl: '/apps/gta-5/' },
     { id: 'gta-4', name: 'GTA IV (Liberty City)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-4.jpg', embedUrl: '/apps/gta-4/' },
     { id: 'gta-san-andreas', name: 'GTA: San Andreas (3D Open World)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-san-andreas.jpg', embedUrl: '/apps/gta-san-andreas/' },
-    { id: 'gta-vice-city', name: 'GTA: Vice City Online', genre: 'gta,action,driving', source: 'gta', thumb: '/apps/vice-city/preview.jpg', embedUrl: 'https://vc.quenq.com' },
-    { id: 'gta-3', name: 'GTA 3 (Grand Theft Auto III)', genre: 'gta,action,driving', source: 'gta', thumb: '/apps/gta-3/preview.jpg', embedUrl: 'https://iii.quenq.com' },
+    { id: 'gta-vice-city', name: 'GTA: Vice City Online', genre: 'gta,action,driving', source: 'gta', thumb: '/apps/vice-city/preview.jpg', embedUrl: '/api/proxy/?app=vice-city' },
+    { id: 'gta-3', name: 'GTA 3 (Grand Theft Auto III)', genre: 'gta,action,driving', source: 'gta', thumb: '/apps/gta-3/preview.jpg', embedUrl: '/api/proxy/?app=gta-3' },
     { id: 'gta-advance', name: 'GTA Advance (Liberty City)', genre: 'gta,action,retro', source: 'gta', thumb: '/images/thumbnails/gta-advance.jpg', embedUrl: '/apps/gta-advance/' },
     { id: 'gta-2', name: 'Grand Theft Auto 2 (1999)', genre: 'gta,action,retro', source: 'gta', thumb: '/images/thumbnails/gta-2.jpg', embedUrl: '/apps/gta-2/' },
     { id: 'gta-1', name: 'Grand Theft Auto (1997)', genre: 'gta,action,retro', source: 'gta', thumb: '/images/thumbnails/gta-1.jpg', embedUrl: '/apps/gta-1/' },
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 'gta-5', name: 'GTA V (Grand Theft Auto V Online)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-5.jpg', embedUrl: '/apps/gta-5/' },
     { id: 'gta-4', name: 'GTA IV (Liberty City)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-4.jpg', embedUrl: '/apps/gta-4/' },
     { id: 'gta-san-andreas', name: 'GTA: San Andreas (3D)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-san-andreas.jpg', embedUrl: '/apps/gta-san-andreas/' },
-    { id: 'gta-vice-city', name: 'GTA: Vice City Online', genre: 'gta,action,driving', thumb: '/apps/vice-city/preview.jpg', embedUrl: 'https://vc.quenq.com' },
+    { id: 'gta-vice-city', name: 'GTA: Vice City Online', genre: 'gta,action,driving', thumb: '/apps/vice-city/preview.jpg', embedUrl: '/api/proxy/?app=vice-city' },
     { id: 'subway-surfers', name: 'Subway Surfers', genre: 'arcade,action', thumb: '/images/thumbnails/subway-surfers.jpg', embedUrl: 'https://games.crazygames.com/en_US/bus-and-subway-runner/index.html' },
     { id: 'geometry-dash-online', name: 'Geometry Dash', genre: 'action', thumb: '/images/thumbnails/geometry-dash.jpg', embedUrl: 'https://games.crazygames.com/en_US/geometry-dash-online/index.html' },
     { id: 'cut-the-rope-ebx', name: 'Cut the Rope', genre: 'puzzle', thumb: '/images/thumbnails/cut-the-rope.jpg', embedUrl: 'https://games.crazygames.com/en_US/cut-the-rope-ebx/index.html' },
@@ -221,18 +221,18 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 'bloxorz', name: 'Bloxorz', genre: 'puzzle', thumb: 'https://imgs.crazygames.com/games/bloxorz/cover-1669373098527.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/bloxorz/index.html' },
     { id: 'pacman', name: 'Pacman', genre: 'arcade', thumb: 'https://imgs.crazygames.com/pacman.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/pacman/index.html' },
     { id: 'space-invaders', name: 'Space Invaders', genre: 'arcade', thumb: 'https://imgs.crazygames.com/games/space-invaders/cover_16x9-1714708168967.png?metadata=none&quality=85&width=540&resizer=covers', embedUrl: 'https://games.crazygames.com/en_US/space-invaders/index.html' },
-    { id: 'gta-3', name: 'GTA 3 (Liberty City)', genre: 'gta,action,driving', thumb: '/apps/gta-3/preview.jpg', embedUrl: 'https://iii.quenq.com' }
+    { id: 'gta-3', name: 'GTA 3 (Liberty City)', genre: 'gta,action,driving', thumb: '/apps/gta-3/preview.jpg', embedUrl: '/api/proxy/?app=gta-3' }
   ];
 
   const FLASH_CLASSICS = [
-    { id: 'antbuster', name: 'Antbuster Defense', genre: 'strategy', thumb: '/images/thumbnails/antbuster.jpg', embedUrl: '/arcade/antbuster/' },
-    { id: 'sonic-on-angel-island', name: 'Sonic on Angel Island', genre: 'action', thumb: '/images/thumbnails/sonic.jpg', embedUrl: '/arcade/sonic-on-angel-island/' },
-    { id: 'feedme', name: 'Feed Me', genre: 'puzzle', thumb: '/images/thumbnails/feed-me.jpg', embedUrl: '/arcade/feedme/' },
-    { id: 'epicbattlefantasy2', name: 'Epic Battle Fantasy 2', genre: 'action', thumb: '/images/thumbnails/epic-battle-fantasy-2.jpg', embedUrl: '/arcade/epicbattlefantasy2/' },
-    { id: 'pandemic', name: 'Pandemic', genre: 'strategy', thumb: '/images/thumbnails/pandemic.jpg', embedUrl: '/arcade/pandemic/' },
-    { id: 'ufomania', name: 'UfoMania', genre: 'arcade', thumb: '/images/thumbnails/ufomania.jpg', embedUrl: '/arcade/ufomania/' },
-    { id: 'bear-in-the-big-blue-house-help-bear-bake', name: 'Bear in Big Blue House', genre: 'simulation', thumb: '/images/thumbnails/bear-in-big-blue-house.jpg', embedUrl: '/arcade/bear-in-the-big-blue-house-help-bear-bake/' },
-    { id: 'cow-and-chicken-ballet-parking', name: 'Ballet Parking', genre: 'driving', thumb: '/images/thumbnails/ballet-parking.jpg', embedUrl: '/arcade/cow-and-chicken-ballet-parking/' }
+    { id: 'antbuster', name: 'Antbuster Defense', genre: 'strategy', thumb: '/images/thumbnails/antbuster.jpg', embedUrl: '/api/proxy/?game=antbuster' },
+    { id: 'sonic-on-angel-island', name: 'Sonic on Angel Island', genre: 'action', thumb: '/images/thumbnails/sonic.jpg', embedUrl: '/api/proxy/?game=sonic-on-angel-island' },
+    { id: 'feedme', name: 'Feed Me', genre: 'puzzle', thumb: '/images/thumbnails/feed-me.jpg', embedUrl: '/api/proxy/?game=feedme' },
+    { id: 'epicbattlefantasy2', name: 'Epic Battle Fantasy 2', genre: 'action', thumb: '/images/thumbnails/epic-battle-fantasy-2.jpg', embedUrl: '/api/proxy/?game=epicbattlefantasy2' },
+    { id: 'pandemic', name: 'Pandemic', genre: 'strategy', thumb: '/images/thumbnails/pandemic.jpg', embedUrl: '/api/proxy/?game=pandemic' },
+    { id: 'ufomania', name: 'UfoMania', genre: 'arcade', thumb: '/images/thumbnails/ufomania.jpg', embedUrl: '/api/proxy/?game=ufomania' },
+    { id: 'bear-in-the-big-blue-house-help-bear-bake', name: 'Bear in Big Blue House', genre: 'simulation', thumb: '/images/thumbnails/bear-in-big-blue-house.jpg', embedUrl: '/api/proxy/?game=bear-in-the-big-blue-house-help-bear-bake' },
+    { id: 'cow-and-chicken-ballet-parking', name: 'Ballet Parking', genre: 'driving', thumb: '/images/thumbnails/ballet-parking.jpg', embedUrl: '/api/proxy/?game=cow-and-chicken-ballet-parking' }
   ];
 
   // Lazy Thumbnail Observer
@@ -332,22 +332,139 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Internal direct playable engine mappings (prevents 404s, CORS, CSP frame-ancestors blocks)
+  const STANDALONE_PLAYABLE_MAP = {
+    'flappy-bird': '/apps/flappy-bird/',
+    'crossy-road': '/apps/crossy-road/',
+    'slope': '/apps/slope/',
+    'bad-ice-cream': '/apps/bad-ice-cream/',
+    'bad-ice-cream-2': '/apps/bad-ice-cream/',
+    'bad-ice-cream-3': '/apps/bad-ice-cream/',
+    '2048': '/apps/2048/',
+    'doodle-jump': '/apps/doodle-jump/',
+    'cookie-clicker': '/apps/cookie-clicker/',
+    'doom-1993': '/apps/doom/',
+    'doom': '/apps/doom/',
+    'gta-1': '/apps/gta-1/',
+    'gta-2': '/apps/gta-2/',
+    'gta-3': '/api/proxy/?app=gta-3',
+    'gta-iii': '/api/proxy/?app=gta-3',
+    'vice-city': '/api/proxy/?app=vice-city',
+    'gta-vice-city': '/api/proxy/?app=vice-city',
+    'gta-4': '/apps/gta-4/',
+    'gta-iv': '/apps/gta-4/',
+    'gta-5': '/apps/gta-5/',
+    'gta-v': '/apps/gta-5/',
+    'gta-san-andreas': '/apps/gta-san-andreas/',
+    'san-andreas': '/apps/gta-san-andreas/',
+    'gta-advance': '/apps/gta-advance/',
+    'bully': '/apps/bully/',
+    'midnight-club': '/apps/midnight-club/',
+    'max-payne': '/apps/max-payne/',
+    'red-dead': '/apps/red-dead/',
+    'red-dead-redemption': '/apps/red-dead/',
+    'diamond-rush': '/api/proxy/?app=diamond-rush',
+    'dr-driving': '/api/proxy/?app=dr-driving',
+    'project-igi': '/api/proxy/?app=project-igi',
+    'hill-climb-racing': '/api/proxy/?app=hill-climb-racing',
+    'minecraft': '/api/proxy/?app=minecraft',
+    '3d-pinball-space-cadet': '/api/proxy/?app=3d-pinball-space-cadet',
+    'angry-birds-chrome': '/api/proxy/?app=angry-birds-chrome',
+    'minivmac': '/api/proxy/?app=minivmac',
+    'reborn-xp': '/api/proxy/?app=reborn-xp',
+    'fake-updates': '/apps/fake-updates/',
+    'antbuster': '/api/proxy/?game=antbuster',
+    'sonic-on-angel-island': '/api/proxy/?game=sonic-on-angel-island',
+    'feedme': '/api/proxy/?game=feedme',
+    'epicbattlefantasy2': '/api/proxy/?game=epicbattlefantasy2',
+    'pandemic': '/api/proxy/?game=pandemic',
+    'ufomania': '/api/proxy/?game=ufomania',
+    'bear-in-the-big-blue-house-help-bear-bake': '/api/proxy/?game=bear-in-the-big-blue-house-help-bear-bake',
+    'bowja-the-ninja-2-in-bigmans-compound': '/api/proxy/?game=bowja-the-ninja-2-in-bigmans-compound',
+    'cow-and-chicken-ballet-parking': '/api/proxy/?game=cow-and-chicken-ballet-parking',
+    'follow': '/api/proxy/?game=follow',
+    'spongebob-saw-game': '/api/proxy/?game=spongebob-saw-game'
+  };
+
+  // Standalone full page destinations for "Open in Tab" (keeping users 100% on onlinegames.stream)
+  const STANDALONE_PAGE_MAP = {
+    'flappy-bird': '/apps/flappy-bird/',
+    'crossy-road': '/apps/crossy-road/',
+    'slope': '/apps/slope/',
+    'bad-ice-cream': '/apps/bad-ice-cream/',
+    'bad-ice-cream-2': '/apps/bad-ice-cream/',
+    'bad-ice-cream-3': '/apps/bad-ice-cream/',
+    '2048': '/apps/2048/',
+    'doodle-jump': '/apps/doodle-jump/',
+    'cookie-clicker': '/apps/cookie-clicker/',
+    'doom-1993': '/apps/doom/',
+    'doom': '/apps/doom/',
+    'gta-1': '/apps/gta-1/',
+    'gta-2': '/apps/gta-2/',
+    'gta-3': '/apps/gta-3/',
+    'gta-iii': '/apps/gta-3/',
+    'vice-city': '/apps/vice-city/',
+    'gta-vice-city': '/apps/vice-city/',
+    'gta-4': '/apps/gta-4/',
+    'gta-iv': '/apps/gta-4/',
+    'gta-5': '/apps/gta-5/',
+    'gta-v': '/apps/gta-5/',
+    'gta-san-andreas': '/apps/gta-san-andreas/',
+    'san-andreas': '/apps/gta-san-andreas/',
+    'gta-advance': '/apps/gta-advance/',
+    'bully': '/apps/bully/',
+    'midnight-club': '/apps/midnight-club/',
+    'max-payne': '/apps/max-payne/',
+    'red-dead': '/apps/red-dead/',
+    'red-dead-redemption': '/apps/red-dead/',
+    'diamond-rush': '/apps/diamond-rush/',
+    'dr-driving': '/apps/dr-driving/',
+    'project-igi': '/apps/project-igi/',
+    'hill-climb-racing': '/apps/hill-climb-racing/',
+    'minecraft': '/apps/minecraft/',
+    '3d-pinball-space-cadet': '/apps/3d-pinball-space-cadet/',
+    'angry-birds-chrome': '/apps/angry-birds-chrome/',
+    'minivmac': '/apps/minivmac/',
+    'reborn-xp': '/apps/reborn-xp/',
+    'fake-updates': '/apps/fake-updates/'
+  };
+
   // Open Theater Player
   function openTheaterGame(game) {
     if (!game) return;
     currentGamePlaying = game;
     theaterTitle.textContent = game.name;
-    const playerUrl = game.embedUrl || (game.id ? `/arcade/${game.id}/` : '#');
+
+    // 1. Resolve direct in-player playable URL (bypassing all embedding blocks)
+    let playerUrl;
+    if (STANDALONE_PLAYABLE_MAP[game.id]) {
+      playerUrl = STANDALONE_PLAYABLE_MAP[game.id];
+    } else if (game.source === 'crazygames' || (game.embedUrl && game.embedUrl.includes('crazygames.com'))) {
+      playerUrl = `/api/proxy/?cg=${encodeURIComponent(game.id)}`;
+    } else if (game.embedUrl) {
+      if (game.embedUrl.startsWith('/arcade/')) {
+        playerUrl = `/api/proxy/?game=${encodeURIComponent(game.id)}`;
+      } else {
+        playerUrl = game.embedUrl;
+      }
+    } else {
+      playerUrl = `/api/proxy/?game=${encodeURIComponent(game.id)}`;
+    }
+
+    // 2. Resolve on-site URL for "Open in Tab" button (strictly remains on onlinegames.stream)
+    const onSiteTabUrl = STANDALONE_PAGE_MAP[game.id] || `/arcade/${game.id}/`;
 
     // Prevent iframe embedding restrictions via no-referrer policy
     try {
       theaterIframe.referrerPolicy = 'no-referrer';
     } catch (_) {}
     theaterIframe.src = playerUrl;
-    theaterPopoutBtn.href = playerUrl;
+    theaterPopoutBtn.href = onSiteTabUrl;
+    theaterPopoutBtn.target = '_blank';
 
     if (theaterDirectLink) {
-      theaterDirectLink.href = playerUrl;
+      theaterDirectLink.href = onSiteTabUrl;
+      theaterDirectLink.target = '_blank';
     }
 
     if (theaterGameBadge) {
@@ -936,6 +1053,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log(`[onlinegames.stream] Total catalog ready: ${allGames.length} games.`);
     updateGrid();
+    checkUrlGameLaunch();
   }).catch(err => {
     console.warn('Could not load game catalogs:', err);
   });
@@ -952,14 +1070,26 @@ document.addEventListener('DOMContentLoaded', () => {
     updateGrid();
   }
 
-  // Check if a direct game was requested in the URL path (e.g. /arcade/moto-x3m/)
-  const currentPath = window.location.pathname;
-  const match = currentPath.match(/^\/arcade\/([a-zA-Z0-9_\-]+)\/?$/);
-  if (match && match[1] && match[1] !== 'index') {
-    const slug = match[1];
-    setTimeout(() => {
-      const targetGame = allGames.find(g => g.id === slug) || { id: slug, name: slug.replace(/-/g, ' ').toUpperCase() };
+  // Check if a direct game was requested in URL path or ?play= parameter
+  function checkUrlGameLaunch() {
+    if (currentGamePlaying) return;
+    const currentPath = window.location.pathname;
+    const match = currentPath.match(/^\/arcade\/([a-zA-Z0-9_\-]+)\/?$/);
+    const searchParams = new URLSearchParams(window.location.search);
+    const playParam = searchParams.get('play');
+    const slug = playParam || (match && match[1] && match[1] !== 'index' ? match[1] : null);
+
+    if (slug) {
+      const lowerSlug = slug.toLowerCase();
+      const targetGame = allGames.find(g => g.id && g.id.toLowerCase() === lowerSlug) || {
+        id: slug,
+        name: slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        genre: 'arcade'
+      };
       openTheaterGame(targetGame);
-    }, 300);
+    }
   }
+
+  // Trigger fallback check on immediate DOM readiness
+  checkUrlGameLaunch();
 });

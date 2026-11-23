@@ -86,8 +86,11 @@
       </a>
 
       <div class="cg-sidebar-section-title">Popular Categories</div>
+      <a class="cg-nav-item" data-genre="gta">
+        <span class="cg-nav-icon">🚗</span> GTA &amp; Rockstar Games
+      </a>
       <a class="cg-nav-item" data-genre="driving">
-        <span class="cg-nav-icon">🚗</span> Driving & Racing
+        <span class="cg-nav-icon">🏎️</span> Driving &amp; Racing
       </a>
       <a class="cg-nav-item" data-genre="action">
         <span class="cg-nav-icon">💥</span> Action & Combat
@@ -187,9 +190,10 @@
       <!-- Quick Category Pills -->
       <div class="cg-category-bar" id="category-pills">
         <button class="cg-tag-pill active" data-genre="all">🎮 All Games (6,100+)</button>
+        <button class="cg-tag-pill" data-genre="gta" style="border-color: rgba(243, 156, 18, 0.4); background: rgba(243, 156, 18, 0.1);">🚗 GTA &amp; Rockstar</button>
         <button class="cg-tag-pill" data-genre="crazygames">⭐ CrazyGames (HTML5)</button>
         <button class="cg-tag-pill" data-genre="flash">⚡ Classic Flash</button>
-        <button class="cg-tag-pill" data-genre="driving">🚗 Driving</button>
+        <button class="cg-tag-pill" data-genre="driving">🏎️ Driving</button>
         <button class="cg-tag-pill" data-genre="action">💥 Action</button>
         <button class="cg-tag-pill" data-genre="puzzle">🧩 Puzzle</button>
         <button class="cg-tag-pill" data-genre="sports">🏀 Sports</button>
@@ -198,6 +202,20 @@
         <button class="cg-tag-pill" data-genre="strategy">👑 Strategy</button>
         <button class="cg-tag-pill" data-genre="pinned">📌 Pinned (<span id="pinned-count">0</span>)</button>
       </div>
+
+      <!-- Horizontal Showcase Row: Grand Theft Auto & Rockstar Classics -->
+      <section class="cg-row-container" id="gta-row-container">
+        <div class="cg-row-header">
+          <h2 class="cg-row-title">🚗 Grand Theft Auto &amp; Rockstar Classics</h2>
+          <div class="cg-row-nav-btns">
+            <button class="cg-slider-btn prev-btn" data-target="gta-track">‹</button>
+            <button class="cg-slider-btn next-btn" data-target="gta-track">›</button>
+          </div>
+        </div>
+        <div class="cg-slider-track" id="gta-track">
+          <!-- Populated by JS with GTA Collection -->
+        </div>
+      </section>
 
       <!-- Horizontal Showcase Row: Trending Hit Games -->
       <section class="cg-row-container" id="trending-row-container">

@@ -17,10 +17,26 @@ Developed & Maintained by **[FS FERDOWS](https://github.com/fsferdows)**.
 
 ## 🌟 Key Features & Capabilities
 
+- **Grand Theft Auto & Rockstar Complete Collection**:
+  - **GTA: San Andreas (3D Open World)**: Play as CJ in Los Santos with drive-bys, turf wars, and high-speed police chases.
+  - **GTA: Vice City Online (1986 Miami)**: Tommy Vercetti neon Miami crime saga with save managers and radio stations.
+  - **GTA 3 (Grand Theft Auto III)**: Claude in Liberty City — the groundbreaking 2001 3D open-world revolution.
+  - **GTA V (Los Santos 3D Simulator)**: Modern metropolis with hypercars, syndicate heists, and tactical SWAT combat.
+  - **GTA Advance (2004)**: Top-down Liberty City crime prequel preserved for instant browser play.
+  - **Grand Theft Auto 2 (1999)**: "Respect is Everything" Anywhere City gang warfare (Zaibatsu, Loonies, Yakuza).
+  - **Grand Theft Auto (1997 Original)**: The legendary DMA Design top-down classic across Liberty City, San Andreas & Vice City.
+  - **Bully (Canis Canem Edit)**: Jimmy Hopkins navigates school cliques, skateboards, and pranks at Bullworth Academy.
+  - **Midnight Club: Street Racing 3D**: High-speed illegal open-world midnight tuner racing.
+  - **Gangster Contract: Mafia Wars & Free Rally: Vice City**: 3D third-person open-world crime simulators.
+- **Self-Healing Image Fallback Engine (Zero Broken Images)**:
+  - Local high-resolution 16:9 covers for all featured games in `/images/thumbnails/`.
+  - Automatic vector SVG procedural card cover generator with genre-calibrated gradients, initial badges, and typography.
+  - Intelligent `onerror` trap ensuring no game ever displays an empty or broken thumbnail icon.
 - **CrazyGames Portal Interface (`/arcade/`)**:
   - Authentic dark-mode gaming portal aesthetic with hero carousel (Moto X3M, Smash Karts, Slope 3D).
+  - Dedicated showcase row: **"🚗 Grand Theft Auto & Rockstar Classics"**.
   - Horizontal swipeable featured rows ("Trending Hits", "High-Octane Driving", "Flash Preservation").
-  - Instant live search with keyboard shortcut (`/`) and genre filtering pills.
+  - Instant live search with keyboard shortcut (`/`) and genre filtering pills (`🚗 GTA & Rockstar`).
   - In-Page Theater Mode player modal with zero-reload launching, fullscreen toggle, link sharing, and Esc closing.
 - **6,100+ Playable Games**:
   - **4,800+ CrazyGames HTML5 Titles**: Moto X3M, Smash Karts, Happy Wheels, Bloxorz, Pacman, Space Invaders, Cut the Rope, Duck Life series, and more.

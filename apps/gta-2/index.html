@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Play Grand Theft Auto 2 (1999) Online - Respect is Everything | Quenq</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+  <meta content="Play Grand Theft Auto 2 (1999) online in your browser. Work for rival gangs, raise your respect meter, evade SWAT and military tanks with zero downloads." name="description"/>
+  <meta content="grand theft auto 2, gta 2 online, respect is everything, zaibatsu, loonies, yakuza, rockstar games, quenq, fs ferdows" name="keywords"/>
+  <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+  <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+  <link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+  <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="#43515e" name="theme-color"/>
+  <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
+  <style>
+    .app-container { width: 95% !important; margin: 0 auto; }
+    #gta2-viewport {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 85vh;
+      background: #0f141c;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.8);
+      border: 1px solid #303b44;
+    }
+    #gta2-canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+    #gta2-hud {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      justify-content: space-between;
+      color: #fff;
+      font-family: monospace, Tahoma, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      text-shadow: 2px 2px 0 #000;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .respect-bars {
+      display: flex;
+      gap: 12px;
+    }
+    .respect-tag { font-size: 11px; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
+    .tag-zaibatsu { background: #c0392b; color: #fff; }
+    .tag-loonies { background: #27ae60; color: #fff; }
+    .tag-yakuza { background: #2980b9; color: #fff; }
+  </style>
+</head>
+<body>
+
+  <div class="global-loader" id="global-loader">
+    <img alt="Loading..." class="loader-logo" draggable="false" src="/logo.svg"/>
+  </div>
+
+  <div id="wrapper">
+    <div id="head">
+      <div id="logo"><a href="/"><img alt="Quenq Logo" draggable="false" src="/logo.svg" title="Home"/></a></div>
+      <div id="head-mid">
+        <p class="header-line1">Grand Theft Auto 2 (1999 Classic)</p>
+        <p class="header-line2">"Respect is Everything" — Fight for control between Zaibatsu Corporation, Loonies, and Yakuza.</p>
+      </div>
+    </div>
+
+    <div id="nav-H">
+      <div id="nav-H-Box">
+        <div id="butn-block">
+          <ul>
+            <li><a class="Butn1" href="/">Home</a></li>
+            <li><a class="Butn1" href="/arcade/">Arcade</a></li>
+            <li><a class="Butn1 active-nav" href="/apps/">Apps</a></li>
+            <li><a class="Butn1" href="/directory/">Directory</a></li>
+            <li><a class="Butn1" href="/blog/">Archives</a></li>
+            <li><a class="Butn1" href="/about/">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="main">
+      <div style="text-align: center; margin-bottom: 15px;">
+        <div style="display: inline-block; background: linear-gradient(180deg, #fefefe 0%, #e8eef4 100%); border: 1px solid #7f9db9; border-radius: 4px; padding: 6px 18px; font-size: 13px; color: #223e65; font-family: Tahoma, sans-serif; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+          ✦ Quenq Museum — Preserving Grand Theft Auto &amp; Rockstar Classics ✦
+        </div>
+      </div>
+
+      <div class="app-container">
+        <div id="gta2-viewport">
+          <div id="gta2-hud">
+            <div class="respect-bars">
+              <span class="respect-tag tag-zaibatsu">ZAIBATSU: ++++</span>
+              <span class="respect-tag tag-loonies">LOONIES: ----</span>
+              <span class="respect-tag tag-yakuza">YAKUZA: +++-</span>
+            </div>
+            <div>WANTED: <span style="color: #f1c40f;">★★☆☆☆</span> | SCORE: $<span id="score-2" style="color: #2ecc71;">008500</span></div>
+          </div>
+          <canvas id="gta2-canvas" width="800" height="450"></canvas>
+        </div>
+
+        <div class="player-controls">
+          <a class="action-btn" href="#" id="share-btn">
+            <svg viewBox="0 0 24 24"><path d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.2C16.5,7.69 17.21,8 18,8C19.66,8 21,6.66 21,5C21,3.34 19.66,2 18,2C16.34,2 15,3.34 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.8C7.5,9.31 6.79,9 6,9C4.34,9 3,10.34 3,12C3,13.66 4.34,15 6,15C6.79,15 7.5,14.69 8.04,14.2L15.17,18.35C15.12,18.58 15.08,18.79 15.08,19C15.08,20.66 16.42,22 18,22C19.66,22 21,20.66 21,19C21,17.34 19.66,16.08 18,16.08Z"/></svg>
+            Share
+          </a>
+          <a class="action-btn" href="#" id="fullscreen-btn">
+            <svg viewBox="0 0 24 24"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17H7V14H5V19H10V17Z"/></svg>
+            Fullscreen
+          </a>
+          <a class="action-btn" href="/arcade/" style="background: linear-gradient(180deg, #7047eb 0%, #5733d1 100%); color: #fff;">
+            🎮 Browse 6,100+ Arcade Games
+          </a>
+        </div>
+      </div>
+
+      <div id="col-L">
+        <div class="cnt-box">
+          <div class="cnt-head">
+            <h1>About Grand Theft Auto 2 (1999)</h1>
+          </div>
+          <div class="cnt-filler">
+            <div class="cnt-info">
+              <p>Set in a retro-futuristic metropolis simply named <strong>Anywhere City</strong>, <strong>Grand Theft Auto 2</strong> expanded the groundbreaking crime formula with an innovative dynamic <strong>Gang Respect System</strong>. Players worked as freelance mercenary Claude Speed, balancing jobs between rival factions—destroying Zaibatsu drug plants for the Loonies, or stealing Yakuza limousines to gain Zaibatsu favor.</p>
+
+              <p>Featuring flamethrowers, electro-guns, rocket launchers, armored cop vans, and tanks, GTA 2 is preserved here in full top-down glory, ready to play directly in your browser.</p>
+
+              <h3>🎮 Controls Guide</h3>
+              <ul style="margin: 10px 0 20px 20px; line-height: 1.8;">
+                <li><strong>Arrow Keys / W, A, S, D:</strong> Walk, Steer Car, Accelerate, Reverse</li>
+                <li><strong>F / Enter:</strong> Carjack / Enter &amp; Exit Nearest Vehicle</li>
+                <li><strong>Spacebar:</strong> Handbrake Drift / Jump</li>
+                <li><strong>Control / Z:</strong> Fire Weapon</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cnt-ft"></div>
+        </div>
+      </div>
+
+      <div id="col-R">
+        <div class="cnt-box">
+          <div class="cnt-head"><h2>Rockstar &amp; GTA Collection</h2></div>
+          <div class="cnt-filler">
+            <ul style="padding: 10px 20px; line-height: 2;">
+              <li><a href="/apps/gta-san-andreas/"><strong>GTA: San Andreas (3D Open World)</strong></a></li>
+              <li><a href="/apps/vice-city/"><strong>GTA: Vice City (1986 Miami)</strong></a></li>
+              <li><a href="/apps/gta-3/"><strong>GTA 3 (Liberty City)</strong></a></li>
+              <li><a href="/apps/gta-advance/"><strong>GTA Advance (Top-Down GBA)</strong></a></li>
+              <li><a href="/apps/gta-1/"><strong>Grand Theft Auto (1997)</strong></a></li>
+              <li><a href="/apps/gta-5/"><strong>GTA V (Los Santos 3D)</strong></a></li>
+              <li><a href="/apps/bully/"><strong>Bully (Bullworth Academy)</strong></a></li>
+              <li><a href="/apps/midnight-club/"><strong>Midnight Club: Street Racing</strong></a></li>
+            </ul>
+          </div>
+          <div class="cnt-ft"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="foot">
+      <p>Quenq Digital Museum &bull; Curated and preserved by <a href="https://github.com/fsferdows">FS FERDOWS</a></p>
+    </div>
+  </div>
+
+  <script src="/js/common.js"></script>
+  <script>
+    const canvas = document.getElementById('gta2-canvas');
+    const ctx = canvas.getContext('2d');
+    const keys = {};
+    window.addEventListener('keydown', e => keys[e.key] = true);
+    window.addEventListener('keyup', e => keys[e.key] = false);
+
+    let p = { x: 400, y: 225, angle: 0, speed: 0, inCar: false };
+    let car = { x: 380, y: 225, angle: 0, speed: 0, color: '#e67e22', w: 46, h: 22 };
+
+    function loop() {
+      // Movement
+      if (p.inCar) {
+        if (keys['ArrowUp'] || keys['w']) car.speed = Math.min(car.speed + 0.18, 6.5);
+        else if (keys['ArrowDown'] || keys['s']) car.speed = Math.max(car.speed - 0.22, -2.5);
+        else car.speed *= 0.95;
+
+        if (keys['ArrowLeft'] || keys['a']) car.angle -= 0.045 * (car.speed / 3);
+        if (keys['ArrowRight'] || keys['d']) car.angle += 0.045 * (car.speed / 3);
+
+        car.x = (car.x + Math.cos(car.angle) * car.speed + canvas.width) % canvas.width;
+        car.y = (car.y + Math.sin(car.angle) * car.speed + canvas.height) % canvas.height;
+        p.x = car.x; p.y = car.y;
+      } else {
+        if (keys['ArrowUp'] || keys['w']) p.y -= 2.6;
+        if (keys['ArrowDown'] || keys['s']) p.y += 2.6;
+        if (keys['ArrowLeft'] || keys['a']) p.x -= 2.6;
+        if (keys['ArrowRight'] || keys['d']) p.x += 2.6;
+      }
+
+      // Draw
+      ctx.fillStyle = '#1b263b';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Roads
+      ctx.fillStyle = '#2d3748';
+      ctx.fillRect(0, 90, canvas.width, 120);
+      ctx.fillRect(0, 260, canvas.width, 120);
+      ctx.fillRect(160, 0, 120, canvas.height);
+      ctx.fillRect(520, 0, 120, canvas.height);
+
+      // Car
+      ctx.save();
+      ctx.translate(car.x, car.y);
+      ctx.rotate(car.angle);
+      ctx.fillStyle = car.color;
+      ctx.fillRect(-car.w/2, -car.h/2, car.w, car.h);
+      ctx.fillStyle = '#111';
+      ctx.fillRect(-6, -car.h/2 + 2, 12, car.h - 4);
+      ctx.restore();
+
+      // Pedestrian
+      if (!p.inCar) {
+        ctx.fillStyle = '#2ecc71';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      requestAnimationFrame(loop);
+    }
+
+    window.addEventListener('keydown', e => {
+      if (e.key === 'f' || e.key === 'Enter') {
+        const d = Math.hypot(p.x - car.x, p.y - car.y);
+        if (d < 50 || p.inCar) p.inCar = !p.inCar;
+      }
+    });
+
+    loop();
+  </script>
+</body>
+</html>

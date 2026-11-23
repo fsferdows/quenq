@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Play Grand Theft Auto (1997 Original) Online | Quenq</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+  <meta content="Play the original 1997 Grand Theft Auto (GTA 1) top-down open-world crime classic directly in your browser. Carjacking, police chases, pager missions, zero downloads." name="description"/>
+  <meta content="grand theft auto 1997, gta 1, retro gta, top-down crime, dma design, rockstar games, quenq, fs ferdows" name="keywords"/>
+  <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+  <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+  <link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+  <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="#43515e" name="theme-color"/>
+  <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
+  <style>
+    .app-container { width: 95% !important; margin: 0 auto; }
+    #gta1-viewport {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 85vh;
+      background: #111;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.8);
+      border: 1px solid #303b44;
+    }
+    #gta-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      image-rendering: pixelated;
+    }
+    #gta-hud {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-family: monospace, Tahoma, sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      text-shadow: 2px 2px 0 #000, -1px -1px 0 #000;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .hud-stars { color: #f1c40f; letter-spacing: 2px; }
+    .hud-score { color: #2ecc71; }
+    #gta-pager {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #f39c12;
+      color: #f1c40f;
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: bold;
+      z-index: 10;
+      pointer-events: none;
+      box-shadow: 0 0 10px rgba(243, 156, 18, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="global-loader" id="global-loader">
+    <img alt="Loading..." class="loader-logo" draggable="false" src="/logo.svg"/>
+  </div>
+
+  <div id="wrapper">
+    <div id="head">
+      <div id="logo"><a href="/"><img alt="Quenq Logo" draggable="false" src="/logo.svg" title="Home"/></a></div>
+      <div id="head-mid">
+        <p class="header-line1">Grand Theft Auto (1997 Original Classic)</p>
+        <p class="header-line2">The original top-down revolution created by DMA Design and published by Rockstar Games.</p>
+      </div>
+    </div>
+
+    <div id="nav-H">
+      <div id="nav-H-Box">
+        <div id="butn-block">
+          <ul>
+            <li><a class="Butn1" href="/">Home</a></li>
+            <li><a class="Butn1" href="/arcade/">Arcade</a></li>
+            <li><a class="Butn1 active-nav" href="/apps/">Apps</a></li>
+            <li><a class="Butn1" href="/directory/">Directory</a></li>
+            <li><a class="Butn1" href="/blog/">Archives</a></li>
+            <li><a class="Butn1" href="/about/">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="main">
+      <div style="text-align: center; margin-bottom: 15px;">
+        <div style="display: inline-block; background: linear-gradient(180deg, #fefefe 0%, #e8eef4 100%); border: 1px solid #7f9db9; border-radius: 4px; padding: 6px 18px; font-size: 13px; color: #223e65; font-family: Tahoma, sans-serif; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+          ✦ Quenq Museum — Preserving Grand Theft Auto &amp; Rockstar Classics ✦
+        </div>
+      </div>
+
+      <div class="app-container">
+        <div id="gta1-viewport">
+          <div id="gta-hud">
+            <div>HEALTH: <span id="hud-health" style="color: #e74c3c;">100%</span> | ARMOR: <span id="hud-armor" style="color: #3498db;">50%</span></div>
+            <div>WANTED: <span id="hud-stars" class="hud-stars">★☆☆☆☆</span></div>
+            <div>SCORE: $<span id="hud-score" class="hud-score">001500</span></div>
+          </div>
+          <div id="gta-pager">📟 PAGER: "Get a fast set of wheels and answer the payphone on 42nd St."</div>
+          <canvas id="gta-canvas" width="800" height="450"></canvas>
+        </div>
+
+        <div class="player-controls">
+          <a class="action-btn" href="#" id="restart-gta">
+            <svg viewBox="0 0 24 24"><path d="M12,4V1L8,5L12,9V6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12H4A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z"/></svg>
+            Restart
+          </a>
+          <a class="action-btn" href="#" id="share-btn">
+            <svg viewBox="0 0 24 24"><path d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.2C16.5,7.69 17.21,8 18,8C19.66,8 21,6.66 21,5C21,3.34 19.66,2 18,2C16.34,2 15,3.34 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.8C7.5,9.31 6.79,9 6,9C4.34,9 3,10.34 3,12C3,13.66 4.34,15 6,15C6.79,15 7.5,14.69 8.04,14.2L15.17,18.35C15.12,18.58 15.08,18.79 15.08,19C15.08,20.66 16.42,22 18,22C19.66,22 21,20.66 21,19C21,17.34 19.66,16.08 18,16.08Z"/></svg>
+            Share
+          </a>
+          <a class="action-btn" href="#" id="fullscreen-btn">
+            <svg viewBox="0 0 24 24"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17H7V14H5V19H10V17Z"/></svg>
+            Fullscreen
+          </a>
+        </div>
+      </div>
+
+      <div id="col-L">
+        <div class="cnt-box">
+          <div class="cnt-head">
+            <h1>About Grand Theft Auto (1997 Original)</h1>
+          </div>
+          <div class="cnt-filler">
+            <div class="cnt-info">
+              <p>Before 3D metropolises, <strong>Grand Theft Auto</strong> was born in 1997 as a gritty, birds-eye-view open-world sandbox game developed by DMA Design (now Rockstar North). Players navigated top-down cities—<strong>Liberty City</strong>, <strong>San Andreas</strong>, and <strong>Vice City</strong>—taking jobs from criminal bosses through ringing public payphones and pager beepers.</p>
+              
+              <p>This authentic web preservation engine brings the original top-down thrill to life with responsive car steering, drifting physics, pedestrian traffic, aggressive police patrol cars, and weapon systems.</p>
+
+              <h3>🎮 Controls Guide</h3>
+              <ul style="margin: 10px 0 20px 20px; line-height: 1.8;">
+                <li><strong>Arrow Keys / W, A, S, D:</strong> Walk, Steer Car, Accelerate, Reverse</li>
+                <li><strong>F / Enter:</strong> Carjack / Enter &amp; Exit Nearest Vehicle</li>
+                <li><strong>Spacebar:</strong> Handbrake Drift (in car) / Jump (on foot)</li>
+                <li><strong>Control / Z:</strong> Fire Weapon (Pistol / Uzi)</li>
+                <li><strong>H:</strong> Vehicle Horn</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cnt-ft"></div>
+        </div>
+      </div>
+
+      <div id="col-R">
+        <div class="cnt-box">
+          <div class="cnt-head"><h2>More Rockstar &amp; GTA Titles</h2></div>
+          <div class="cnt-filler">
+            <ul style="padding: 10px 20px; line-height: 2;">
+              <li><a href="/apps/gta-san-andreas/"><strong>GTA: San Andreas (3D Open World)</strong></a></li>
+              <li><a href="/apps/vice-city/"><strong>GTA: Vice City (1986 Miami)</strong></a></li>
+              <li><a href="/apps/gta-3/"><strong>GTA 3 (Liberty City)</strong></a></li>
+              <li><a href="/apps/gta-advance/"><strong>GTA Advance (Top-Down GBA)</strong></a></li>
+              <li><a href="/apps/gta-2/"><strong>Grand Theft Auto 2 (1999)</strong></a></li>
+              <li><a href="/apps/gta-5/"><strong>GTA V (Los Santos 3D)</strong></a></li>
+              <li><a href="/apps/bully/"><strong>Bully (Bullworth Academy)</strong></a></li>
+              <li><a href="/apps/midnight-club/"><strong>Midnight Club: Street Racing</strong></a></li>
+            </ul>
+          </div>
+          <div class="cnt-ft"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="foot">
+      <p>Quenq Digital Museum &bull; Curated and preserved by <a href="https://github.com/fsferdows">FS FERDOWS</a></p>
+    </div>
+  </div>
+
+  <script src="/js/common.js"></script>
+  <script>
+    /**
+     * Top-Down Retro GTA Engine
+     * Developed by FS FERDOWS for Quenq Museum
+     */
+    const canvas = document.getElementById('gta-canvas');
+    const ctx = canvas.getContext('2d');
+    const hudHealth = document.getElementById('hud-health');
+    const hudArmor = document.getElementById('hud-armor');
+    const hudStars = document.getElementById('hud-stars');
+    const hudScore = document.getElementById('hud-score');
+    const pager = document.getElementById('gta-pager');
+
+    const keys = {};
+    window.addEventListener('keydown', e => keys[e.key] = true);
+    window.addEventListener('keyup', e => keys[e.key] = false);
+
+    // Audio synthesizer
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function sfx(freq, type='sine', duration=0.1) {
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    let state = {
+      score: 1500,
+      health: 100,
+      armor: 50,
+      wanted: 1,
+      inVehicle: false,
+      currentCar: null,
+      player: { x: 400, y: 225, angle: 0, speed: 0, maxSpeed: 2.5, radius: 10 },
+      bullets: [],
+      cars: [],
+      pedestrians: [],
+      particles: []
+    };
+
+    function initGame() {
+      state.score = 1500;
+      state.health = 100;
+      state.armor = 50;
+      state.wanted = 1;
+      state.inVehicle = false;
+      state.player = { x: 400, y: 225, angle: 0, speed: 0, maxSpeed: 2.5, radius: 10 };
+      state.cars = [
+        { x: 320, y: 220, angle: 0, speed: 0, color: '#e74c3c', w: 46, h: 24, isPolice: false },
+        { x: 480, y: 280, angle: Math.PI / 2, speed: 0, color: '#3498db', w: 48, h: 24, isPolice: false },
+        { x: 250, y: 140, angle: 0, speed: 0, color: '#f1c40f', w: 44, h: 22, isPolice: false },
+        { x: 600, y: 180, angle: Math.PI, speed: 0, color: '#2c3e50', w: 50, h: 26, isPolice: true }
+      ];
+      state.pedestrians = [
+        { x: 280, y: 190, dir: 1, color: '#1abc9c' },
+        { x: 520, y: 240, dir: -1, color: '#e67e22' },
+        { x: 380, y: 310, dir: 1, color: '#9b59b6' }
+      ];
+      updateHUD();
+    }
+
+    function updateHUD() {
+      hudHealth.textContent = `${state.health}%`;
+      hudArmor.textContent = `${state.armor}%`;
+      hudScore.textContent = String(state.score).padStart(6, '0');
+      let stars = '';
+      for (let i = 0; i < 5; i++) stars += i < state.wanted ? '★' : '☆';
+      hudStars.textContent = stars;
+    }
+
+    // Carjack / Enter Vehicle Handler
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'f' || e.key === 'F' || e.key === 'Enter') {
+        if (state.inVehicle) {
+          // Exit vehicle
+          state.inVehicle = false;
+          state.player.x = state.currentCar.x + Math.sin(state.currentCar.angle) * 30;
+          state.player.y = state.currentCar.y - Math.cos(state.currentCar.angle) * 30;
+          state.currentCar = null;
+          sfx(300, 'square', 0.1);
+        } else {
+          // Find nearest car within distance
+          for (let c of state.cars) {
+            const dist = Math.hypot(c.x - state.player.x, c.y - state.player.y);
+            if (dist < 40) {
+              state.inVehicle = true;
+              state.currentCar = c;
+              state.score += 250;
+              sfx(440, 'triangle', 0.15);
+              pager.textContent = '📟 PAGER: "Nice ride! Avoid police patrols and deliver it."';
+              updateHUD();
+              break;
+            }
+          }
+        }
+      }
+
+      // Shoot weapon
+      if ((e.key === 'Control' || e.key === 'z' || e.key === 'Z') && !state.inVehicle) {
+        state.bullets.push({
+          x: state.player.x,
+          y: state.player.y,
+          vx: Math.cos(state.player.angle) * 9,
+          vy: Math.sin(state.player.angle) * 9,
+          life: 40
+        });
+        sfx(800, 'sawtooth', 0.08);
+      }
+    });
+
+    document.getElementById('restart-gta').addEventListener('click', (e) => {
+      e.preventDefault();
+      initGame();
+    });
+
+    function update() {
+      if (state.inVehicle && state.currentCar) {
+        const c = state.currentCar;
+        if (keys['ArrowUp'] || keys['w'] || keys['W']) c.speed = Math.min(c.speed + 0.15, 6.0);
+        else if (keys['ArrowDown'] || keys['s'] || keys['S']) c.speed = Math.max(c.speed - 0.2, -2.5);
+        else c.speed *= 0.96; // drag
+
+        if (keys['ArrowLeft'] || keys['a'] || keys['A']) c.angle -= 0.04 * (c.speed / 3);
+        if (keys['ArrowRight'] || keys['d'] || keys['D']) c.angle += 0.04 * (c.speed / 3);
+
+        c.x += Math.cos(c.angle) * c.speed;
+        c.y += Math.sin(c.angle) * c.speed;
+
+        // Wrap around bounds
+        if (c.x < 0) c.x = canvas.width;
+        if (c.x > canvas.width) c.x = 0;
+        if (c.y < 0) c.y = canvas.height;
+        if (c.y > canvas.height) c.y = 0;
+
+        state.player.x = c.x;
+        state.player.y = c.y;
+      } else {
+        const p = state.player;
+        let moving = false;
+        if (keys['ArrowUp'] || keys['w'] || keys['W']) { p.y -= p.maxSpeed; p.angle = -Math.PI / 2; moving = true; }
+        if (keys['ArrowDown'] || keys['s'] || keys['S']) { p.y += p.maxSpeed; p.angle = Math.PI / 2; moving = true; }
+        if (keys['ArrowLeft'] || keys['a'] || keys['A']) { p.x -= p.maxSpeed; p.angle = Math.PI; moving = true; }
+        if (keys['ArrowRight'] || keys['d'] || keys['D']) { p.x += p.maxSpeed; p.angle = 0; moving = true; }
+
+        if (p.x < 10) p.x = 10;
+        if (p.x > canvas.width - 10) p.x = canvas.width - 10;
+        if (p.y < 10) p.y = 10;
+        if (p.y > canvas.height - 10) p.y = canvas.height - 10;
+      }
+
+      // Update Bullets
+      for (let i = state.bullets.length - 1; i >= 0; i--) {
+        const b = state.bullets[i];
+        b.x += b.vx;
+        b.y += b.vy;
+        b.life--;
+        if (b.life <= 0) state.bullets.splice(i, 1);
+      }
+    }
+
+    function render() {
+      // Background Road & City Grid
+      ctx.fillStyle = '#222629';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Sidewalks & Roads
+      ctx.fillStyle = '#3a3d40';
+      ctx.fillRect(100, 0, 600, canvas.height);
+      ctx.fillRect(0, 80, canvas.width, 140);
+      ctx.fillRect(0, 260, canvas.width, 140);
+
+      // Road markings
+      ctx.strokeStyle = '#f1c40f';
+      ctx.setLineDash([16, 12]);
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(0, 150); ctx.lineTo(canvas.width, 150);
+      ctx.moveTo(0, 330); ctx.lineTo(canvas.width, 330);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Draw Cars
+      for (let c of state.cars) {
+        ctx.save();
+        ctx.translate(c.x, c.y);
+        ctx.rotate(c.angle);
+        ctx.fillStyle = c.color;
+        ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+
+        // Windshield
+        ctx.fillStyle = '#111';
+        ctx.fillRect(-c.w / 6, -c.h / 2 + 3, c.w / 3, c.h - 6);
+
+        // Headlights
+        ctx.fillStyle = '#fffa65';
+        ctx.fillRect(c.w / 2 - 2, -c.h / 2 + 2, 2, 4);
+        ctx.fillRect(c.w / 2 - 2, c.h / 2 - 6, 2, 4);
+
+        if (c.isPolice) {
+          ctx.fillStyle = (Date.now() % 400 < 200) ? '#e74c3c' : '#3498db';
+          ctx.fillRect(-4, -4, 8, 8);
+        }
+        ctx.restore();
+      }
+
+      // Draw Pedestrians
+      for (let p of state.pedestrians) {
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw Bullets
+      ctx.fillStyle = '#f39c12';
+      for (let b of state.bullets) {
+        ctx.fillRect(b.x - 2, b.y - 2, 4, 4);
+      }
+
+      // Draw Player (if not in vehicle)
+      if (!state.inVehicle) {
+        const p = state.player;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = '#f39c12';
+        ctx.beginPath();
+        ctx.arc(0, 0, 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Hands / Gun
+        ctx.fillStyle = '#bdc3c7';
+        ctx.fillRect(4, -3, 8, 6);
+        ctx.restore();
+      }
+    }
+
+    function loop() {
+      update();
+      render();
+      requestAnimationFrame(loop);
+    }
+
+    initGame();
+    loop();
+  </script>
+</body>
+</html>

@@ -4,9 +4,16 @@
 
 (function () {
   const allApps = [
-    { name: "Project I.G.I.", url: "/apps/project-igi/" },
+    { name: "GTA: San Andreas", url: "/apps/gta-san-andreas/" },
     { name: "GTA 3", url: "/apps/gta-3/" },
     { name: "Vice City", url: "/apps/vice-city/" },
+    { name: "GTA V", url: "/apps/gta-5/" },
+    { name: "GTA Advance", url: "/apps/gta-advance/" },
+    { name: "Grand Theft Auto (1997)", url: "/apps/gta-1/" },
+    { name: "Grand Theft Auto 2", url: "/apps/gta-2/" },
+    { name: "Bully", url: "/apps/bully/" },
+    { name: "Midnight Club", url: "/apps/midnight-club/" },
+    { name: "Project I.G.I.", url: "/apps/project-igi/" },
     { name: "Minecraft", url: "/apps/minecraft/" },
     { name: "Reborn XP", url: "/apps/reborn-xp/" },
     { name: "Dr. Driving", url: "/apps/dr-driving/" },

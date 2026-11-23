@@ -1,5 +1,5 @@
 /**
- * Quenq - Common Site Scripts & Mobile Gamepad Engine
+ * onlinegames.stream - Common Site Scripts & Mobile Gamepad Engine
  * Handles global loader, pseudo-fullscreen safeguard, ad mocks,
  * and universal on-screen touch gamepad for mobile/tablet retro gaming.
  */

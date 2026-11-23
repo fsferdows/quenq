@@ -1,5 +1,5 @@
 /**
- * Quenq CrazyGames Arcade Engine
+ * onlinegames.stream Arcade Engine
  * Inspired by https://www.crazygames.com/
  * Powers the 6,100+ game catalog, hero carousel, horizontal sliders,
  * live instant search, category filtering, and in-page theater player.
@@ -29,6 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const theaterPopoutBtn = document.getElementById('theater-popout-btn');
   const theaterControlsBtn = document.getElementById('theater-controls-btn');
   const theaterVpad = document.getElementById('theater-virtual-gamepad');
+  const theaterRecList = document.getElementById('theater-rec-list');
+  const theaterRecGenreBadge = document.getElementById('theater-rec-genre-badge');
+  const theaterRecSubtitle = document.getElementById('theater-rec-subtitle');
+  const theaterReloadBtn = document.getElementById('theater-reload-btn');
+  const theaterTroubleshootHint = document.getElementById('theater-troubleshoot-hint');
+  const theaterDirectLink = document.getElementById('theater-direct-link');
+  const theaterGameBadge = document.getElementById('theater-game-badge');
+  let currentGamePlaying = null;
 
   // Rows
   const gtaTrack = document.getElementById('gta-track');
@@ -100,7 +108,23 @@ document.addEventListener('DOMContentLoaded', () => {
     'cow-and-chicken-ballet-parking': '/images/thumbnails/ballet-parking.jpg',
     'pacman': 'https://imgs.crazygames.com/pacman.png?metadata=none&quality=85&width=540&resizer=covers',
     'bloxorz': 'https://imgs.crazygames.com/games/bloxorz/cover-1669373098527.png?metadata=none&quality=85&width=540&resizer=covers',
-    '2048': 'https://imgs.crazygames.com/games/2048/cover_16x9-1707828856995.png?metadata=none&quality=85&width=540&resizer=covers'
+    '2048': 'https://imgs.crazygames.com/games/2048/cover_16x9-1707828856995.png?metadata=none&quality=85&width=540&resizer=covers',
+    'minecraft': '/apps/minecraft/og.jpg',
+    'dr-driving': '/apps/dr-driving/og.jpg',
+    'project-igi': '/apps/project-igi/og.jpg',
+    'hill-climb-racing': '/apps/hill-climb-racing/og.jpg',
+    'diamond-rush': '/apps/diamond-rush/og.jpg',
+    'angry-birds': '/apps/angry-birds-chrome/og.jpg',
+    'angry-birds-chrome': '/apps/angry-birds-chrome/og.jpg',
+    '3d-pinball-space-cadet': '/apps/3d-pinball-space-cadet/og.jpg',
+    'space-cadet-pinball': '/apps/3d-pinball-space-cadet/og.jpg',
+    'reborn-xp': '/apps/reborn-xp/og.jpg',
+    'emulator': '/apps/emulator/og.jpg',
+    'hacker-simulator': '/apps/hacker-simulator/og.jpg',
+    'swf-player': '/apps/swf-player/og.jpg',
+    'moto-x3m': 'https://imgs.crazygames.com/moto-x3m_16x9/20241004045353/moto-x3m_16x9-cover?metadata=none&quality=85&width=540&resizer=covers',
+    'smash-karts': 'https://imgs.crazygames.com/smash-karts_16x9/20241004045353/smash-karts_16x9-cover?metadata=none&quality=85&width=540&resizer=covers',
+    'happy-wheels': 'https://imgs.crazygames.com/happywheels.png?metadata=none&quality=85&width=540&resizer=covers'
   };
 
   // High-Resolution Procedural Poster Card Cover Generator (Zero Initials, Stylized Arcade Artwork)
@@ -229,6 +253,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Update Pin Counter
   function updatePinCount() {
     if (pinnedCountElem) pinnedCountElem.textContent = pinnedGames.length;
+    const sidebarPinElem = document.getElementById('sidebar-pinned-count');
+    if (sidebarPinElem) sidebarPinElem.textContent = pinnedGames.length;
   }
   updatePinCount();
 
@@ -239,13 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (pinnedGames.includes(game.id)) card.classList.add('pinned');
     card.dataset.id = game.id;
 
-    // Resolve robust thumbnail URL (Check map -> Check valid web thumb -> Procedural Fallback)
-    let thumbUrl = POPULAR_THUMB_MAP[game.id] || null;
-    if (!thumbUrl && game.thumb) {
-      if (!game.thumb.includes('static.quenq.com')) {
-        thumbUrl = game.thumb;
-      }
-    }
+    // Resolve accurate thumbnail URL (Priority: Popular Map -> Game Thumb -> Stylized Poster Fallback)
+    let thumbUrl = POPULAR_THUMB_MAP[game.id] || (game.thumb && game.thumb.trim()) || null;
     if (!thumbUrl) {
       thumbUrl = getProceduralThumbnail(game.name, game.genre);
     }
@@ -314,10 +335,30 @@ document.addEventListener('DOMContentLoaded', () => {
   // Open Theater Player
   function openTheaterGame(game) {
     if (!game) return;
+    currentGamePlaying = game;
     theaterTitle.textContent = game.name;
     const playerUrl = game.embedUrl || (game.id ? `/arcade/${game.id}/` : '#');
+
+    // Prevent iframe embedding restrictions via no-referrer policy
+    try {
+      theaterIframe.referrerPolicy = 'no-referrer';
+    } catch (_) {}
     theaterIframe.src = playerUrl;
     theaterPopoutBtn.href = playerUrl;
+
+    if (theaterDirectLink) {
+      theaterDirectLink.href = playerUrl;
+    }
+
+    if (theaterGameBadge) {
+      const g = (game.genre || 'arcade').split(',')[0].toUpperCase();
+      theaterGameBadge.textContent = g;
+      theaterGameBadge.style.display = 'inline-block';
+    }
+
+    // Render Right-Side Recommendations tailored to current title
+    renderTheaterRecommendations(game);
+
     theaterModal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
     if (isTouchDevice && window.innerWidth < 1024 && theaterVpad) {
@@ -333,13 +374,171 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
     if (theaterVpad) theaterVpad.style.display = 'none';
     if (theaterControlsBtn) theaterControlsBtn.classList.remove('primary');
+    if (theaterRecList) theaterRecList.innerHTML = '';
+    currentGamePlaying = null;
     window.history.pushState({}, '', '/arcade/');
+  }
+
+  // Reload Game Button
+  if (theaterReloadBtn) {
+    theaterReloadBtn.addEventListener('click', () => {
+      if (currentGamePlaying) {
+        const playerUrl = currentGamePlaying.embedUrl || (currentGamePlaying.id ? `/arcade/${currentGamePlaying.id}/` : '#');
+        theaterIframe.src = 'about:blank';
+        setTimeout(() => {
+          theaterIframe.referrerPolicy = 'no-referrer';
+          theaterIframe.src = playerUrl;
+        }, 120);
+      }
+    });
+  }
+
+  // Smart Recommendation Algorithm based on active game
+  function getRecommendedGames(game, count = 10) {
+    if (!game) return FEATURED_HITS.slice(0, count);
+
+    const currentId = (game.id || '').toLowerCase();
+    const currentGenres = (game.genre || '').toLowerCase().split(',').map(s => s.trim()).filter(Boolean);
+    const nameTokens = (game.name || '').toLowerCase().replace(/[^a-z0-9 ]/g, '').split(/\s+/).filter(w => w.length > 2);
+
+    // Topical keyword clusters
+    const sportsKeywords = ['soccer', 'football', 'fifa', 'penalty', 'manager', 'sport', 'basketball', 'tennis', 'baseball', 'cricket', 'goal', 'striker'];
+    const drivingKeywords = ['car', 'driving', 'race', 'racing', 'drift', 'moto', 'bike', 'speed', 'stunt', 'truck', 'highway', 'traffic'];
+    const shootingKeywords = ['shoot', 'gun', 'sniper', 'fps', 'war', 'combat', 'battle', 'strike', 'bullet', 'clash'];
+    const puzzleKeywords = ['puzzle', 'match', 'logic', 'brain', 'block', '2048', 'escape', 'physics', 'bubble'];
+    const actionKeywords = ['action', 'fight', 'gta', 'ninja', 'run', 'runner', 'adventure', 'smash', 'karts'];
+
+    const isCurrentSports = currentGenres.some(cg => sportsKeywords.includes(cg)) || nameTokens.some(t => sportsKeywords.includes(t));
+    const isCurrentDriving = currentGenres.some(cg => drivingKeywords.includes(cg)) || nameTokens.some(t => drivingKeywords.includes(t));
+    const isCurrentShooting = currentGenres.some(cg => shootingKeywords.includes(cg)) || nameTokens.some(t => shootingKeywords.includes(t));
+    const isCurrentPuzzle = currentGenres.some(cg => puzzleKeywords.includes(cg)) || nameTokens.some(t => puzzleKeywords.includes(t));
+    const isCurrentAction = currentGenres.some(cg => actionKeywords.includes(cg)) || nameTokens.some(t => actionKeywords.includes(t));
+
+    const pool = (allGames && allGames.length > 0) ? allGames : FEATURED_HITS;
+
+    const scored = pool
+      .filter(g => g.id && g.id.toLowerCase() !== currentId)
+      .map(g => {
+        let score = 0;
+        const gId = g.id.toLowerCase();
+        const gName = (g.name || '').toLowerCase();
+        const gGenres = (g.genre || '').toLowerCase().split(',').map(s => s.trim()).filter(Boolean);
+
+        // 1. Direct genre matching
+        for (const cg of currentGenres) {
+          if (gGenres.includes(cg)) score += 40;
+        }
+
+        // 2. Name token overlap (e.g. "Football", "Manager", "Moto", "GTA", "Slope")
+        for (const tok of nameTokens) {
+          if (gName.includes(tok) || gId.includes(tok)) score += 35;
+        }
+
+        // 3. Category cluster bonuses
+        if (isCurrentSports && (gGenres.some(cg => sportsKeywords.includes(cg)) || sportsKeywords.some(k => gName.includes(k)))) {
+          score += 35;
+        }
+        if (isCurrentDriving && (gGenres.some(cg => drivingKeywords.includes(cg)) || drivingKeywords.some(k => gName.includes(k)))) {
+          score += 35;
+        }
+        if (isCurrentShooting && (gGenres.some(cg => shootingKeywords.includes(cg)) || shootingKeywords.some(k => gName.includes(k)))) {
+          score += 35;
+        }
+        if (isCurrentPuzzle && (gGenres.some(cg => puzzleKeywords.includes(cg)) || puzzleKeywords.some(k => gName.includes(k)))) {
+          score += 35;
+        }
+        if (isCurrentAction && (gGenres.some(cg => actionKeywords.includes(cg)) || actionKeywords.some(k => gName.includes(k)))) {
+          score += 25;
+        }
+
+        // 4. Boost curated high-res titles
+        if (POPULAR_THUMB_MAP[g.id]) score += 15;
+        if (FEATURED_HITS.some(h => h.id === g.id)) score += 10;
+
+        return { game: g, score };
+      });
+
+    scored.sort((a, b) => b.score - a.score);
+    const results = scored.slice(0, count).map(s => s.game);
+
+    // Backfill with FEATURED_HITS if needed
+    if (results.length < count) {
+      for (const fh of FEATURED_HITS) {
+        if (fh.id !== currentId && !results.some(r => r.id === fh.id)) {
+          results.push(fh);
+          if (results.length >= count) break;
+        }
+      }
+    }
+
+    return results;
+  }
+
+  // Render Recommendations into Right-Side Panel
+  function renderTheaterRecommendations(game) {
+    if (!theaterRecList) return;
+    theaterRecList.innerHTML = '';
+
+    const recs = getRecommendedGames(game, 10);
+
+    if (theaterRecGenreBadge) {
+      const primaryGenre = (game.genre || 'Popular').split(',')[0];
+      theaterRecGenreBadge.textContent = primaryGenre.toUpperCase();
+    }
+    if (theaterRecSubtitle) {
+      theaterRecSubtitle.textContent = `More games like ${game.name}`;
+    }
+
+    recs.forEach(rec => {
+      const card = document.createElement('a');
+      card.className = 'cg-rec-card';
+      card.href = `/arcade/${rec.id}/`;
+
+      const thumbUrl = POPULAR_THUMB_MAP[rec.id] || (rec.thumb && rec.thumb.trim()) || getProceduralThumbnail(rec.name, rec.genre);
+      const genreLabel = (rec.genre || 'arcade').split(',')[0];
+
+      card.innerHTML = `
+        <div class="cg-rec-thumb-box">
+          <img class="cg-rec-thumb" src="${thumbUrl}" alt="${rec.name}" loading="lazy"/>
+        </div>
+        <div class="cg-rec-info">
+          <h4 class="cg-rec-name" title="${rec.name}">${rec.name}</h4>
+          <div class="cg-rec-meta">
+            <span class="cg-rec-tag">${genreLabel}</span>
+            <span class="cg-rec-play-btn">▶ Play</span>
+          </div>
+        </div>
+      `;
+
+      const img = card.querySelector('.cg-rec-thumb');
+      if (img) {
+        img.onerror = function() {
+          this.onerror = null;
+          this.src = getProceduralThumbnail(rec.name, rec.genre);
+        };
+      }
+
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        openTheaterGame(rec);
+        const frame = document.getElementById('theater-frame-container');
+        if (frame && window.innerWidth < 1024) {
+          frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+
+      theaterRecList.appendChild(card);
+    });
   }
 
   theaterCloseBtn.addEventListener('click', closeTheater);
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && theaterModal.classList.contains('is-open')) {
-      closeTheater();
+    if (e.key === 'Escape') {
+      if (theaterModal && theaterModal.classList.contains('is-open')) {
+        closeTheater();
+      } else if (sidebar && sidebar.classList.contains('mobile-open')) {
+        closeSidebar();
+      }
     }
   });
 
@@ -354,7 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   theaterShareBtn.addEventListener('click', async () => {
-    const shareData = { title: theaterTitle.textContent, text: 'Play ' + theaterTitle.textContent + ' free on Quenq Arcade!', url: window.location.href };
+    const shareData = { title: theaterTitle.textContent, text: 'Play ' + theaterTitle.textContent + ' free on onlinegames.stream Arcade!', url: window.location.href };
     try {
       if (navigator.share) await navigator.share(shareData);
       else {
@@ -490,12 +689,68 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Sidebar Toggle for Mobile
+  // Sidebar Drawer for Mobile
+  const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+  const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+
+  function openSidebar() {
+    if (sidebar) sidebar.classList.add('mobile-open');
+    if (sidebarBackdrop) sidebarBackdrop.classList.add('is-visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    if (sidebar) sidebar.classList.remove('mobile-open');
+    if (sidebarBackdrop) sidebarBackdrop.classList.remove('is-visible');
+    if (!theaterModal || !theaterModal.classList.contains('is-open')) {
+      document.body.style.overflow = '';
+    }
+  }
+
   if (sidebarToggle && sidebar) {
-    sidebarToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('mobile-open');
+    sidebarToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (sidebar.classList.contains('mobile-open')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
     });
   }
+
+  if (sidebarCloseBtn) {
+    sidebarCloseBtn.addEventListener('click', closeSidebar);
+  }
+
+  if (sidebarBackdrop) {
+    sidebarBackdrop.addEventListener('click', closeSidebar);
+  }
+
+  // Sub-Menu Toggle Accordion System
+  const submenuHeaders = document.querySelectorAll('.cg-sidebar-toggle-header');
+  submenuHeaders.forEach(header => {
+    const section = header.closest('.cg-sidebar-section');
+    const sectionId = section ? section.id : null;
+
+    // Restore saved collapse state from localStorage if exists
+    if (sectionId && localStorage.getItem('sidebar_collapsed_' + sectionId) === 'true') {
+      header.setAttribute('aria-expanded', 'false');
+      if (section) section.classList.add('is-collapsed');
+    }
+
+    header.addEventListener('click', (e) => {
+      e.preventDefault();
+      const isExpanded = header.getAttribute('aria-expanded') === 'true';
+      const newExpanded = !isExpanded;
+      header.setAttribute('aria-expanded', String(newExpanded));
+      if (section) {
+        section.classList.toggle('is-collapsed', !newExpanded);
+        if (sectionId) {
+          localStorage.setItem('sidebar_collapsed_' + sectionId, String(!newExpanded));
+        }
+      }
+    });
+  });
 
   // Pagination Controls
   function renderPagination(totalCount) {
@@ -599,6 +854,14 @@ document.addEventListener('DOMContentLoaded', () => {
     currentGenre = genre;
     currentPage = 1;
 
+    // Update URL query parameter cleanly without page reload
+    if (window.history && window.history.replaceState) {
+      const newUrl = genre === 'all' 
+        ? window.location.pathname 
+        : window.location.pathname + '?genre=' + encodeURIComponent(genre);
+      window.history.replaceState({ genre }, '', newUrl);
+    }
+
     // Update sidebar items
     document.querySelectorAll('.cg-nav-item[data-genre]').forEach(el => {
       el.classList.toggle('active', el.dataset.genre === genre);
@@ -610,8 +873,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // On mobile, close sidebar after clicking
-    if (window.innerWidth < 980 && sidebar) {
-      sidebar.classList.remove('mobile-open');
+    if (window.innerWidth < 980) {
+      closeSidebar();
     }
 
     updateGrid();
@@ -671,7 +934,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    console.log(`[Quenq CrazyGames] Total catalog ready: ${allGames.length} games.`);
+    console.log(`[onlinegames.stream] Total catalog ready: ${allGames.length} games.`);
     updateGrid();
   }).catch(err => {
     console.warn('Could not load game catalogs:', err);

@@ -1,5 +1,5 @@
 /**
- * Quenq Directory - Web Ports & Digital Exhibits Launcher
+ * onlinegames.stream Directory - Web Ports & Digital Exhibits Launcher
  * Opens interactive museum items and web ports in centered desktop popups.
  */
 

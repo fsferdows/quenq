@@ -1,0 +1,34 @@
+# onlinegames.stream
+
+> onlinegames.stream is a premier free online gaming platform and digital software preservation archive featuring over 6,100 playable web games. It provides instant access to HTML5 hits, classic Flash arcade titles via WebAssembly, and high-fidelity retro system simulators with zero downloads, zero installations, and cross-platform mobile support.
+
+## Core Hubs & Sections
+- [Arcade Hub](https://onlinegames.stream/arcade/): 6,100+ instant-play HTML5 and Flash games with live search, category filtering, and in-page theater mode.
+- [Apps & Simulators](https://onlinegames.stream/apps/): Full system simulators (Windows Reborn XP), console emulators, and standalone web ports.
+- [Web Directory](https://onlinegames.stream/directory/): Hand-curated index of external web ports and interactive digital exhibits.
+- [Archives & Articles](https://onlinegames.stream/blog/): Cultural retrospectives on legendary video games and internet history.
+
+## Top Playable Games & Standalone Apps
+- [Reborn XP Online Simulator](https://onlinegames.stream/apps/reborn-xp/): Full interactive Windows XP operating system simulator with 3D Pinball, Paint, and Internet Explorer.
+- [Minecraft Browser Edition](https://onlinegames.stream/apps/minecraft/): Fully playable classic Minecraft sandbox directly in your web browser.
+- [Slope 3D Endless Runner](https://onlinegames.stream/apps/slope/): High-speed 3D neon downhill ball runner.
+- [DOOM 1993 WebAssembly Port](https://onlinegames.stream/apps/doom/): The iconic id Software FPS running at full 60 FPS in browser.
+- [Moto X3M Bike Race](https://onlinegames.stream/arcade/?search=Moto%20X3M): Extreme stunt dirt bike racing across 25+ obstacle levels.
+- [Smash Karts 3D](https://onlinegames.stream/arcade/?search=Smash%20Karts): Fast-paced 3D multiplayer kart battle arena.
+- [Cookie Clicker Classic](https://onlinegames.stream/apps/cookie-clicker/): The quintessential incremental clicking game.
+- [2048 Classic Puzzle](https://onlinegames.stream/apps/2048/): Minimalist tile-combining number puzzle game.
+- [Crossy Road Web](https://onlinegames.stream/apps/crossy-road/): Endless voxel road-crossing arcade game.
+- [Bad Ice-Cream Arcade](https://onlinegames.stream/apps/bad-ice-cream/): Nitrome classic maze puzzle game with multiplayer support.
+- [GTA San Andreas 3D Simulator](https://onlinegames.stream/arcade/?search=GTA): Open-world city driving and mission simulation.
+- [Flappy Bird HTML5](https://onlinegames.stream/apps/flappy-bird/): Original physics obstacle aviary challenge.
+
+## Major Game Categories & Collections
+- **Grand Theft Auto & Rockstar Classics**: GTA San Andreas (3D Open World), GTA Vice City Online, GTA 3, GTA IV, GTA V Simulator, Bully, Midnight Club, Red Dead.
+- **Top HTML5 Arcade Hits**: Moto X3M, Smash Karts, Slope 3D, Subway Surfers, Geometry Dash, Space Invaders, Pacman, Happy Wheels.
+- **Classic Flash Archive**: Antbuster, Pandemic, Epic Battle Fantasy 2, Feed Me, Sonic on Angel Island, SpongeBob Saw Game.
+- **Standalone Indie Ports**: DOOM (1993 WASM), Minecraft Browser Edition, Flappy Bird, 2048, Doodle Jump, Cookie Clicker, Crossy Road, Bad Ice-Cream, Hill Climb Racing, Project I.G.I.
+
+## Technical & Access Features
+- Universal responsive controls for PC, Mac, Chromebook, iPhone, iPad, and Android.
+- Built-in on-screen virtual gamepad for touch devices.
+- Zero tracking, zero telemetry, and privacy-first gaming.

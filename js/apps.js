@@ -1,5 +1,5 @@
 /**
- * Quenq Apps - Dynamic Apps Recommendation & Filtering
+ * onlinegames.stream - Dynamic Apps Recommendation & Filtering
  */
 
 (function () {

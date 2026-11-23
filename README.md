@@ -1,6 +1,6 @@
-# Quenq - Open Source Web Preservation & 6,000+ Game Archive
+# onlinegames.stream - Open Source Web Preservation & 6,000+ Game Archive
 
-An open-source web preservation archive and simulator museum cloned from [quenq.com](https://quenq.com/) and supercharged with **6,100+ playable games** (integrated from [CrazyGames](https://www.crazygames.com/) via the REA reverse-engineering methodology, plus classic Flash and standalone HTML5 apps). Fully responsive across mobile phones, tablets, laptops, and desktop PCs.
+An open-source web preservation archive and simulator museum cloned from [onlinegames.stream](https://onlinegames.stream/) and supercharged with **6,100+ playable games** (integrated from [CrazyGames](https://www.crazygames.com/) via the REA reverse-engineering methodology, plus classic Flash and standalone HTML5 apps). Fully responsive across mobile phones, tablets, laptops, and desktop PCs.
 
 Developed & Maintained by **[FS FERDOWS](https://github.com/fsferdows)**.
 
@@ -60,7 +60,7 @@ Developed & Maintained by **[FS FERDOWS](https://github.com/fsferdows)**.
 ## 📂 Repository Layout
 
 ```
-quenq/
+onlinegames.stream/
 ├── index.html                    # Museum Entrance & Featured Showcase
 ├── arcade/                       # Interactive Web Games Catalog (6,100+ Titles)
 ├── apps/                         # System Simulators & Standalone Web Ports

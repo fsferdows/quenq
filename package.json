@@ -1,15 +1,15 @@
 {
-  "name": "quenq",
+  "name": "onlinegames-stream",
   "version": "1.0.0",
-  "description": "Quenq - Interactive Museum of Internet Culture. Reconstructed web archive of classic games, preserved software, and digital curiosities.",
+  "description": "onlinegames.stream - Interactive Museum of Internet Culture. Reconstructed web archive of classic games, preserved software, and digital curiosities.",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "build": "echo 'Quenq Museum build ready'",
+    "build": "echo 'onlinegames.stream build ready'",
     "test": "node -e \"const http = require('http'); const s = require('./server.js'); console.log('Server file loaded successfully'); process.exit(0);\""
   },
   "keywords": [
-    "quenq",
+    "onlinegames-stream",
     "reborn-xp",
     "retro-gaming",
     "flash-arcade",
@@ -17,6 +17,6 @@
     "emulator",
     "digital-museum"
   ],
-  "author": "Quenq Archive",
+  "author": "onlinegames.stream Archive",
   "license": "MIT"
 }

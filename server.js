@@ -1,10 +1,10 @@
 /**
- * Quenq Museum & Arcade Server
+ * onlinegames.stream & Arcade Server
  * Pure Node.js (no external npm dependencies required)
  * 
  * Features:
  * - Static file serving with MIME types, caching headers, and range requests
- * - Over 6,000 playable games (Quenq Flash + CrazyGames HTML5 archive)
+ * - Over 6,000 playable games (onlinegames.stream Flash + CrazyGames HTML5 archive)
  * - Automatic game routing & failover (Direct WebAssembly, CrazyGames embed, HTML5 apps)
  * - Clean URLs (/arcade/ -> arcade/index.html, /apps/ -> apps/index.html)
  * - Zero broken games guarantee with intelligent alias resolution
@@ -30,6 +30,8 @@ const MIME_TYPES = {
   '.gif': 'image/gif',
   '.ico': 'image/x-icon',
   '.webp': 'image/webp',
+  '.xml': 'application/xml; charset=utf-8',
+  '.txt': 'text/plain; charset=utf-8',
   '.woff': 'font/woff',
   '.woff2': 'font/woff2',
   '.ttf': 'font/ttf'
@@ -84,10 +86,10 @@ try {
     cgData.forEach(g => {
       crazyGamesMap.set(g.id.toLowerCase(), g);
     });
-    console.log(`[Quenq Museum Server] Loaded ${crazyGamesMap.size} CrazyGames titles.`);
+    console.log(`[onlinegames.stream Server] Loaded ${crazyGamesMap.size} CrazyGames titles.`);
   }
 } catch (e) {
-  console.warn('[Quenq Museum Server] Could not load crazygames-catalog.json:', e.message);
+  console.warn('[onlinegames.stream Server] Could not load crazygames-catalog.json:', e.message);
 }
 
 // Load Flash Preservation catalog
@@ -99,10 +101,10 @@ try {
     fgData.forEach(g => {
       flashGamesMap.set(g.id.toLowerCase(), g);
     });
-    console.log(`[Quenq Museum Server] Loaded ${flashGamesMap.size} Flash classic titles.`);
+    console.log(`[onlinegames.stream Server] Loaded ${flashGamesMap.size} Flash classic titles.`);
   }
 } catch (e) {
-  console.warn('[Quenq Museum Server] Could not load flash-catalog.json:', e.message);
+  console.warn('[onlinegames.stream Server] Could not load flash-catalog.json:', e.message);
 }
 
 // Cache for arcade template
@@ -227,12 +229,12 @@ const server = http.createServer((req, res) => {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>404 Not Found | Quenq</title>
+          <title>404 Not Found | onlinegames.stream</title>
           <link rel="stylesheet" href="/css/styles.css">
         </head>
         <body style="font-family: Tahoma, sans-serif; text-align: center; padding-top: 100px;">
           <h1>404 - Exhibit Not Found</h1>
-          <p>The requested page <code>${pathname}</code> was not found in the Quenq archive.</p>
+          <p>The requested page <code>${pathname}</code> was not found in the onlinegames.stream archive.</p>
           <p><a href="/" class="Butn1" style="display: inline-block; padding: 6px 16px;">Return to Home</a></p>
         </body>
       </html>
@@ -242,7 +244,7 @@ const server = http.createServer((req, res) => {
 
 function startServer(portToTry) {
   server.listen(portToTry, () => {
-    console.log(`[Quenq Museum Server] Running at http://localhost:${portToTry}/`);
+    console.log(`[onlinegames.stream Server] Running at http://localhost:${portToTry}/`);
     console.log(`- Home:       http://localhost:${portToTry}/`);
     console.log(`- Arcade:     http://localhost:${portToTry}/arcade/`);
     console.log(`- Apps:       http://localhost:${portToTry}/apps/`);
@@ -253,7 +255,7 @@ function startServer(portToTry) {
 
 server.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
-    console.warn(`[Quenq Museum Server] Port ${PORT} is occupied. Retrying on port ${PORT + 1}...`);
+    console.warn(`[onlinegames.stream Server] Port ${PORT} is occupied. Retrying on port ${PORT + 1}...`);
     PORT++;
     startServer(PORT);
   } else {

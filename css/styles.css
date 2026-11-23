@@ -1061,10 +1061,23 @@ body.pseudo-fullscreen-active {
 
 @media screen and (max-width: 980px) {
   .game-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  #apps-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .game-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
   #apps-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 }
 
@@ -1222,7 +1235,7 @@ body.pseudo-fullscreen-active {
   }
 }
 
-/* Quenq Daily Game Key Widget */
+/* onlinegames.stream Daily Game Key Widget */
 #game-key-widget {
   margin: 35px 0 20px 0;
   padding: 24px 20px;

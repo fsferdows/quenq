@@ -1,0 +1,87 @@
+# onlinegames.stream — Full Catalog & Preservation Documentation
+
+> Comprehensive catalog index and technical reference for onlinegames.stream, an open gaming portal and digital preservation archive hosting 6,100+ playable browser games, system simulators, and WebAssembly applications.
+
+## Table of Contents
+1. [Platform Overview](#platform-overview)
+2. [Primary Sections](#primary-sections)
+3. [Featured Standalone Web Apps](#featured-standalone-web-apps)
+4. [CrazyGames HTML5 Collection (4,800+ Titles)](#crazygames-html5-collection)
+5. [Flash Preservation Archive (1,300+ Titles)](#flash-preservation-archive)
+6. [System Simulators & Retro Emulation](#system-simulators--retro-emulation)
+7. [Device Compatibility & Performance](#device-compatibility--performance)
+8. [AI Agent & Web Crawler Information](#ai-agent--web-crawler-information)
+
+---
+
+## Platform Overview
+onlinegames.stream is an open digital entertainment preservation project designed to maintain browser access to two decades of web gaming heritage. It bridges the gap between classic Macromedia/Adobe Flash games (rendered via the Ruffle WebAssembly emulator) and modern high-performance HTML5/WebGL games.
+
+- **Domain**: https://onlinegames.stream/
+- **Catalog Size**: 6,136+ indexed playable games
+- **Architecture**: Zero-dependency static frontend with fast CDN delivery and progressive WebAssembly loading
+- **Cost / Ads**: 100% free to play with zero downloads or mandatory registration
+
+---
+
+## Primary Sections
+- **[Home](https://onlinegames.stream/)**: Editorial portal highlighting preserved collections, recent updates, and community links.
+- **[Arcade](https://onlinegames.stream/arcade/)**: Unified multi-genre gaming platform featuring instant live search across 6,100+ titles, genre filter pills (Action, Adventure, Driving, Puzzle, Shooting, Sports, Retro Flash, Multiplayer), sidebar navigation toggles, and theater mode.
+- **[Apps](https://onlinegames.stream/apps/)**: Handcrafted standalone web application ports, operating system simulators, and classic computer software.
+- **[Directory](https://onlinegames.stream/directory/)**: Curated catalog of external web ports, software preservation efforts, and interactive museums.
+- **[Archives & Blog](https://onlinegames.stream/blog/)**: Cultural retrospectives on Flash animation history, classic game development post-mortems, and digital preservation guides.
+- **[About Us](https://onlinegames.stream/about/)**: Mission statement, technical architecture overview, and legal compliance notices.
+- **[Contact](https://onlinegames.stream/contact/)**: DMCA notice handling, bug reporting, and developer submission channel.
+
+---
+
+## Featured Standalone Web Apps
+1. **[Reborn XP Simulator](https://onlinegames.stream/apps/reborn-xp/)**:
+   Full desktop environment recreating Microsoft Windows XP Service Pack 3 in HTML5 and CSS3. Includes functional Start Menu, File Explorer, 3D Pinball: Space Cadet, Paint, Calculator, Minesweeper, and Internet Explorer 6 simulator.
+2. **[Minecraft Browser Edition](https://onlinegames.stream/apps/minecraft/)**:
+   Voxel sandbox world generation in JavaScript/WebGL with block placement, mining, inventory crafting, and terrain exploration.
+3. **[Slope 3D](https://onlinegames.stream/apps/slope/)**:
+   Fast-paced 3D arcade runner where players guide a neon sphere down an infinite procedural downhill course with accelerating velocity.
+4. **[DOOM 1993 WASM](https://onlinegames.stream/apps/doom/)**:
+   Complete shareware episode of the groundbreaking 1993 id Software first-person shooter compiled to WebAssembly with authentic sound and music.
+5. **[Cookie Clicker Classic](https://onlinegames.stream/apps/cookie-clicker/)**:
+   Julien 'Orteil' Thiennot's iconic incremental baking simulation running without third-party tracking.
+6. **[2048 Classic](https://onlinegames.stream/apps/2048/)**:
+   Gabriele Cirulli's addictive sliding tile puzzle game with keyboard and touch swipe navigation.
+7. **[Crossy Road](https://onlinegames.stream/apps/crossy-road/)**:
+   Endless arcade hopper inspired by Frogger featuring isometric voxel aesthetics and responsive obstacle timing.
+8. **[Bad Ice-Cream](https://onlinegames.stream/apps/bad-ice-cream/)**:
+   Nitrome's retro 2-player arcade puzzle game where players break ice blocks and collect fruit while evading roaming monsters.
+9. **[Dr. Driving Online](https://onlinegames.stream/apps/dr-driving/)**:
+   Urban driving and parking challenge simulator emphasizing realistic vehicle handling, gear shifting, and city traffic rules.
+10. **[Project I.G.I.](https://onlinegames.stream/apps/project-igi/)**:
+    Tactical stealth military simulation tribute recreating Cold War infiltration missions.
+
+---
+
+## CrazyGames HTML5 Collection
+Over 4,800 modern HTML5/WebGL titles playable instantly without plugins:
+- **Driving & Racing**: Moto X3M (all episodes: Winter, Spooky Land, Pool Party), Smash Karts, Drift Hunters, Madalin Stunt Cars 2, Highway Racer 3D.
+- **Shooting & Action**: Time Shooter 2, Subway Clash 3D, Shell Shockers, Venge.io, Mini Royale, Rooftop Snipers.
+- **Multiplayer & .IO**: Agar.io variants, Paper.io 2, Hole.io, Slither-style arenas, Wormate.io.
+- **Puzzles & Strategy**: Bloons Tower Defense 4/5, Cut the Rope, Fireboy and Watergirl (Forest, Light, Ice, Crystal Temples).
+
+---
+
+## Flash Preservation Archive
+Over 1,300 historic Flash (.swf) game masterworks running smoothly via Ruffle WebAssembly:
+- **Tower Defense**: Antbuster, Desktop Tower Defense, GemCraft, Onslaught.
+- **RPG & Adventure**: Epic Battle Fantasy 2, Sonny, Swords and Sandals 2, The Fancy Pants Adventures.
+- **Classics**: Interactive Buddy, Pandemic 2, Xiao Xiao Combat series, Line Rider, Age of War, Learn to Fly.
+
+---
+
+## Device Compatibility & Performance
+- **Desktop (Windows, macOS, Linux, ChromeOS)**: Full keyboard, mouse, and game controller gamepad API support.
+- **Mobile & Tablet (iOS Safari, Android Chrome)**: Automatically activates touch virtual joystick and responsive canvas scaling.
+- **Performance**: Zero external render-blocking trackers; WebAssembly asset streaming with client-side caching.
+
+---
+
+## AI Agent & Web Crawler Information
+This file and `llms.txt` serve as machine-readable summaries for AI search engines (Perplexity, ChatGPT Search, Claude, Gemini, Google AI Overviews). All content on onlinegames.stream is legally compliant, freely accessible, and optimized for instant web browser execution.

@@ -178,7 +178,7 @@ const server = http.createServer((req, res) => {
   }
 
   // API endpoint: /api/proxy (for embedding apps like Reborn XP, GTA 3, Vice City)
-  if (pathname === '/api/proxy') {
+  if (pathname === '/api/proxy' || pathname === '/api/proxy/') {
     const proxyHandler = require('./api/proxy.js');
     req.query = parsedUrl.query;
     res.status = (code) => { res.statusCode = code; return res; };

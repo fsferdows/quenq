@@ -177,6 +177,16 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // API endpoint: /api/proxy (for embedding apps like Reborn XP, GTA 3, Vice City)
+  if (pathname === '/api/proxy') {
+    const proxyHandler = require('./api/proxy.js');
+    req.query = parsedUrl.query;
+    res.status = (code) => { res.statusCode = code; return res; };
+    res.send = (body) => { res.end(body); return res; };
+    proxyHandler(req, res);
+    return;
+  }
+
   // Check if directory
   if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
     filePath = path.join(filePath, 'index.html');

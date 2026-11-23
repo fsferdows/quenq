@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>macOS Fake Update Screen - onlinegames.stream Prank</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <meta name="description" content="Realistic macOS fake update screen prank with realistic progress and Blue Screen of Death (BSOD)."/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="stylesheet" href="/apps/fake-updates/prank.css"/>
+</head>
+<body class="prank-body">
+  <div id="prank-wrapper" class="prank-screen prank-apple">
+    <button class="prank-exit-btn" id="prank-exit-btn">✕ Exit Prank (Esc)</button>
+    <div id="prank-content" style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;"></div>
+  </div>
+  <script src="/apps/fake-updates/prank.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      window.PrankEngine.init("apple");
+    });
+  </script>
+</body>
+</html>

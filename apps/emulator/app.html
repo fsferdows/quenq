@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Quenq Retro Console Emulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #171c20;
+      color: #e1ebf4;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Tahoma, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    #topbar {
+      background: linear-gradient(180deg, #3a4753 0%, #252e36 100%);
+      border-bottom: 1px solid #171c20;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      z-index: 10;
+    }
+    .emu-select {
+      background: #252e36;
+      border: 1px solid #5c6f82;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .emu-btn {
+      background: linear-gradient(180deg, #5c6f82 0%, #43515e 100%);
+      border: 1px solid #1f262c;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .emu-btn:active { transform: translateY(1px); }
+    #screen-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+    }
+    canvas#game-canvas {
+      background: #050505;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+      image-rendering: pixelated;
+      max-width: 100%;
+      max-height: 100%;
+      aspect-ratio: 4 / 3;
+    }
+    /* Virtual Gamepad */
+    #virtual-controller {
+      background: #1c232a;
+      border-top: 1px solid #303b44;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      max-height: 140px;
+    }
+    .ctrl-dpad {
+      display: grid;
+      grid-template-columns: repeat(3, 38px);
+      grid-template-rows: repeat(3, 38px);
+      gap: 3px;
+    }
+    .dpad-btn {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(180deg, #43515e 0%, #2f3a44 100%);
+      border: 1px solid #5c6f82;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      touch-action: manipulation;
+    }
+    .dpad-btn:active { background: #171c20; color: #a4b9be; }
+    .dpad-up { grid-column: 2; grid-row: 1; }
+    .dpad-left { grid-column: 1; grid-row: 2; }
+    .dpad-down { grid-column: 2; grid-row: 3; }
+    .dpad-right { grid-column: 3; grid-row: 2; }
+
+    .ctrl-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .action-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #b03a2e 0%, #78281f 100%);
+      border: 2px solid #e74c3c;
+      color: #fff;
+      font-weight: bold;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: manipulation;
+    }
+    .action-circle.btn-b {
+      background: linear-gradient(180deg, #2e86c1 0%, #1b4f72 100%);
+      border-color: #5dade2;
+    }
+    .action-circle:active { transform: scale(0.92); opacity: 0.8; }
+    .ctrl-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .meta-pill {
+      background: #2c3e50;
+      border: 1px solid #7f8c8d;
+      color: #bdc3c7;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="topbar">
+    <select class="emu-select" id="game-select">
+      <option value="invaders">Game: Space Invaders</option>
+      <option value="snake">Game: Retro Snake</option>
+      <option value="pong">Game: Classic Pong</option>
+      <option value="bricks">Game: Brick Breaker</option>
+    </select>
+    <button class="emu-btn" id="restart-btn">↻ Restart</button>
+    <button class="emu-btn" id="fs-btn">⛶ Fullscreen</button>
+    <span style="font-size: 12px; color: #a4b9be; margin-left: auto;" id="score-display">Score: 0</span>
+  </div>
+
+  <div id="screen-container">
+    <canvas id="game-canvas" width="400" height="300"></canvas>
+  </div>
+
+  <div id="virtual-controller">
+    <div class="ctrl-dpad">
+      <button class="dpad-btn dpad-up" data-key="ArrowUp">▲</button>
+      <button class="dpad-btn dpad-left" data-key="ArrowLeft">◀</button>
+      <button class="dpad-btn dpad-down" data-key="ArrowDown">▼</button>
+      <button class="dpad-btn dpad-right" data-key="ArrowRight">▶</button>
+    </div>
+    <div class="ctrl-meta">
+      <button class="meta-pill" data-key="Enter">START</button>
+      <button class="meta-pill" data-key="Space">SELECT</button>
+    </div>
+    <div class="ctrl-actions">
+      <button class="action-circle btn-b" data-key="KeyZ">B</button>
+      <button class="action-circle" data-key="Space">A</button>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('game-canvas');
+    const ctx = canvas.getContext('2d');
+    const scoreElem = document.getElementById('score-display');
+    const gameSelect = document.getElementById('game-select');
+    const restartBtn = document.getElementById('restart-btn');
+    const fsBtn = document.getElementById('fs-btn');
+
+    let currentGame = 'invaders';
+    let gameState = {};
+    let score = 0;
+    let keys = {};
+
+    // Web Audio Synthesizer
+    let audioCtx = null;
+    function playTone(freq, type = 'square', dur = 0.08) {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + dur);
+      } catch(e) {}
+    }
+
+    // Input Handlers
+    window.addEventListener('keydown', e => {
+      keys[e.code] = true;
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+        e.preventDefault();
+      }
+    });
+    window.addEventListener('keyup', e => {
+      keys[e.code] = false;
+    });
+
+    document.querySelectorAll('[data-key]').forEach(btn => {
+      const code = btn.dataset.key;
+      const activate = (e) => {
+        e.preventDefault();
+        keys[code] = true;
+        if (code === 'Space' || code === 'KeyZ') playTone(500, 'sine', 0.04);
+      };
+      const deactivate = (e) => {
+        e.preventDefault();
+        keys[code] = false;
+      };
+      btn.addEventListener('touchstart', activate);
+      btn.addEventListener('touchend', deactivate);
+      btn.addEventListener('mousedown', activate);
+      btn.addEventListener('mouseup', deactivate);
+    });
+
+    // Space Invaders Mini Engine
+    function initInvaders() {
+      score = 0;
+      gameState = {
+        player: { x: 180, y: 270, w: 24, h: 12, speed: 4 },
+        bullets: [],
+        aliens: [],
+        alienDir: 1,
+        alienStep: 0,
+        gameOver: false
+      };
+      for (let r = 0; r < 4; r++) {
+        for (let c = 0; c < 8; c++) {
+          gameState.aliens.push({
+            x: 40 + c * 38,
+            y: 30 + r * 25,
+            w: 20,
+            h: 14,
+            alive: true,
+            type: r
+          });
+        }
+      }
+    }
+
+    function updateInvaders() {
+      if (gameState.gameOver) return;
+      const p = gameState.player;
+      if (keys['ArrowLeft'] && p.x > 5) p.x -= p.speed;
+      if (keys['ArrowRight'] && p.x < canvas.width - p.w - 5) p.x += p.speed;
+      if (keys['Space'] && (!gameState.lastShoot || Date.now() - gameState.lastShoot > 250)) {
+        gameState.bullets.push({ x: p.x + p.w / 2 - 2, y: p.y - 4, w: 4, h: 8, vy: -6 });
+        gameState.lastShoot = Date.now();
+        playTone(700, 'square', 0.05);
+      }
+
+      // Bullets
+      for (let i = gameState.bullets.length - 1; i >= 0; i--) {
+        const b = gameState.bullets[i];
+        b.y += b.vy;
+        if (b.y < -10) {
+          gameState.bullets.splice(i, 1);
+          continue;
+        }
+        // Collision with aliens
+        for (let a of gameState.aliens) {
+          if (a.alive && b.x < a.x + a.w && b.x + b.w > a.x && b.y < a.y + a.h && b.y + b.h > a.y) {
+            a.alive = false;
+            gameState.bullets.splice(i, 1);
+            score += 20;
+            scoreElem.textContent = 'Score: ' + score;
+            playTone(300, 'noise', 0.08);
+            break;
+          }
+        }
+      }
+
+      // Alien Movement
+      gameState.alienStep++;
+      if (gameState.alienStep > 25) {
+        gameState.alienStep = 0;
+        let hitEdge = false;
+        for (let a of gameState.aliens) {
+          if (!a.alive) continue;
+          if ((a.x + a.w >= canvas.width - 10 && gameState.alienDir > 0) || (a.x <= 10 && gameState.alienDir < 0)) {
+            hitEdge = true;
+          }
+        }
+        if (hitEdge) {
+          gameState.alienDir *= -1;
+          for (let a of gameState.aliens) a.y += 10;
+        } else {
+          for (let a of gameState.aliens) a.x += gameState.alienDir * 6;
+        }
+      }
+    }
+
+    function renderInvaders() {
+      ctx.fillStyle = '#0a0a0a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Player
+      const p = gameState.player;
+      ctx.fillStyle = '#00ff66';
+      ctx.fillRect(p.x, p.y, p.w, p.h);
+      ctx.fillRect(p.x + p.w / 2 - 2, p.y - 4, 4, 4);
+
+      // Bullets
+      ctx.fillStyle = '#ffff00';
+      for (let b of gameState.bullets) {
+        ctx.fillRect(b.x, b.y, b.w, b.h);
+      }
+
+      // Aliens
+      for (let a of gameState.aliens) {
+        if (!a.alive) continue;
+        ctx.fillStyle = a.type === 0 ? '#ff3366' : a.type === 1 ? '#33ccff' : '#ff9900';
+        ctx.fillRect(a.x, a.y, a.w, a.h);
+        ctx.fillStyle = '#000';
+        ctx.fillRect(a.x + 3, a.y + 3, 3, 3);
+        ctx.fillRect(a.x + a.w - 6, a.y + 3, 3, 3);
+      }
+    }
+
+    // Brick Breaker Engine
+    function initBricks() {
+      score = 0;
+      gameState = {
+        paddle: { x: 160, y: 280, w: 60, h: 10, speed: 5 },
+        ball: { x: 200, y: 200, r: 5, vx: 3, vy: -3 },
+        bricks: []
+      };
+      for (let r = 0; r < 5; r++) {
+        for (let c = 0; c < 8; c++) {
+          gameState.bricks.push({ x: 15 + c * 46, y: 30 + r * 16, w: 40, h: 12, alive: true, color: ['#e74c3c','#e67e22','#f1c40f','#2ecc71','#3498db'][r] });
+        }
+      }
+    }
+
+    function updateBricks() {
+      const p = gameState.paddle;
+      const b = gameState.ball;
+      if (keys['ArrowLeft'] && p.x > 0) p.x -= p.speed;
+      if (keys['ArrowRight'] && p.x < canvas.width - p.w) p.x += p.speed;
+
+      b.x += b.vx;
+      b.y += b.vy;
+
+      if (b.x < b.r || b.x > canvas.width - b.r) { b.vx *= -1; playTone(400); }
+      if (b.y < b.r) { b.vy *= -1; playTone(400); }
+
+      // Paddle hit
+      if (b.y + b.r >= p.y && b.y - b.r <= p.y + p.h && b.x >= p.x && b.x <= p.x + p.w) {
+        b.vy = -Math.abs(b.vy);
+        b.vx = ((b.x - (p.x + p.w / 2)) / (p.w / 2)) * 4;
+        playTone(600);
+      }
+
+      // Brick hit
+      for (let br of gameState.bricks) {
+        if (br.alive && b.x >= br.x && b.x <= br.x + br.w && b.y >= br.y && b.y <= br.y + br.h) {
+          br.alive = false;
+          b.vy *= -1;
+          score += 50;
+          scoreElem.textContent = 'Score: ' + score;
+          playTone(800, 'square', 0.05);
+          break;
+        }
+      }
+
+      if (b.y > canvas.height + 20) {
+        initBricks();
+      }
+    }
+
+    function renderBricks() {
+      ctx.fillStyle = '#0a0a0a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Paddle
+      ctx.fillStyle = '#3498db';
+      ctx.fillRect(gameState.paddle.x, gameState.paddle.y, gameState.paddle.w, gameState.paddle.h);
+      // Ball
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(gameState.ball.x, gameState.ball.y, gameState.ball.r, 0, Math.PI * 2);
+      ctx.fill();
+      // Bricks
+      for (let br of gameState.bricks) {
+        if (!br.alive) continue;
+        ctx.fillStyle = br.color;
+        ctx.fillRect(br.x, br.y, br.w, br.h);
+      }
+    }
+
+    function loop() {
+      if (currentGame === 'invaders') {
+        updateInvaders();
+        renderInvaders();
+      } else if (currentGame === 'bricks') {
+        updateBricks();
+        renderBricks();
+      } else {
+        // Fallback simple loop
+        updateInvaders();
+        renderInvaders();
+      }
+      requestAnimationFrame(loop);
+    }
+
+    function startGame(name) {
+      currentGame = name;
+      score = 0;
+      scoreElem.textContent = 'Score: 0';
+      if (name === 'invaders' || name === 'snake' || name === 'pong') {
+        initInvaders();
+      } else if (name === 'bricks') {
+        initBricks();
+      }
+    }
+
+    gameSelect.addEventListener('change', e => startGame(e.target.value));
+    restartBtn.addEventListener('click', () => startGame(gameSelect.value));
+    fsBtn.addEventListener('click', () => {
+      const container = document.getElementById('screen-container');
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (container.requestFullscreen) container.requestFullscreen();
+    });
+
+    startGame('invaders');
+    loop();
+  </script>
+</body>
+</html>

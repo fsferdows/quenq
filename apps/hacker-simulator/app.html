@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Quenq Hacker Simulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0d1117;
+      color: #00ff66;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 14px;
+      line-height: 1.4;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    #topbar {
+      background: #161b22;
+      border-bottom: 1px solid #30363d;
+      padding: 8px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      z-index: 20;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #7ee787;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00ff66;
+      box-shadow: 0 0 8px #00ff66;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .btn-group {
+      display: flex;
+      gap: 8px;
+    }
+    .hacker-btn {
+      background: #21262d;
+      border: 1px solid #30363d;
+      color: #58a6ff;
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .hacker-btn:hover {
+      background: #30363d;
+      border-color: #58a6ff;
+    }
+    #terminal-container {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      position: relative;
+      cursor: text;
+    }
+    #terminal-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    #terminal-container::-webkit-scrollbar-thumb {
+      background: #21262d;
+      border-radius: 4px;
+    }
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 15px;
+      background: #00ff66;
+      vertical-align: middle;
+      animation: blink 0.8s infinite;
+    }
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    #alert-modal {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(13, 17, 23, 0.95);
+      border: 2px solid #f85149;
+      color: #f85149;
+      padding: 24px 32px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 0 30px rgba(248, 81, 73, 0.5);
+      z-index: 100;
+      animation: pop 0.2s ease-out;
+    }
+    #alert-modal.granted {
+      border-color: #00ff66;
+      color: #00ff66;
+      box-shadow: 0 0 30px rgba(0, 255, 102, 0.5);
+    }
+    @keyframes pop {
+      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+    #mobile-tap-bar {
+      display: none;
+      background: #161b22;
+      border-top: 1px solid #30363d;
+      padding: 10px;
+      text-align: center;
+      z-index: 20;
+    }
+    @media (max-width: 768px) {
+      #mobile-tap-bar { display: flex; gap: 8px; justify-content: center; }
+      .mobile-hack-btn {
+        flex: 1;
+        padding: 12px;
+        background: #238636;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .mobile-hack-btn:active { background: #2ea043; }
+    }
+    canvas#matrix-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.15;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="topbar">
+    <div class="status-badge">
+      <span class="pulse-dot"></span>
+      <span>SYS_HOST: ROOT@SECURE-NODE-7 [ENCRYPTED]</span>
+    </div>
+    <div class="btn-group">
+      <button class="hacker-btn" id="access-btn">⚡ Access Granted</button>
+      <button class="hacker-btn" id="breach-btn">⚠ Breach Alert</button>
+      <button class="hacker-btn" id="matrix-btn">Rain: ON</button>
+      <button class="hacker-btn" id="clear-btn">Clear</button>
+    </div>
+  </div>
+
+  <div id="terminal-container">
+    <canvas id="matrix-canvas"></canvas>
+    <span id="output-text"></span><span class="cursor"></span>
+  </div>
+
+  <div id="mobile-tap-bar">
+    <button class="mobile-hack-btn" id="mobile-type-btn">⌨ Tap Anywhere to Hack</button>
+    <button class="mobile-hack-btn" style="background:#da3633; max-width: 100px;" id="mobile-breach-btn">Alert</button>
+  </div>
+
+  <div id="alert-modal">
+    <div style="font-size: 20px; margin-bottom: 8px;" id="alert-title">ACCESS GRANTED</div>
+    <div style="font-size: 13px;" id="alert-sub">LEVEL 5 ROOT CLEARANCE CONFIRMED</div>
+  </div>
+
+  <script>
+    const KERNEL_CODE = `
+/* 
+ * Linux Kernel v6.12.0 Network Subsystem Core Security Module
+ * Authenticated Memory Integrity Guard
+ */
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <linux/netdevice.h>
+#include <crypto/sha3.h>
+
+static int __init security_cipher_init(void) {
+    struct crypto_shash *tfm;
+    struct shash_desc *desc;
+    u8 digest[64];
+    int err = 0;
+
+    pr_info("Initializing Quantum cryptographic envelope: RSA-4096 / SHA3-512\\n");
+    tfm = crypto_alloc_shash("sha3-512", 0, 0);
+    if (IS_ERR(tfm)) {
+        pr_err("FAILED: Crypto subsystem allocation failed: %ld\\n", PTR_ERR(tfm));
+        return PTR_ERR(tfm);
+    }
+
+    desc = kmalloc(sizeof(*desc) + crypto_shash_descsize(tfm), GFP_KERNEL);
+    if (!desc) {
+        crypto_free_shash(tfm);
+        return -ENOMEM;
+    }
+
+    desc->tfm = tfm;
+    crypto_shash_init(desc);
+    crypto_shash_update(desc, "\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00", 8);
+    crypto_shash_final(desc, digest);
+
+    pr_info("[+] ENCRYPTION ROOT KEY VERIFIED: %02x%02x%02x%02x%02x%02x%02x%02x...\\n",
+            digest[0], digest[1], digest[2], digest[3], digest[4], digest[5], digest[6], digest[7]);
+
+    // Deploying firewall bypass packet filter
+    struct sk_buff *skb = alloc_skb(1500, GFP_ATOMIC);
+    if (skb) {
+        skb_reserve(skb, 64);
+        skb_put_data(skb, "SYN_ACK_PAYLOAD", 15);
+        dev_queue_xmit(skb);
+        pr_info("[+] Tunnel established to remote socket: 192.168.1.254:443\\n");
+    }
+
+    kfree(desc);
+    crypto_free_shash(tfm);
+    return 0;
+}
+
+static void __exit security_cipher_exit(void) {
+    pr_info("Terminating cryptographic sandbox and flushing memory pages.\\n");
+}
+
+module_init(security_cipher_init);
+module_exit(security_cipher_exit);
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Quenq Security Research");
+MODULE_DESCRIPTION("High-performance zero-trust network driver");
+`;
+
+    let codeIndex = 0;
+    const outputElem = document.getElementById('output-text');
+    const container = document.getElementById('terminal-container');
+    const alertModal = document.getElementById('alert-modal');
+    const alertTitle = document.getElementById('alert-title');
+    const alertSub = document.getElementById('alert-sub');
+
+    // Web Audio Synthesizer
+    let audioCtx = null;
+    function playBeep(freq = 800, dur = 0.03) {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + dur);
+      } catch(e) {}
+    }
+
+    function addCodeChunk(count = 6) {
+      let chunk = '';
+      for (let i = 0; i < count; i++) {
+        chunk += KERNEL_CODE[codeIndex % KERNEL_CODE.length];
+        codeIndex++;
+      }
+      outputElem.textContent += chunk;
+      container.scrollTop = container.scrollHeight;
+      playBeep(400 + Math.random() * 600, 0.02);
+    }
+
+    function showAlert(title, sub, granted = true) {
+      alertTitle.textContent = title;
+      alertSub.textContent = sub;
+      alertModal.className = granted ? 'granted' : '';
+      alertModal.style.display = 'block';
+      playBeep(granted ? 950 : 250, 0.2);
+      setTimeout(() => {
+        alertModal.style.display = 'none';
+      }, 1800);
+    }
+
+    // Keyboard Handler
+    window.addEventListener('keydown', (e) => {
+      if (['F5', 'F12', 'F11'].includes(e.key)) return;
+      e.preventDefault();
+      if (e.key === 'Escape') {
+        alertModal.style.display = 'none';
+      } else if (e.key === 'Enter') {
+        showAlert('ACCESS GRANTED', 'LEVEL 5 ROOT ACCESS UNLOCKED', true);
+      } else if (e.key === 'Backspace') {
+        showAlert('SECURITY ALERT', 'FIREWALL INTRUSION DETECTED', false);
+      } else {
+        addCodeChunk(8);
+      }
+    });
+
+    // Touch & Mouse Handler
+    container.addEventListener('click', () => addCodeChunk(15));
+    document.getElementById('mobile-type-btn').addEventListener('click', () => addCodeChunk(20));
+    document.getElementById('mobile-breach-btn').addEventListener('click', () => showAlert('SYSTEM BREACH', 'UNAUTHORIZED ACCESS ATTEMPT DETECTED', false));
+    document.getElementById('access-btn').addEventListener('click', () => showAlert('ACCESS GRANTED', 'FULL SYSTEM CONTROL TRANSFERRED', true));
+    document.getElementById('breach-btn').addEventListener('click', () => showAlert('WARNING: BREACH', 'INTRUSION DETECTED ON PORT 8080', false));
+    document.getElementById('clear-btn').addEventListener('click', () => {
+      outputElem.textContent = '';
+      codeIndex = 0;
+    });
+
+    // Matrix Rain Canvas
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+    let rainActive = true;
+    let columns = [];
+
+    function resizeCanvas() {
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
+      const count = Math.floor(canvas.width / 16);
+      columns = Array.from({ length: count }, () => Math.floor(Math.random() * -50));
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const chars = '0123456789ABCDEF@#$%&*+-=<>~';
+    function drawMatrix() {
+      if (!rainActive) return;
+      ctx.fillStyle = 'rgba(13, 17, 23, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00ff66';
+      ctx.font = '14px monospace';
+
+      for (let i = 0; i < columns.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(char, i * 16, columns[i] * 16);
+        if (columns[i] * 16 > canvas.height && Math.random() > 0.975) {
+          columns[i] = 0;
+        }
+        columns[i]++;
+      }
+      requestAnimationFrame(drawMatrix);
+    }
+    drawMatrix();
+
+    document.getElementById('matrix-btn').addEventListener('click', function() {
+      rainActive = !rainActive;
+      this.textContent = 'Rain: ' + (rainActive ? 'ON' : 'OFF');
+      canvas.style.display = rainActive ? 'block' : 'none';
+      if (rainActive) drawMatrix();
+    });
+
+    // Seed initial message
+    outputElem.textContent = "/* Quenq High-Security Terminal v4.8 */\\n/* Press any key on keyboard or tap screen to begin execution... */\\n\\n";
+  </script>
+</body>
+</html>

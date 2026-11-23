@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Crossy Road Classic | Quenq</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    body { background: #171c20; margin: 0; padding: 0; overflow-x: hidden; color: #fff; }
+    .game-wrapper {
+      max-width: 860px;
+      margin: 15px auto;
+      padding: 10px;
+      text-align: center;
+    }
+    #gameCanvas {
+      background: #70a1ff;
+      border: 3px solid #2d353e;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      touch-action: none;
+    }
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 480px;
+      margin: 10px auto;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .touch-pad {
+      display: grid;
+      grid-template-columns: repeat(3, 60px);
+      grid-template-rows: repeat(2, 50px);
+      gap: 8px;
+      justify-content: center;
+      margin: 15px auto 0 auto;
+      max-width: 240px;
+    }
+    .t-btn {
+      background: linear-gradient(180deg, #5c6f82, #3a4753);
+      border: 1px solid #71889c;
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .t-btn:active { background: #222; transform: scale(0.95); }
+    .t-up { grid-column: 2; grid-row: 1; }
+    .t-left { grid-column: 1; grid-row: 2; }
+    .t-down { grid-column: 2; grid-row: 2; }
+    .t-right { grid-column: 3; grid-row: 2; }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="head">
+      <div id="logo"><a href="/"><img alt="Quenq Logo" src="/logo.svg" style="height:70px;"></a></div>
+      <div id="head-mid">
+        <p class="header-line1">Crossy Road</p>
+        <p class="header-line2">Hop across busy roads, avoid speeding cars, and set a new record!</p>
+      </div>
+    </div>
+    <div id="nav-H">
+      <div id="nav-H-Box">
+        <div id="butn-block">
+          <ul>
+            <li><a class="Butn1" href="/">Home</a></li>
+            <li><a class="Butn1 active-nav" href="/arcade/">Arcade</a></li>
+            <li><a class="Butn1" href="/apps/">Apps</a></li>
+            <li><a class="Butn1" href="/directory/">Directory</a></li>
+            <li><a class="Butn1" href="/blog/">Archives</a></li>
+            <li><a class="Butn1" href="/about/">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-wrapper">
+      <div class="hud">
+        <div>Score: <span id="scoreVal" style="color:#2ed573;">0</span></div>
+        <div>Best: <span id="bestVal" style="color:#ffa502;">0</span></div>
+      </div>
+      <canvas id="gameCanvas" width="480" height="540"></canvas>
+      
+      <div class="touch-pad">
+        <button class="t-btn t-up" id="btn-up">▲</button>
+        <button class="t-btn t-left" id="btn-left">◀</button>
+        <button class="t-btn t-down" id="btn-down">▼</button>
+        <button class="t-btn t-right" id="btn-right">▶</button>
+      </div>
+      <p style="font-size:12px; color:#a4b9be; margin-top:10px;">Use Arrow Keys / WASD or Touch D-Pad to move. Hop forward to score!</p>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreVal = document.getElementById('scoreVal');
+    const bestVal = document.getElementById('bestVal');
+
+    const GRID = 40;
+    const COLS = 12;
+    const ROWS = 13;
+
+    let player = { col: 6, row: 11, targetCol: 6, targetRow: 11, hopping: 0, dead: false };
+    let score = 0;
+    let maxRowReached = 11;
+    let best = parseInt(localStorage.getItem('crossy_best') || '0', 10);
+    bestVal.textContent = best;
+
+    let cameraY = 0;
+    let lanes = [];
+
+    // Lane types: grass, road, river
+    function createLane(laneIndex) {
+      if (laneIndex <= 1 || laneIndex % 5 === 0) {
+        return { type: 'grass', y: laneIndex * GRID, items: [] };
+      }
+      if (Math.random() > 0.4) {
+        // Road with cars
+        const dir = Math.random() > 0.5 ? 1 : -1;
+        const speed = (Math.random() * 2 + 2) * dir;
+        const cars = [];
+        const count = Math.floor(Math.random() * 2) + 2;
+        for (let i = 0; i < count; i++) {
+          cars.push({ x: (i * 180 + Math.random() * 40) % (canvas.width + 60), w: 55, h: 26, color: ['#ff4757', '#ffa502', '#2ed573', '#1e90ff'][Math.floor(Math.random() * 4)] });
+        }
+        return { type: 'road', y: laneIndex * GRID, speed, items: cars };
+      } else {
+        // River with logs
+        const dir = Math.random() > 0.5 ? 1 : -1;
+        const speed = (Math.random() * 1.5 + 1.5) * dir;
+        const logs = [];
+        for (let i = 0; i < 3; i++) {
+          logs.push({ x: i * 160, w: 80, h: 28 });
+        }
+        return { type: 'river', y: laneIndex * GRID, speed, items: logs };
+      }
+    }
+
+    function initGame() {
+      player = { col: 6, row: 11, targetCol: 6, targetRow: 11, hopping: 0, dead: false, x: 6 * GRID + 10, y: 11 * GRID + 10 };
+      score = 0;
+      maxRowReached = 11;
+      scoreVal.textContent = score;
+      lanes = [];
+      for (let i = 0; i < 30; i++) {
+        lanes.push(createLane(i));
+      }
+    }
+
+    function move(dCol, dRow) {
+      if (player.dead) { initGame(); return; }
+      const newCol = Math.max(0, Math.min(COLS - 1, player.col + dCol));
+      const newRow = player.row + dRow;
+
+      player.col = newCol;
+      player.row = newRow;
+
+      if (11 - newRow > score) {
+        score = 11 - newRow;
+        scoreVal.textContent = score;
+        if (score > best) {
+          best = score;
+          bestVal.textContent = best;
+          localStorage.setItem('crossy_best', best);
+        }
+      }
+
+      // Add more lanes ahead
+      while (lanes.length < 15 - player.row + 20) {
+        lanes.push(createLane(lanes.length));
+      }
+    }
+
+    window.addEventListener('keydown', e => {
+      if (['ArrowUp', 'KeyW'].includes(e.code)) move(0, -1);
+      if (['ArrowDown', 'KeyS'].includes(e.code)) move(0, 1);
+      if (['ArrowLeft', 'KeyA'].includes(e.code)) move(-1, 0);
+      if (['ArrowRight', 'KeyD'].includes(e.code)) move(1, 0);
+    });
+
+    document.getElementById('btn-up').addEventListener('click', () => move(0, -1));
+    document.getElementById('btn-down').addEventListener('click', () => move(0, 1));
+    document.getElementById('btn-left').addEventListener('click', () => move(-1, 0));
+    document.getElementById('btn-right').addEventListener('click', () => move(1, 0));
+
+    function update() {
+      if (player.dead) return;
+
+      const targetX = player.col * GRID + 10;
+      const targetY = player.row * GRID + 10;
+      player.x += (targetX - player.x) * 0.3;
+      player.y += (targetY - player.y) * 0.3;
+
+      const targetCameraY = (player.row - 8) * GRID;
+      cameraY += (targetCameraY - cameraY) * 0.1;
+
+      // Update lane items
+      for (let lane of lanes) {
+        if (lane.type === 'road' || lane.type === 'river') {
+          for (let item of lane.items) {
+            item.x += lane.speed;
+            if (lane.speed > 0 && item.x > canvas.width + 60) item.x = -item.w - 20;
+            if (lane.speed < 0 && item.x < -item.w - 20) item.x = canvas.width + 20;
+
+            // Collision check
+            const laneTop = lane.y;
+            const laneBottom = laneTop + GRID;
+            if (player.y + 10 >= laneTop && player.y + 10 <= laneBottom) {
+              if (lane.type === 'road') {
+                if (player.x + 18 > item.x && player.x + 2 < item.x + item.w) {
+                  player.dead = true;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(0, -cameraY);
+
+      // Render lanes
+      for (let i = 0; i < lanes.length; i++) {
+        const lane = lanes[i];
+        if (lane.y < cameraY - GRID || lane.y > cameraY + canvas.height + GRID) continue;
+
+        if (lane.type === 'grass') {
+          ctx.fillStyle = i % 2 === 0 ? '#7bed9f' : '#2ed573';
+          ctx.fillRect(0, lane.y, canvas.width, GRID);
+        } else if (lane.type === 'road') {
+          ctx.fillStyle = '#2f3542';
+          ctx.fillRect(0, lane.y, canvas.width, GRID);
+          // Dash line
+          ctx.strokeStyle = '#f1f2f6';
+          ctx.setLineDash([12, 12]);
+          ctx.beginPath();
+          ctx.moveTo(0, lane.y + GRID / 2);
+          ctx.lineTo(canvas.width, lane.y + GRID / 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          for (let car of lane.items) {
+            ctx.fillStyle = car.color;
+            ctx.fillRect(car.x, lane.y + 7, car.w, car.h);
+            ctx.fillStyle = '#ced6e0';
+            ctx.fillRect(car.x + (lane.speed > 0 ? car.w - 12 : 3), lane.y + 10, 8, car.h - 6);
+          }
+        } else if (lane.type === 'river') {
+          ctx.fillStyle = '#1e90ff';
+          ctx.fillRect(0, lane.y, canvas.width, GRID);
+          for (let log of lane.items) {
+            ctx.fillStyle = '#8b572a';
+            ctx.fillRect(log.x, lane.y + 6, log.w, log.h);
+          }
+        }
+      }
+
+      // Render player (Chicken)
+      ctx.fillStyle = player.dead ? '#ff4757' : '#ffffff';
+      ctx.fillRect(player.x, player.y, 20, 20);
+      ctx.fillStyle = '#ffa502';
+      ctx.fillRect(player.x + 6, player.y - 4, 8, 6);
+      ctx.fillStyle = '#ff4757';
+      ctx.fillRect(player.x + 8, player.y - 7, 4, 4);
+
+      ctx.restore();
+
+      if (player.dead) {
+        ctx.fillStyle = 'rgba(0,0,0,0.7)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ff4757';
+        ctx.font = 'bold 32px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('SQUASHED!', canvas.width / 2, canvas.height / 2 - 20);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '18px sans-serif';
+        ctx.fillText('Press any key or tap to restart', canvas.width / 2, canvas.height / 2 + 25);
+      }
+    }
+
+    function gameLoop() {
+      update();
+      render();
+      requestAnimationFrame(gameLoop);
+    }
+
+    initGame();
+    gameLoop();
+  </script>
+</body>
+</html>

@@ -537,7 +537,68 @@ h5 {
   }
 
   #nav-H {
-    display: none;
+    display: block;
+    height: auto;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background: linear-gradient(to bottom, #2f3a44, #1f262c);
+    border-bottom: 1px solid #171c20;
+    padding: 6px 4px;
+    box-sizing: border-box;
+  }
+  #nav-H-Box {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    background: none;
+    display: flex;
+    justify-content: center;
+  }
+  #butn-block {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  #butn-block ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 2px 0;
+    margin: 0;
+  }
+  #butn-block ul li {
+    width: auto;
+    flex: 1 1 calc(33.333% - 8px);
+    min-width: 85px;
+    max-width: 130px;
+    height: 36px;
+    line-height: 36px;
+    float: none;
+  }
+  #butn-block ul li a.Butn1 {
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 4px;
+    background: linear-gradient(to bottom, #5c6f82, #2f3a44);
+    border: 1px solid #1f262c;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f0f0f0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.3);
+    text-decoration: none;
+  }
+  #butn-block ul li a.Butn1.active-nav,
+  #butn-block ul li a.Butn1:hover {
+    background: linear-gradient(to bottom, #2f3a44, #171c20) !important;
+    color: #ffffff !important;
+    border-color: #a4b9be;
   }
 
   .cnt-filler {
@@ -1248,4 +1309,186 @@ body.pseudo-fullscreen-active {
   color: #8ea1a6;
   margin: 12px 0 0 0;
   line-height: 1.4;
+}
+
+
+/* ===================================================
+   Universal Mobile & Tablet Virtual Gamepad Styles
+   =================================================== */
+.virtual-gamepad {
+  display: none;
+  width: 100%;
+  max-width: 650px;
+  margin: 14px auto 0 auto;
+  padding: 12px 16px;
+  background: rgba(23, 28, 32, 0.94);
+  border: 1px solid #43515e;
+  border-radius: 8px;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+.virtual-gamepad.is-visible {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.vpad-dpad {
+  display: grid;
+  grid-template-columns: repeat(3, 44px);
+  grid-template-rows: repeat(3, 44px);
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+}
+.vpad-btn {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(180deg, #5c6f82 0%, #3a4753 100%);
+  border: 1px solid #71889c;
+  border-radius: 6px;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: background 0.1s, transform 0.05s;
+  -webkit-tap-highlight-color: transparent;
+}
+.vpad-btn:active, .vpad-btn.vpad-active {
+  background: linear-gradient(180deg, #2f3a44 0%, #1f262c 100%) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  transform: scale(0.92);
+  color: #a4b9be;
+}
+.vpad-dpad .vpad-up { grid-column: 2; grid-row: 1; }
+.vpad-dpad .vpad-left { grid-column: 1; grid-row: 2; }
+.vpad-dpad .vpad-down { grid-column: 2; grid-row: 3; }
+.vpad-dpad .vpad-right { grid-column: 3; grid-row: 2; }
+.vpad-dpad .vpad-center {
+  grid-column: 2; grid-row: 2;
+  background: #252e36;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  margin: auto;
+  pointer-events: none;
+}
+.vpad-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 48px);
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.vpad-action-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 13px;
+  background: linear-gradient(180deg, #b03a2e 0%, #78281f 100%);
+  border: 1px solid #e74c3c;
+}
+.vpad-action-btn.vpad-btn-blue {
+  background: linear-gradient(180deg, #2980b9 0%, #1a5276 100%);
+  border: 1px solid #5dade2;
+}
+.vpad-action-btn.vpad-btn-green {
+  background: linear-gradient(180deg, #27ae60 0%, #196f3d 100%);
+  border: 1px solid #58d68d;
+}
+.vpad-action-btn.vpad-btn-yellow {
+  background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%);
+  border: 1px solid #f4d03f;
+}
+.vpad-utility {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.vpad-util-btn {
+  width: 68px;
+  height: 28px;
+  border-radius: 14px;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  background: linear-gradient(180deg, #4d5656 0%, #2c3e50 100%);
+  border: 1px solid #7f8c8d;
+}
+
+/* ===================================================
+   Cross-Device Responsive Grid & Viewport Rules
+   =================================================== */
+@media screen and (max-width: 980px) {
+  .app-container {
+    width: 96% !important;
+    max-width: 100% !important;
+    padding: 10px !important;
+    margin: 8px auto !important;
+  }
+  .app-container iframe,
+  .app-container #game-iframe,
+  .app-container #app-iframe,
+  .app-container .app-iframe {
+    width: 100% !important;
+    max-height: 70vh !important;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  body {
+    font-size: 0.78em;
+  }
+  #head {
+    padding: 6px 4px;
+  }
+  #logo img {
+    height: 65px !important;
+  }
+  .header-line1 {
+    font-size: 110%;
+  }
+  .header-line2 {
+    font-size: 95%;
+  }
+  .header-line3 {
+    font-size: 85%;
+  }
+  .app-container {
+    width: 98% !important;
+    padding: 6px !important;
+  }
+  .vpad-dpad {
+    grid-template-columns: repeat(3, 38px);
+    grid-template-rows: repeat(3, 38px);
+  }
+  .vpad-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 12px;
+  }
+  .vpad-action-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 12px;
+  }
+  .vpad-actions {
+    grid-template-columns: repeat(2, 42px);
+    gap: 8px;
+  }
+  .player-controls {
+    gap: 8px;
+  }
+  .action-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
 }

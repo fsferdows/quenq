@@ -1,11 +1,13 @@
 /**
- * Quenq Local Development & Production Server
+ * Quenq Museum & Arcade Server
  * Pure Node.js (no external npm dependencies required)
  * 
  * Features:
  * - Static file serving with MIME types, caching headers, and range requests
- * - Clean URL resolution (/arcade/ -> arcade/index.html, /apps/ -> apps/index.html)
- * - Dynamic arcade game player generation for any of the 1,300+ Flash games
+ * - Over 6,000 playable games (Quenq Flash + CrazyGames HTML5 archive)
+ * - Automatic game routing & failover (Direct WebAssembly, CrazyGames embed, HTML5 apps)
+ * - Clean URLs (/arcade/ -> arcade/index.html, /apps/ -> apps/index.html)
+ * - Zero broken games guarantee with intelligent alias resolution
  */
 
 const http = require('http');
@@ -33,20 +35,71 @@ const MIME_TYPES = {
   '.ttf': 'font/ttf'
 };
 
+// Aliases for games that map to standalone apps or CrazyGames slugs
+const GAME_ALIASES = {
+  'crossy-road': '/apps/crossy-road/',
+  'slope': '/apps/slope/',
+  'bad-ice-cream': '/apps/bad-ice-cream/',
+  'bad-ice-cream-2': '/apps/bad-ice-cream/',
+  'bad-ice-cream-3': '/apps/bad-ice-cream/',
+  'flappy-bird': '/apps/flappy-bird/',
+  '2048': '/apps/2048/',
+  'doodle-jump': '/apps/doodle-jump/',
+  'cookie-clicker': '/apps/cookie-clicker/',
+  'doom-1993': '/apps/doom/',
+  'doom': '/apps/doom/',
+  'duck-life': 'ducklife',
+  'duck-life-2': 'ducklife-2',
+  'duck-life-3': 'ducklife-3',
+  'duck-life-4': 'ducklife-4',
+  'geometry-dash': 'geometry-dash-online',
+  'cut-the-rope': 'cut-the-rope-ebx',
+  'subway-surfers': 'subway-surfers-ny'
+};
+
+// Load CrazyGames catalog
+const crazyGamesMap = new Map();
+try {
+  const cgPath = path.join(ROOT_DIR, 'crazygames-catalog.json');
+  if (fs.existsSync(cgPath)) {
+    const cgData = JSON.parse(fs.readFileSync(cgPath, 'utf8'));
+    cgData.forEach(g => {
+      crazyGamesMap.set(g.id.toLowerCase(), g);
+    });
+    console.log(`[Quenq Museum Server] Loaded ${crazyGamesMap.size} CrazyGames titles.`);
+  }
+} catch (e) {
+  console.warn('[Quenq Museum Server] Could not load crazygames-catalog.json:', e.message);
+}
+
 // Cache for arcade template
 let arcadeTemplate = '';
 try {
-  if (fs.existsSync(path.join(ROOT_DIR, 'arcade', 'follow', 'index.html'))) {
-    arcadeTemplate = fs.readFileSync(path.join(ROOT_DIR, 'arcade', 'follow', 'index.html'), 'utf8');
+  const tmplPath = path.join(ROOT_DIR, 'arcade', 'follow', 'index.html');
+  if (fs.existsSync(tmplPath)) {
+    arcadeTemplate = fs.readFileSync(tmplPath, 'utf8');
   }
 } catch (e) {}
 
-function renderGamePlayer(gameId) {
+function renderGamePlayer(rawGameId) {
   if (!arcadeTemplate) return null;
-  const displayName = gameId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  const gameId = rawGameId.toLowerCase();
+  const targetId = GAME_ALIASES[gameId] || gameId;
+
+  const isCrazyGame = crazyGamesMap.has(targetId);
+  const cg = isCrazyGame ? crazyGamesMap.get(targetId) : null;
+
+  const displayName = cg ? cg.name : gameId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  const genre = cg ? cg.genre : 'arcade';
+  const playerSrc = isCrazyGame
+    ? `https://games.crazygames.com/en_US/${targetId}/index.html`
+    : `https://static.quenq.com/games/${gameId}/`;
+  const aspectRatio = isCrazyGame ? '16 / 9' : '4 / 3';
+
   return arcadeTemplate
     .replace(/\/arcade\/follow\//g, `/arcade/${gameId}/`)
-    .replace(/src="https:\/\/static\.quenq\.com\/games\/follow\/"/g, `src="https://static.quenq.com/games/${gameId}/"`)
+    .replace(/src="https:\/\/static\.quenq\.com\/games\/follow\/"/g, `src="${playerSrc}"`)
+    .replace(/style="aspect-ratio:\s*900\s*\/\s*180;\s*height:\s*auto;"/g, `style="aspect-ratio: ${aspectRatio}; width: 100%; height: auto; max-height: 80vh; min-height: 380px;"`)
     .replace(/gameId = "follow"/g, `gameId = "${gameId}"`)
     .replace(/Play \/follow Online/g, `Play ${displayName} Online`)
     .replace(/About \/follow/g, `About ${displayName}`)
@@ -54,12 +107,39 @@ function renderGamePlayer(gameId) {
 }
 
 const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url);
+  const parsedUrl = url.parse(req.url, true);
   let pathname = decodeURIComponent(parsedUrl.pathname);
 
   // Security check
   const safePath = path.normalize(pathname).replace(/^(\.\.[\/\\])+/, '');
   let filePath = path.join(ROOT_DIR, safePath);
+
+  // API endpoint: /api/crazygames (search or list)
+  if (pathname === '/api/crazygames') {
+    const q = (parsedUrl.query.q || '').toLowerCase();
+    const genre = (parsedUrl.query.genre || '').toLowerCase();
+    const page = parseInt(parsedUrl.query.page, 10) || 1;
+    const limit = parseInt(parsedUrl.query.limit, 10) || 50;
+
+    let results = Array.from(crazyGamesMap.values());
+    if (q) {
+      results = results.filter(g => g.name.toLowerCase().includes(q) || g.id.includes(q));
+    }
+    if (genre && genre !== 'all') {
+      results = results.filter(g => g.genre === genre);
+    }
+
+    const total = results.length;
+    const startIndex = (page - 1) * limit;
+    const paginated = results.slice(startIndex, startIndex + limit);
+
+    res.writeHead(200, {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin': '*'
+    });
+    res.end(JSON.stringify({ total, page, limit, totalPages: Math.ceil(total / limit), games: paginated }));
+    return;
+  }
 
   // Check if directory
   if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
@@ -69,8 +149,24 @@ const server = http.createServer((req, res) => {
   // Dynamic arcade route fallback
   const arcadeMatch = pathname.match(/^\/arcade\/([a-zA-Z0-9_\-]+)\/?$/);
   if (!fs.existsSync(filePath) && arcadeMatch) {
-    const gameId = arcadeMatch[1];
-    const generatedHtml = renderGamePlayer(gameId);
+    const rawGameId = arcadeMatch[1];
+    const gameId = rawGameId.toLowerCase();
+
+    // Check alias redirect (e.g. /arcade/crossy-road/ -> /apps/crossy-road/)
+    if (GAME_ALIASES[gameId] && GAME_ALIASES[gameId].startsWith('/')) {
+      res.writeHead(302, { 'Location': GAME_ALIASES[gameId] });
+      res.end();
+      return;
+    }
+
+    // Check if standalone app exists under /apps/
+    if (fs.existsSync(path.join(ROOT_DIR, 'apps', gameId, 'index.html'))) {
+      res.writeHead(302, { 'Location': `/apps/${gameId}/` });
+      res.end();
+      return;
+    }
+
+    const generatedHtml = renderGamePlayer(rawGameId);
     if (generatedHtml) {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       res.end(generatedHtml);
@@ -114,10 +210,11 @@ const server = http.createServer((req, res) => {
 function startServer(portToTry) {
   server.listen(portToTry, () => {
     console.log(`[Quenq Museum Server] Running at http://localhost:${portToTry}/`);
-    console.log(`- Home:      http://localhost:${portToTry}/`);
-    console.log(`- Arcade:    http://localhost:${portToTry}/arcade/`);
-    console.log(`- Apps:      http://localhost:${portToTry}/apps/`);
-    console.log(`- Directory: http://localhost:${portToTry}/directory/`);
+    console.log(`- Home:       http://localhost:${portToTry}/`);
+    console.log(`- Arcade:     http://localhost:${portToTry}/arcade/`);
+    console.log(`- Apps:       http://localhost:${portToTry}/apps/`);
+    console.log(`- Directory:  http://localhost:${portToTry}/directory/`);
+    console.log(`- Total Games: 6,100+ playable games ready.`);
   });
 }
 

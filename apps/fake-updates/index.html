@@ -265,73 +265,201 @@
   #prank-overlay {
     position: fixed;
     top: 0; left: 0;
-    width: 100%; height: 100%;
+    width: 100vw; height: 100vh;
+    height: 100dvh;
     background: #000;
-    z-index: 99999;
+    z-index: 999999;
     display: none;
+    cursor: none;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Tahoma, sans-serif;
   }
-  #prank-overlay iframe {
+  .prank-screen {
     width: 100%; height: 100%;
-    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    user-select: none;
   }
+  .prank-win10 {
+    background: #00599f;
+    color: #ffffff;
+  }
+  .prank-win7 {
+    background: radial-gradient(circle at center, #1b5886 0%, #082138 100%);
+    color: #ffffff;
+  }
+  .prank-apple {
+    background: #000000;
+    color: #ffffff;
+  }
+  .prank-ubuntu {
+    background: linear-gradient(135deg, #77216f 0%, #5e2750 100%);
+    color: #ffffff;
+  }
+  .prank-bsod {
+    background: #0078d7;
+    color: #ffffff;
+    align-items: flex-start;
+    text-align: left;
+    padding: 60px 80px;
+  }
+  .spinner-dots {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 24px;
+    border: 4px solid transparent;
+    border-top: 4px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  .prank-exit-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    z-index: 1000;
+    opacity: 0.3;
+    transition: opacity 0.2s;
+  }
+  .prank-exit-btn:hover { opacity: 1; }
 </style>
+<div id="prank-overlay">
+  <button class="prank-exit-btn" id="prank-exit-btn">✕ Exit Prank (Esc)</button>
+  <div class="prank-screen prank-win10" id="prank-content">
+    <div class="spinner-dots"></div>
+    <h2 style="font-size: 26px; font-weight: 300; margin-bottom: 12px;" id="prank-heading">Working on updates</h2>
+    <div style="font-size: 20px; font-weight: 300;" id="prank-subtext">27% complete</div>
+    <div style="font-size: 14px; font-weight: 300; margin-top: 15px; color: rgba(255,255,255,0.8);">Don't turn off your PC. This will take a while.</div>
+    <div style="margin-top: 40px; font-size: 12px; color: rgba(255,255,255,0.5);">(Press ENTER or tap screen for Blue Screen of Death)</div>
+  </div>
+</div>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const prankCards = document.querySelectorAll('.prank-card');
     const overlay = document.getElementById('prank-overlay');
-    let currentIframe = null;
+    const content = document.getElementById('prank-content');
+    const heading = document.getElementById('prank-heading');
+    const subtext = document.getElementById('prank-subtext');
+    const exitBtn = document.getElementById('prank-exit-btn');
+
+    let currentPercent = 14;
+    let timer = null;
+    let isBsod = false;
 
     const closePrank = () => {
-      if (document.fullscreenElement || document.webkitFullscreenElement) {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
-        }
-      }
-      if ('keyboard' in navigator && 'unlock' in navigator.keyboard) {
-        navigator.keyboard.unlock();
-      }
+      clearInterval(timer);
       overlay.style.display = 'none';
-      if (currentIframe) {
-        overlay.removeChild(currentIframe);
-        currentIframe = null;
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
       }
+    };
+
+    const triggerBsod = () => {
+      isBsod = true;
+      content.className = 'prank-screen prank-bsod';
+      content.innerHTML = `
+        <div style="font-size: 100px; margin-bottom: 20px;">:(</div>
+        <div style="font-size: 28px; font-weight: 300; line-height: 1.4; max-width: 800px; margin-bottom: 30px;">
+          Your PC ran into a problem and needs to restart. We're just collecting some error info, and then we'll restart for you.
+        </div>
+        <div style="font-size: 20px; font-weight: 300; margin-bottom: 40px;">
+          ${currentPercent}% complete
+        </div>
+        <div style="display: flex; gap: 20px; align-items: center;">
+          <div style="width: 90px; height: 90px; background: #fff; padding: 6px; box-sizing: border-box; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;">
+            <div style="background:#000;"></div><div style="background:#000;"></div><div></div><div style="background:#000;"></div>
+            <div style="background:#000;"></div><div></div><div style="background:#000;"></div><div style="background:#000;"></div>
+            <div></div><div style="background:#000;"></div><div style="background:#000;"></div><div></div>
+            <div style="background:#000;"></div><div></div><div style="background:#000;"></div><div style="background:#000;"></div>
+          </div>
+          <div style="font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.9);">
+            For more information about this issue and possible fixes, visit https://windows.com/stopcode<br>
+            If you call a support person, give them this info:<br>
+            <strong>Stop code: CRITICAL_PROCESS_DIED</strong>
+          </div>
+        </div>
+      `;
+    };
+
+    const startPrank = (osType) => {
+      isBsod = false;
+      currentPercent = Math.floor(Math.random() * 20) + 10;
+      overlay.style.display = 'block';
+
+      if (overlay.requestFullscreen) {
+        overlay.requestFullscreen().catch(() => {});
+      }
+
+      if (osType.includes('apple')) {
+        content.className = 'prank-screen prank-apple';
+        content.innerHTML = `
+          <svg width="60" height="70" viewBox="0 0 170 170" fill="#ffffff" style="margin-bottom: 40px;">
+            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.66-7.83-11.88-14.37-6.2-9.67-11-20.97-14.41-33.91-3.41-12.94-5.12-24.87-5.12-35.79 0-14.02 3.69-25.75 11.07-35.19 7.38-9.44 16.71-14.28 27.99-14.53 4.8 0 10.15 1.25 16.06 3.75 5.91 2.5 9.77 3.86 11.58 4.09 1.45-.23 5.42-1.64 11.91-4.24 6.5-2.59 12.06-3.74 16.69-3.45 13.91.86 24.87 6.13 32.89 15.82-12.09 7.37-18.01 17.51-17.75 30.43.27 10.3 4.29 18.9 12.07 25.8 7.78 6.9 16.92 10.74 27.42 11.53-2.17 6.72-4.8 13.43-7.88 20.14zM119.22 31.84c0-7.39 2.66-14.33 7.97-20.82 5.32-6.5 11.85-10.45 19.61-11.87.67 7.28-1.74 14.22-7.22 20.82-5.49 6.6-12.28 10.55-20.36 11.87z"/>
+          </svg>
+          <div style="width: 240px; height: 6px; background: #333; border-radius: 3px; overflow: hidden; margin-bottom: 20px;">
+            <div style="width: ${currentPercent}%; height: 100%; background: #fff; transition: width 0.5s;"></div>
+          </div>
+          <div style="font-size: 13px; color: #888;">About ${Math.max(1, Math.round((100 - currentPercent) / 3))} minutes remaining</div>
+        `;
+      } else {
+        content.className = osType.includes('win7') || osType.includes('vista') ? 'prank-screen prank-win7' : 'prank-screen prank-win10';
+        content.innerHTML = `
+          <div class="spinner-dots"></div>
+          <h2 style="font-size: 26px; font-weight: 300; margin-bottom: 12px;">Working on updates</h2>
+          <div style="font-size: 20px; font-weight: 300;" id="prank-percent">${currentPercent}% complete</div>
+          <div style="font-size: 14px; font-weight: 300; margin-top: 15px; color: rgba(255,255,255,0.8);">Don't turn off your PC. This will take a while.</div>
+          <div style="margin-top: 40px; font-size: 12px; color: rgba(255,255,255,0.5);">(Press ENTER or tap screen for Blue Screen of Death)</div>
+        `;
+      }
+
+      timer = setInterval(() => {
+        if (currentPercent < 99 && !isBsod) {
+          currentPercent += Math.floor(Math.random() * 3) + 1;
+          const pElem = document.getElementById('prank-percent');
+          if (pElem) pElem.textContent = `${currentPercent}% complete`;
+        }
+      }, 3000);
     };
 
     prankCards.forEach(card => {
       card.addEventListener('click', (e) => {
         e.preventDefault();
-        const url = card.href;
-        
-        currentIframe = document.createElement('iframe');
-        currentIframe.src = url;
-        overlay.appendChild(currentIframe);
-        overlay.style.display = 'block';
-
-        if (overlay.requestFullscreen) {
-          overlay.requestFullscreen();
-        } else if (overlay.webkitRequestFullscreen) {
-          overlay.webkitRequestFullscreen();
-        }
-
-        if ('keyboard' in navigator && 'lock' in navigator.keyboard) {
-          navigator.keyboard.lock(['Escape', 'F11']).catch(err => {});
-        }
+        const href = card.getAttribute('href') || '';
+        startPrank(href);
       });
     });
 
-    const onFullscreenChange = () => {
-      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        if ('keyboard' in navigator && 'unlock' in navigator.keyboard) {
-          navigator.keyboard.unlock();
+    exitBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closePrank();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (overlay.style.display === 'block') {
+        if (e.key === 'Escape') {
+          closePrank();
+        } else if (e.key === 'Enter') {
+          triggerBsod();
         }
-        closePrank();
       }
-    };
-    
-    document.addEventListener('fullscreenchange', onFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+    });
+
+    overlay.addEventListener('click', () => {
+      if (overlay.style.display === 'block' && !isBsod) {
+        triggerBsod();
+      }
+    });
   });
 </script>
 

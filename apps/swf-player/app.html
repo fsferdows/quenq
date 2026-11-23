@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Quenq Flash & SWF Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #171c20;
+      color: #e1ebf4;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Tahoma, sans-serif;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+    }
+    #toolbar {
+      background: linear-gradient(180deg, #3a4753 0%, #252e36 100%);
+      border-bottom: 1px solid #171c20;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    }
+    .tool-btn {
+      background: linear-gradient(180deg, #5c6f82 0%, #43515e 100%);
+      border: 1px solid #1f262c;
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 3px rgba(0,0,0,0.3);
+      transition: background 0.15s, transform 0.05s;
+    }
+    .tool-btn:hover {
+      background: linear-gradient(180deg, #6d8296 0%, #4e5e6d 100%);
+    }
+    .tool-btn:active {
+      transform: translateY(1px);
+    }
+    select.tool-select {
+      background: #252e36;
+      border: 1px solid #5c6f82;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      max-width: 220px;
+    }
+    #player-wrapper {
+      flex: 1;
+      position: relative;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #drop-zone {
+      position: absolute;
+      inset: 20px;
+      border: 2px dashed #5c6f82;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      background: rgba(23, 28, 32, 0.85);
+      backdrop-filter: blur(4px);
+      z-index: 5;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    #drop-zone.dragover {
+      border-color: #5dade2;
+      background: rgba(35, 45, 55, 0.95);
+    }
+    #drop-zone h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    #drop-zone p {
+      font-size: 14px;
+      color: #a4b9be;
+      max-width: 400px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    #ruffle-container {
+      width: 100%;
+      height: 100%;
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    ruffle-player {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    #file-input { display: none; }
+  </style>
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+</head>
+<body>
+  <div id="toolbar">
+    <button class="tool-btn" id="open-file-btn">📁 Open SWF File</button>
+    <input type="file" id="file-input" accept=".swf">
+    
+    <select class="tool-select" id="sample-select">
+      <option value="">-- Load Featured Game --</option>
+      <option value="https://static.quenq.com/games/bear-in-the-big-blue-house-help-bear-bake/bear-in-the-big-blue-house-help-bear-bake.swf">Bear in Big Blue House</option>
+      <option value="https://static.quenq.com/games/antbuster/antbuster.swf">Antbuster Defense</option>
+      <option value="https://static.quenq.com/games/feedme/feedme.swf">Feed Me (Classic)</option>
+      <option value="https://static.quenq.com/games/cow-and-chicken-ballet-parking/cow-and-chicken-ballet-parking.swf">Ballet Parking</option>
+      <option value="https://static.quenq.com/games/epicbattlefantasy2/epicbattlefantasy2.swf">Epic Battle Fantasy 2</option>
+      <option value="https://static.quenq.com/games/pandemic/pandemic.swf">Pandemic</option>
+      <option value="https://static.quenq.com/games/sonic-on-angel-island/sonic-on-angel-island.swf">Sonic Angel Island</option>
+      <option value="https://static.quenq.com/games/ufomania/ufomania.swf">UFO Mania</option>
+    </select>
+
+    <button class="tool-btn" id="fs-btn">⛶ Fullscreen</button>
+    <button class="tool-btn" id="reload-btn">↻ Reload</button>
+  </div>
+
+  <div id="player-wrapper">
+    <div id="drop-zone">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#a4b9be" stroke-width="1.5" style="margin-bottom:12px;">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+      </svg>
+      <h2>Drag & Drop Any Flash (.swf) Game</h2>
+      <p>Play any vintage Flash animation or game directly in your browser powered by WebAssembly. No plugins required.</p>
+      <button class="tool-btn" id="choose-file-cta">Select SWF From Device</button>
+    </div>
+    <div id="ruffle-container"></div>
+  </div>
+
+  <script>
+    let currentPlayer = null;
+    let currentSwfSource = null;
+    const ruffleContainer = document.getElementById('ruffle-container');
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const openFileBtn = document.getElementById('open-file-btn');
+    const chooseFileCta = document.getElementById('choose-file-cta');
+    const sampleSelect = document.getElementById('sample-select');
+    const fsBtn = document.getElementById('fs-btn');
+    const reloadBtn = document.getElementById('reload-btn');
+
+    function initRufflePlayer() {
+      const ruffle = window.RufflePlayer ? window.RufflePlayer.newest() : null;
+      if (!ruffle) {
+        alert('WebAssembly Ruffle engine is still initializing. Please wait a moment.');
+        return null;
+      }
+      ruffleContainer.innerHTML = '';
+      const player = ruffle.createPlayer();
+      player.style.width = '100%';
+      player.style.height = '100%';
+      ruffleContainer.appendChild(player);
+      ruffleContainer.style.display = 'block';
+      dropZone.style.display = 'none';
+      currentPlayer = player;
+      return player;
+    }
+
+    function loadSwfUrl(url) {
+      currentSwfSource = url;
+      const player = initRufflePlayer();
+      if (player) {
+        player.load(url);
+      }
+    }
+
+    function loadSwfData(arrayBuffer) {
+      currentSwfSource = arrayBuffer;
+      const player = initRufflePlayer();
+      if (player) {
+        player.load({ data: arrayBuffer });
+      }
+    }
+
+    function handleFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        loadSwfData(e.target.result);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    openFileBtn.addEventListener('click', () => fileInput.click());
+    chooseFileCta.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) handleFile(e.target.files[0]);
+    });
+
+    sampleSelect.addEventListener('change', (e) => {
+      if (e.target.value) loadSwfUrl(e.target.value);
+    });
+
+    reloadBtn.addEventListener('click', () => {
+      if (typeof currentSwfSource === 'string') {
+        loadSwfUrl(currentSwfSource);
+      } else if (currentSwfSource) {
+        loadSwfData(currentSwfSource);
+      }
+    });
+
+    fsBtn.addEventListener('click', () => {
+      const elem = document.getElementById('player-wrapper');
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        if (elem.requestFullscreen) elem.requestFullscreen();
+      }
+    });
+
+    // Drag and Drop
+    window.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+    window.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+    });
+    window.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length > 0) {
+        handleFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    // Support URL params (?swf=...)
+    const urlParams = new URLSearchParams(window.location.search);
+    const swfParam = urlParams.get('swf');
+    if (swfParam) {
+      setTimeout(() => loadSwfUrl(swfParam), 200);
+    }
+  </script>
+</body>
+</html>

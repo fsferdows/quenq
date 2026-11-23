@@ -9,76 +9,56 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" }
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
       ]
     },
     {
       "source": "/images/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/(.*)\\.(json|js|css|svg|woff2|jpg|png|xml|txt|ico|webmanifest)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
       ]
     }
   ],
-  "redirects": [
-    { "source": "/arcade/flappy-bird/:path*", "destination": "/apps/flappy-bird/", "permanent": false },
-    { "source": "/arcade/flappy-bird", "destination": "/apps/flappy-bird/", "permanent": false },
-    { "source": "/arcade/crossy-road/:path*", "destination": "/apps/crossy-road/", "permanent": false },
-    { "source": "/arcade/crossy-road", "destination": "/apps/crossy-road/", "permanent": false },
-    { "source": "/arcade/slope/:path*", "destination": "/apps/slope/", "permanent": false },
-    { "source": "/arcade/slope", "destination": "/apps/slope/", "permanent": false },
-    { "source": "/arcade/bad-ice-cream/:path*", "destination": "/apps/bad-ice-cream/", "permanent": false },
-    { "source": "/arcade/bad-ice-cream", "destination": "/apps/bad-ice-cream/", "permanent": false },
-    { "source": "/arcade/bad-ice-cream-2/:path*", "destination": "/apps/bad-ice-cream/", "permanent": false },
-    { "source": "/arcade/bad-ice-cream-3/:path*", "destination": "/apps/bad-ice-cream/", "permanent": false },
-    { "source": "/arcade/doom-1993/:path*", "destination": "/apps/doom/", "permanent": false },
-    { "source": "/arcade/doom/:path*", "destination": "/apps/doom/", "permanent": false },
-    { "source": "/arcade/cookie-clicker/:path*", "destination": "/apps/cookie-clicker/", "permanent": false },
-    { "source": "/arcade/cookie-clicker", "destination": "/apps/cookie-clicker/", "permanent": false },
-    { "source": "/arcade/doodle-jump/:path*", "destination": "/apps/doodle-jump/", "permanent": false },
-    { "source": "/arcade/doodle-jump", "destination": "/apps/doodle-jump/", "permanent": false },
-    { "source": "/arcade/2048/:path*", "destination": "/apps/2048/", "permanent": false },
-    { "source": "/arcade/2048", "destination": "/apps/2048/", "permanent": false },
-    { "source": "/arcade/gta-3/:path*", "destination": "/apps/gta-3/", "permanent": false },
-    { "source": "/arcade/gta-3", "destination": "/apps/gta-3/", "permanent": false },
-    { "source": "/arcade/gta-iii/:path*", "destination": "/apps/gta-3/", "permanent": false },
-    { "source": "/arcade/gta-vice-city/:path*", "destination": "/apps/vice-city/", "permanent": false },
-    { "source": "/arcade/gta-vice-city", "destination": "/apps/vice-city/", "permanent": false },
-    { "source": "/arcade/vice-city/:path*", "destination": "/apps/vice-city/", "permanent": false },
-    { "source": "/arcade/vice-city", "destination": "/apps/vice-city/", "permanent": false },
-    { "source": "/arcade/gta-san-andreas/:path*", "destination": "/apps/gta-san-andreas/", "permanent": false },
-    { "source": "/arcade/gta-san-andreas", "destination": "/apps/gta-san-andreas/", "permanent": false },
-    { "source": "/arcade/san-andreas/:path*", "destination": "/apps/gta-san-andreas/", "permanent": false },
-    { "source": "/arcade/gta-advance/:path*", "destination": "/apps/gta-advance/", "permanent": false },
-    { "source": "/arcade/gta-advance", "destination": "/apps/gta-advance/", "permanent": false },
-    { "source": "/arcade/gta-5/:path*", "destination": "/apps/gta-5/", "permanent": false },
-    { "source": "/arcade/gta-5", "destination": "/apps/gta-5/", "permanent": false },
-    { "source": "/arcade/gta-v/:path*", "destination": "/apps/gta-5/", "permanent": false },
-    { "source": "/arcade/gta-4/:path*", "destination": "/apps/gta-4/", "permanent": false },
-    { "source": "/arcade/gta-4", "destination": "/apps/gta-4/", "permanent": false },
-    { "source": "/arcade/gta-iv/:path*", "destination": "/apps/gta-4/", "permanent": false },
-    { "source": "/arcade/gta-1/:path*", "destination": "/apps/gta-1/", "permanent": false },
-    { "source": "/arcade/gta-1", "destination": "/apps/gta-1/", "permanent": false },
-    { "source": "/arcade/gta-2/:path*", "destination": "/apps/gta-2/", "permanent": false },
-    { "source": "/arcade/gta-2", "destination": "/apps/gta-2/", "permanent": false },
-    { "source": "/arcade/bully/:path*", "destination": "/apps/bully/", "permanent": false },
-    { "source": "/arcade/bully", "destination": "/apps/bully/", "permanent": false },
-    { "source": "/arcade/midnight-club/:path*", "destination": "/apps/midnight-club/", "permanent": false },
-    { "source": "/arcade/midnight-club", "destination": "/apps/midnight-club/", "permanent": false },
-    { "source": "/arcade/max-payne/:path*", "destination": "/apps/max-payne/", "permanent": false },
-    { "source": "/arcade/max-payne", "destination": "/apps/max-payne/", "permanent": false },
-    { "source": "/arcade/red-dead/:path*", "destination": "/apps/red-dead/", "permanent": false },
-    { "source": "/arcade/red-dead", "destination": "/apps/red-dead/", "permanent": false },
-    { "source": "/arcade/reborn-xp/:path*", "destination": "/apps/reborn-xp/", "permanent": false },
-    { "source": "/arcade/reborn-xp", "destination": "/apps/reborn-xp/", "permanent": false }
-  ],
-  "rewrites": [
-    { "source": "/arcade/:slug*", "destination": "/arcade/" }
+  "routes": [
+    {
+      "src": "^/images/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/(.*)\\.(json|js|css|svg|woff2|jpg|png|xml|txt|ico|webmanifest)",
+      "headers": {
+        "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800"
+      },
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "^/arcade/.*",
+      "dest": "/arcade/index.html"
+    }
   ]
 }

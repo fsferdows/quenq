@@ -357,17 +357,11 @@ Technical information:
       window.addEventListener("touchstart", showCursor);
       showCursor();
 
-      // Keyboard & Click Triggers
+      // Keyboard Triggers (Enter/Space to crash into BSOD/Panic, Esc to exit)
       window.onkeydown = (e) => {
         if (e.key === "Escape") {
           PrankEngine.exit();
         } else if (e.key === "Enter" || e.key === " ") {
-          PrankEngine.crash();
-        }
-      };
-
-      container.onclick = () => {
-        if (!isCrashed) {
           PrankEngine.crash();
         }
       };
@@ -387,7 +381,11 @@ Technical information:
 
       const tmpl = OS_TEMPLATES[activeOs] || OS_TEMPLATES.win10;
       const screenWrapper = document.getElementById("prank-wrapper") || document.getElementById("prank-overlay");
-      if (screenWrapper) {
+      const prankContent = document.getElementById("prank-content");
+      if (prankContent) {
+        if (screenWrapper) screenWrapper.classList.remove("hide-cursor");
+        prankContent.innerHTML = tmpl.bsod(currentPercent);
+      } else if (screenWrapper) {
         screenWrapper.classList.remove("hide-cursor");
         screenWrapper.innerHTML = `
           <button class="prank-exit-btn visible" id="prank-exit-btn" onclick="window.PrankEngine.exit()">✕ Exit Prank (Esc)</button>

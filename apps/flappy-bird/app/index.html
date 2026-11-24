@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Flappy Bird</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #171c20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #flappy-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 480px;
+    max-height: 720px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #flappy-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #70c5ce;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div id="flappy-wrap">
+  <canvas id="flappy-canvas" width="360" height="540"></canvas>
+</div>
+
+<script>
+(function() {
+  const canvas = document.getElementById('flappy-canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Web Audio Synth for authentic sounds
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  let audioCtx = null;
+  function playSound(type) {
+    try {
+      if (!audioCtx) audioCtx = new AudioCtx();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+      if (type === 'flap') {
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.1);
+        osc.start(now);
+        osc.stop(now + 0.1);
+      } else if (type === 'score') {
+        osc.frequency.setValueAtTime(900, now);
+        osc.frequency.setValueAtTime(1200, now + 0.08);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.18);
+        osc.start(now);
+        osc.stop(now + 0.18);
+      } else if (type === 'hit') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.linearRampToValueAtTime(80, now + 0.2);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      }
+    } catch(e) {}
+  }
+
+  let state = 'START'; // START, PLAYING, GAMEOVER
+  let score = 0;
+  let highScore = parseInt(localStorage.getItem('flappy_best') || '0', 10);
+  let frames = 0;
+
+  const bird = {
+    x: 70,
+    y: 200,
+    w: 32,
+    h: 24,
+    gravity: 0.28,
+    jump: 5.5,
+    velocity: 0,
+    rotation: 0,
+    reset() {
+      this.y = 200;
+      this.velocity = 0;
+      this.rotation = 0;
+    },
+    flap() {
+      this.velocity = -this.jump;
+      playSound('flap');
+    },
+    update() {
+      this.velocity += this.gravity;
+      this.y += this.velocity;
+      if (this.velocity < 0) {
+        this.rotation = -0.35;
+      } else {
+        this.rotation = Math.min(Math.PI / 2, this.rotation + 0.04);
+      }
+      if (this.y + this.h >= canvas.height - 70) {
+        this.y = canvas.height - 70 - this.h;
+        if (state === 'PLAYING') gameOver();
+      }
+    },
+    draw() {
+      ctx.save();
+      ctx.translate(this.x + this.w / 2, this.y + this.h / 2);
+      ctx.rotate(this.rotation);
+      // Bird body
+      ctx.fillStyle = '#f7d02c';
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 16, 12, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#222';
+      ctx.stroke();
+
+      // Wing
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.ellipse(-6, 2, 8, 5, 0.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Eye
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(8, -4, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#000000';
+      ctx.beginPath();
+      ctx.arc(10, -4, 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Beak
+      ctx.fillStyle = '#e67e22';
+      ctx.beginPath();
+      ctx.moveTo(12, 0);
+      ctx.lineTo(20, 4);
+      ctx.lineTo(12, 8);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.restore();
+    }
+  };
+
+  const pipes = {
+    items: [],
+    gap: 125,
+    w: 52,
+    dx: 2.2,
+    reset() {
+      this.items = [];
+    },
+    update() {
+      if (state !== 'PLAYING') return;
+      if (frames % 100 === 0) {
+        const minTop = 60;
+        const maxTop = canvas.height - 70 - this.gap - 60;
+        const topH = Math.floor(Math.random() * (maxTop - minTop + 1)) + minTop;
+        this.items.push({
+          x: canvas.width,
+          top: topH,
+          bottom: canvas.height - 70 - (topH + this.gap),
+          passed: false
+        });
+      }
+
+      for (let i = 0; i < this.items.length; i++) {
+        const p = this.items[i];
+        p.x -= this.dx;
+
+        // Collision detection
+        if (
+          bird.x + bird.w > p.x &&
+          bird.x < p.x + this.w &&
+          (bird.y < p.top || bird.y + bird.h > canvas.height - 70 - p.bottom)
+        ) {
+          gameOver();
+          return;
+        }
+
+        // Score increment
+        if (!p.passed && p.x + this.w < bird.x) {
+          p.passed = true;
+          score++;
+          if (score > highScore) {
+            highScore = score;
+            localStorage.setItem('flappy_best', highScore);
+          }
+          playSound('score');
+        }
+      }
+
+      if (this.items.length && this.items[0].x < -this.w) {
+        this.items.shift();
+      }
+    },
+    draw() {
+      for (let i = 0; i < this.items.length; i++) {
+        const p = this.items[i];
+        // Top pipe
+        ctx.fillStyle = '#2ecc71';
+        ctx.fillRect(p.x, 0, this.w, p.top);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#27ae60';
+        ctx.strokeRect(p.x, 0, this.w, p.top);
+        // Top pipe cap
+        ctx.fillRect(p.x - 4, p.top - 20, this.w + 8, 20);
+        ctx.strokeRect(p.x - 4, p.top - 20, this.w + 8, 20);
+
+        // Bottom pipe
+        const bY = canvas.height - 70 - p.bottom;
+        ctx.fillStyle = '#2ecc71';
+        ctx.fillRect(p.x, bY, this.w, p.bottom);
+        ctx.strokeRect(p.x, bY, this.w, p.bottom);
+        // Bottom pipe cap
+        ctx.fillRect(p.x - 4, bY, this.w + 8, 20);
+        ctx.strokeRect(p.x - 4, bY, this.w + 8, 20);
+      }
+    }
+  };
+
+  const ground = {
+    h: 70,
+    x: 0,
+    update() {
+      if (state === 'PLAYING') {
+        this.x = (this.x - 2.2) % 20;
+      }
+    },
+    draw() {
+      ctx.fillStyle = '#ded895';
+      ctx.fillRect(0, canvas.height - this.h, canvas.width, this.h);
+      ctx.fillStyle = '#73bf2e';
+      ctx.fillRect(0, canvas.height - this.h, canvas.width, 14);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#222';
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height - this.h);
+      ctx.lineTo(canvas.width, canvas.height - this.h);
+      ctx.stroke();
+    }
+  };
+
+  function gameOver() {
+    state = 'GAMEOVER';
+    playSound('hit');
+  }
+
+  function handleAction() {
+    if (state === 'START') {
+      state = 'PLAYING';
+      bird.reset();
+      pipes.reset();
+      score = 0;
+      bird.flap();
+    } else if (state === 'PLAYING') {
+      bird.flap();
+    } else if (state === 'GAMEOVER') {
+      state = 'START';
+      bird.reset();
+      pipes.reset();
+      score = 0;
+    }
+  }
+
+  // Input listeners
+  window.addEventListener('keydown', e => {
+    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
+      e.preventDefault();
+      handleAction();
+    }
+  });
+
+  canvas.addEventListener('click', e => {
+    e.preventDefault();
+    handleAction();
+  });
+
+  canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    handleAction();
+  }, { passive: false });
+
+  function loop() {
+    frames++;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Background Sky & Clouds
+    ctx.fillStyle = '#70c5ce';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // City silhouette in background
+    ctx.fillStyle = '#a8e6cf';
+    ctx.fillRect(20, canvas.height - 130, 45, 60);
+    ctx.fillRect(80, canvas.height - 150, 55, 80);
+    ctx.fillRect(160, canvas.height - 120, 60, 50);
+    ctx.fillRect(245, canvas.height - 165, 45, 95);
+    ctx.fillRect(305, canvas.height - 135, 50, 65);
+
+    pipes.update();
+    pipes.draw();
+
+    ground.update();
+    ground.draw();
+
+    bird.update();
+    bird.draw();
+
+    // UI Overlay
+    ctx.fillStyle = '#ffffff';
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 3;
+    ctx.textAlign = 'center';
+
+    if (state === 'START') {
+      ctx.font = 'bold 28px sans-serif';
+      ctx.strokeText('FLAPPY BIRD', canvas.width / 2, 140);
+      ctx.fillText('FLAPPY BIRD', canvas.width / 2, 140);
+
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillStyle = '#fff';
+      ctx.strokeText('TAP / SPACE TO FLAP', canvas.width / 2, 290);
+      ctx.fillText('TAP / SPACE TO FLAP', canvas.width / 2, 290);
+
+      if (highScore > 0) {
+        ctx.font = 'bold 14px sans-serif';
+        ctx.strokeText('BEST: ' + highScore, canvas.width / 2, 330);
+        ctx.fillText('BEST: ' + highScore, canvas.width / 2, 330);
+      }
+    } else if (state === 'PLAYING') {
+      ctx.font = 'bold 36px sans-serif';
+      ctx.strokeText(score, canvas.width / 2, 60);
+      ctx.fillText(score, canvas.width / 2, 60);
+    } else if (state === 'GAMEOVER') {
+      ctx.font = 'bold 30px sans-serif';
+      ctx.strokeText('GAME OVER', canvas.width / 2, 170);
+      ctx.fillText('GAME OVER', canvas.width / 2, 170);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 18px sans-serif';
+      ctx.strokeText('SCORE: ' + score, canvas.width / 2, 220);
+      ctx.fillText('SCORE: ' + score, canvas.width / 2, 220);
+
+      ctx.strokeText('BEST: ' + highScore, canvas.width / 2, 255);
+      ctx.fillText('BEST: ' + highScore, canvas.width / 2, 255);
+
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillStyle = '#f1c40f';
+      ctx.strokeText('TAP TO PLAY AGAIN', canvas.width / 2, 310);
+      ctx.fillText('TAP TO PLAY AGAIN', canvas.width / 2, 310);
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

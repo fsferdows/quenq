@@ -149,14 +149,13 @@ module.exports = async (req, res) => {
 
   if (isCrazyGames) {
     reqHeaders['Referer'] = 'https://games.crazygames.com/';
+  } else if (isRebornXP || isViceCity || isGTA3) {
+    reqHeaders['Referer'] = 'https://quenq.com/';
   }
 
   try {
     const result = await fetchWithRedirect(targetUrl, reqHeaders);
     let html = result.data;
-
-    const isViceCity = appKey === 'vice-city' || appKey === 'gta-vice-city';
-    const isGTA3 = appKey === 'gta-3' || appKey === 'gta-iii';
 
     // Inject base href tag so relative assets resolve properly
     const baseTag = `\n  <base href="${baseUrl}">\n  <meta name="referrer" content="origin">\n`;
@@ -178,10 +177,17 @@ module.exports = async (req, res) => {
             get: function() { return 'https://quenq.com/'; },
             configurable: true
           });
+          try {
+            Object.defineProperty(window.location, 'ancestorOrigins', {
+              get: function() { return ['https://quenq.com']; },
+              configurable: true
+            });
+          } catch(e) {}
         } catch(e) {}
       </script>`;
       html = html.replace(/<head[^>]*>/, `$&${gtaFix}`);
       html = html.replace(/window\s*===\s*window\.top/g, 'false');
+      html = html.replace(/window\.location\.replace\(["']https:\/\/quenq\.com["']\)/g, 'void 0');
     }
 
     // Reborn XP window === window.top redirect neutralization & referrer spoofing
@@ -193,10 +199,22 @@ module.exports = async (req, res) => {
             get: function() { return 'https://quenq.com/'; },
             configurable: true
           });
+          try {
+            Object.defineProperty(window.location, 'ancestorOrigins', {
+              get: function() { return ['https://quenq.com']; },
+              configurable: true
+            });
+          } catch(e) {}
+          if (navigator.serviceWorker) {
+            navigator.serviceWorker.register = function() {
+              return Promise.reject(new Error('SW bypassed in proxy'));
+            };
+          }
         } catch(e) {}
       </script>`;
       html = html.replace(/<head[^>]*>/, `$&${xpFix}`);
       html = html.replace(/window\s*===\s*window\.top/g, 'false');
+      html = html.replace(/window\.location\.replace\(["']https:\/\/quenq\.com[^"']*["']\)/g, 'void 0');
     }
 
     // CrazyGames embedding unblock & referrer spoofing
@@ -205,7 +223,7 @@ module.exports = async (req, res) => {
       html = html.replace(/"forceEmbeddedExternally":\s*true/g, '"forceEmbeddedExternally":false');
       html = html.replace(/"showAdOnExternal":\s*"ALWAYS"/g, '"showAdOnExternal":"DEFAULT"');
       html = html.replace(
-        'var options = {',
+        /var\s+options\s*=\s*\{/g,
         'var options = {"forceEmbeddedExternally":false,"disableEmbedding":false,"showAdOnExternal":"DEFAULT",'
       );
       const cgOverride = `
@@ -220,6 +238,28 @@ module.exports = async (req, res) => {
           if (window.czyVariables) {
             window.czyVariables.forceEmbeddedExternally = false;
           }
+          var _cg = null;
+          try {
+            Object.defineProperty(window, 'Crazygames', {
+              configurable: true,
+              enumerable: true,
+              get: function() { return _cg; },
+              set: function(val) {
+                _cg = val;
+                if (val && val.load) {
+                  var rawLoad = val.load;
+                  val.load = function(opts) {
+                    if (opts) {
+                      opts.disableEmbedding = false;
+                      opts.forceEmbeddedExternally = false;
+                      opts.showAdOnExternal = 'DEFAULT';
+                    }
+                    return rawLoad.apply(this, arguments);
+                  };
+                }
+              }
+            });
+          } catch(e) {}
           window.addEventListener('DOMContentLoaded', function() {
             if (window.options) {
               window.options.disableEmbedding = false;

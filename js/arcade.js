@@ -353,8 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'gta-vice-city': '/api/proxy/?app=vice-city',
     'gta-4': '/apps/gta-4/',
     'gta-iv': '/apps/gta-4/',
-    'gta-5': '/apps/gta-5/',
-    'gta-v': '/apps/gta-5/',
+    'gta-5': '/api/proxy/?cg=gangster-contract-mafia-wars',
+    'gta-v': '/api/proxy/?cg=gangster-contract-mafia-wars',
     'gta-san-andreas': '/apps/gta-san-andreas/',
     'san-andreas': '/apps/gta-san-andreas/',
     'gta-advance': '/apps/gta-advance/',
@@ -437,13 +437,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (game.source === 'crazygames' || (game.embedUrl && game.embedUrl.includes('crazygames.com'))) {
       return `/api/proxy/?cg=${encodeURIComponent(game.id)}`;
     }
+    if (game.source === 'flash') {
+      return `/api/proxy/?game=${encodeURIComponent(game.id)}`;
+    }
     if (game.embedUrl) {
       if (game.embedUrl.startsWith('/arcade/')) {
-        return `/api/proxy/?game=${encodeURIComponent(game.id)}`;
+        return `/api/proxy/?cg=${encodeURIComponent(game.id)}`;
       }
       return game.embedUrl;
     }
-    return `/api/proxy/?game=${encodeURIComponent(game.id)}`;
+    return `/api/proxy/?cg=${encodeURIComponent(game.id)}`;
   }
 
   // Open Theater Player

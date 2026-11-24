@@ -97,7 +97,13 @@ function fetchWithRedirect(targetUrl, headers, maxRedirects = 3) {
 }
 
 module.exports = async (req, res) => {
-  const query = req.query || {};
+  let query = req.query || {};
+  if (Object.keys(query).length === 0 && req.url && req.url.includes('?')) {
+    try {
+      const parsedUrl = new URL(req.url, 'https://onlinegames.stream');
+      query = Object.fromEntries(parsedUrl.searchParams.entries());
+    } catch (_) {}
+  }
   let targetUrl = '';
   let baseUrl = '';
   let isCrazyGames = false;
@@ -291,6 +297,12 @@ module.exports = async (req, res) => {
 
     return res.status(200).send(html);
   } catch (err) {
+    if (isViceCity) {
+      return res.redirect(302, '/api/proxy/?cg=free-rally-vice');
+    }
+    if (isGTA3) {
+      return res.redirect(302, '/api/proxy/?cg=grand-action-simulator-new-york-car-gang');
+    }
     return res.status(502).send('Error proxying game: ' + err.message);
   }
 };

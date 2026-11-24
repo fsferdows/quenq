@@ -185,11 +185,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Grand Theft Auto & Rockstar Premier Collection
   const GTA_ROCKSTAR_COLLECTION = [
-    { id: 'gta-5', name: 'GTA V (Grand Theft Auto V Online)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-5.jpg', embedUrl: '/apps/gta-5/' },
+    { id: 'gta-5', name: 'GTA V (Grand Theft Auto V Online)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-5.jpg', embedUrl: '/api/proxy/?cg=gangster-contract-mafia-wars' },
     { id: 'gta-4', name: 'GTA IV (Liberty City)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-4.jpg', embedUrl: '/apps/gta-4/' },
     { id: 'gta-san-andreas', name: 'GTA: San Andreas (3D Open World)', genre: 'gta,action,driving', source: 'gta', thumb: '/images/thumbnails/gta-san-andreas.jpg', embedUrl: '/apps/gta-san-andreas/' },
-    { id: 'gta-vice-city', name: 'GTA: Vice City Online', genre: 'gta,action,driving', source: 'gta', thumb: '/apps/vice-city/preview.jpg', embedUrl: '/api/proxy/?app=vice-city' },
-    { id: 'gta-3', name: 'GTA 3 (Grand Theft Auto III)', genre: 'gta,action,driving', source: 'gta', thumb: '/apps/gta-3/preview.jpg', embedUrl: '/api/proxy/?app=gta-3' },
+    { id: 'gta-vice-city', name: 'GTA: Vice City Online', genre: 'gta,action,driving', source: 'gta', thumb: '/apps/vice-city/preview.jpg', embedUrl: '/api/proxy/?cg=free-rally-vice' },
+    { id: 'gta-3', name: 'GTA 3 (Grand Theft Auto III)', genre: 'gta,action,driving', source: 'gta', thumb: '/apps/gta-3/preview.jpg', embedUrl: '/api/proxy/?cg=grand-action-simulator-new-york-car-gang' },
     { id: 'gta-advance', name: 'GTA Advance (Liberty City)', genre: 'gta,action,retro', source: 'gta', thumb: '/images/thumbnails/gta-advance.jpg', embedUrl: '/apps/gta-advance/' },
     { id: 'gta-2', name: 'Grand Theft Auto 2 (1999)', genre: 'gta,action,retro', source: 'gta', thumb: '/images/thumbnails/gta-2.jpg', embedUrl: '/apps/gta-2/' },
     { id: 'gta-1', name: 'Grand Theft Auto (1997)', genre: 'gta,action,retro', source: 'gta', thumb: '/images/thumbnails/gta-1.jpg', embedUrl: '/apps/gta-1/' },
@@ -204,10 +204,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Featured Blockbuster Definitions
   const FEATURED_HITS = [
-    { id: 'gta-5', name: 'GTA V (Grand Theft Auto V Online)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-5.jpg', embedUrl: '/apps/gta-5/' },
+    { id: 'gta-5', name: 'GTA V (Grand Theft Auto V Online)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-5.jpg', embedUrl: '/api/proxy/?cg=gangster-contract-mafia-wars' },
     { id: 'gta-4', name: 'GTA IV (Liberty City)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-4.jpg', embedUrl: '/apps/gta-4/' },
     { id: 'gta-san-andreas', name: 'GTA: San Andreas (3D)', genre: 'gta,action,driving', thumb: '/images/thumbnails/gta-san-andreas.jpg', embedUrl: '/apps/gta-san-andreas/' },
-    { id: 'gta-vice-city', name: 'GTA: Vice City Online', genre: 'gta,action,driving', thumb: '/apps/vice-city/preview.jpg', embedUrl: '/api/proxy/?app=vice-city' },
+    { id: 'gta-vice-city', name: 'GTA: Vice City Online', genre: 'gta,action,driving', thumb: '/apps/vice-city/preview.jpg', embedUrl: '/api/proxy/?cg=free-rally-vice' },
     { id: 'subway-surfers', name: 'Subway Surfers', genre: 'arcade,action', thumb: '/images/thumbnails/subway-surfers.jpg', embedUrl: 'https://games.crazygames.com/en_US/bus-and-subway-runner/index.html' },
     { id: 'geometry-dash-online', name: 'Geometry Dash', genre: 'action', thumb: '/images/thumbnails/geometry-dash.jpg', embedUrl: 'https://games.crazygames.com/en_US/geometry-dash-online/index.html' },
     { id: 'cut-the-rope-ebx', name: 'Cut the Rope', genre: 'puzzle', thumb: '/images/thumbnails/cut-the-rope.jpg', embedUrl: 'https://games.crazygames.com/en_US/cut-the-rope-ebx/index.html' },
@@ -347,10 +347,10 @@ document.addEventListener('DOMContentLoaded', () => {
     'doom': '/apps/doom/',
     'gta-1': '/apps/gta-1/',
     'gta-2': '/apps/gta-2/',
-    'gta-3': '/api/proxy/?app=gta-3',
-    'gta-iii': '/api/proxy/?app=gta-3',
-    'vice-city': '/api/proxy/?app=vice-city',
-    'gta-vice-city': '/api/proxy/?app=vice-city',
+    'gta-3': '/api/proxy/?cg=grand-action-simulator-new-york-car-gang',
+    'gta-iii': '/api/proxy/?cg=grand-action-simulator-new-york-car-gang',
+    'vice-city': '/api/proxy/?cg=free-rally-vice',
+    'gta-vice-city': '/api/proxy/?cg=free-rally-vice',
     'gta-4': '/apps/gta-4/',
     'gta-iv': '/apps/gta-4/',
     'gta-5': '/api/proxy/?cg=gangster-contract-mafia-wars',

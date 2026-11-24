@@ -155,6 +155,9 @@ module.exports = async (req, res) => {
     const result = await fetchWithRedirect(targetUrl, reqHeaders);
     let html = result.data;
 
+    const isViceCity = appKey === 'vice-city' || appKey === 'gta-vice-city';
+    const isGTA3 = appKey === 'gta-3' || appKey === 'gta-iii';
+
     // Inject base href tag so relative assets resolve properly
     const baseTag = `\n  <base href="${baseUrl}">\n  <meta name="referrer" content="origin">\n`;
     if (html.includes('<head>')) {
@@ -163,17 +166,57 @@ module.exports = async (req, res) => {
       html = html.replace(/<head[^>]*>/, `$&${baseTag}`);
     }
 
-    // Bypass CrazyGames embedding restrictions
+    // Vice City & GTA 3 Path Alignment & Origin spoofing
+    if (isViceCity || isGTA3) {
+      const gtaFix = `
+      <script>
+        try {
+          if (window.location.pathname !== '/') {
+            window.history.replaceState(null, '', '/' + (window.location.search || ''));
+          }
+          Object.defineProperty(document, 'referrer', {
+            get: function() { return 'https://quenq.com/'; },
+            configurable: true
+          });
+        } catch(e) {}
+      </script>`;
+      html = html.replace(/<head[^>]*>/, `$&${gtaFix}`);
+      html = html.replace(/window\s*===\s*window\.top/g, 'false');
+    }
+
+    // Reborn XP window === window.top redirect neutralization & referrer spoofing
+    if (isRebornXP) {
+      const xpFix = `
+      <script>
+        try {
+          Object.defineProperty(document, 'referrer', {
+            get: function() { return 'https://quenq.com/'; },
+            configurable: true
+          });
+        } catch(e) {}
+      </script>`;
+      html = html.replace(/<head[^>]*>/, `$&${xpFix}`);
+      html = html.replace(/window\s*===\s*window\.top/g, 'false');
+    }
+
+    // CrazyGames embedding unblock & referrer spoofing
     if (isCrazyGames) {
       html = html.replace(/"disableEmbedding":\s*true/g, '"disableEmbedding":false');
       html = html.replace(/"forceEmbeddedExternally":\s*true/g, '"forceEmbeddedExternally":false');
+      html = html.replace(/"showAdOnExternal":\s*"ALWAYS"/g, '"showAdOnExternal":"DEFAULT"');
       html = html.replace(
         'var options = {',
-        'var options = {"forceEmbeddedExternally":false,'
+        'var options = {"forceEmbeddedExternally":false,"disableEmbedding":false,"showAdOnExternal":"DEFAULT",'
       );
       const cgOverride = `
       <script>
         (function() {
+          try {
+            Object.defineProperty(document, 'referrer', {
+              get: function() { return 'https://www.crazygames.com/'; },
+              configurable: true
+            });
+          } catch(e) {}
           if (window.czyVariables) {
             window.czyVariables.forceEmbeddedExternally = false;
           }
@@ -181,29 +224,27 @@ module.exports = async (req, res) => {
             if (window.options) {
               window.options.disableEmbedding = false;
               window.options.forceEmbeddedExternally = false;
+              window.options.showAdOnExternal = 'DEFAULT';
             }
           });
         })();
-      </script>`;
-      html = html.replace('</body>', `${cgOverride}</body>`);
+      </script>
+      <style>
+        [class*="warning"], [class*="embedding-disallowed"], [class*="Exclusive"] {
+          display: none !important;
+        }
+      </style>`;
+      html = html.replace(/<head[^>]*>/, `$&${cgOverride}`);
     }
-
-    // Reborn XP window === window.top redirect neutralization
-    if (isRebornXP) {
-      html = html.replace(/window\s*===\s*window\.top/g, 'false');
-    }
-
-    // GTA Vice City & GTA 3 origin checks
-    html = html.replace(/window\s*===\s*window\.top/g, 'false');
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
     res.setHeader(
       'Content-Security-Policy',
-      "frame-ancestors 'self' https://onlinegames.stream https://*.onlinegames.stream https://*.vercel.app http://localhost:*"
+      "frame-ancestors *"
     );
-    res.removeHeader('X-Frame-Options');
+    res.setHeader('X-Frame-Options', 'ALLOWALL');
 
     return res.status(200).send(html);
   } catch (err) {

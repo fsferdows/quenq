@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Internal direct playable engine mappings (prevents 404s, CORS, CSP frame-ancestors blocks)
   const STANDALONE_PLAYABLE_MAP = {
-    'flappy-bird': '/apps/flappy-bird/',
+    'flappy-bird': '/apps/flappy-bird/app.html',
     'crossy-road': '/apps/crossy-road/',
     'slope': '/apps/slope/',
     'bad-ice-cream': '/apps/bad-ice-cream/',
@@ -429,6 +429,23 @@ document.addEventListener('DOMContentLoaded', () => {
     'fake-updates': '/apps/fake-updates/'
   };
 
+  function resolvePlayerUrl(game) {
+    if (!game) return 'about:blank';
+    if (STANDALONE_PLAYABLE_MAP[game.id]) {
+      return STANDALONE_PLAYABLE_MAP[game.id];
+    }
+    if (game.source === 'crazygames' || (game.embedUrl && game.embedUrl.includes('crazygames.com'))) {
+      return `/api/proxy/?cg=${encodeURIComponent(game.id)}`;
+    }
+    if (game.embedUrl) {
+      if (game.embedUrl.startsWith('/arcade/')) {
+        return `/api/proxy/?game=${encodeURIComponent(game.id)}`;
+      }
+      return game.embedUrl;
+    }
+    return `/api/proxy/?game=${encodeURIComponent(game.id)}`;
+  }
+
   // Open Theater Player
   function openTheaterGame(game) {
     if (!game) return;
@@ -436,20 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
     theaterTitle.textContent = game.name;
 
     // 1. Resolve direct in-player playable URL (bypassing all embedding blocks)
-    let playerUrl;
-    if (STANDALONE_PLAYABLE_MAP[game.id]) {
-      playerUrl = STANDALONE_PLAYABLE_MAP[game.id];
-    } else if (game.source === 'crazygames' || (game.embedUrl && game.embedUrl.includes('crazygames.com'))) {
-      playerUrl = `/api/proxy/?cg=${encodeURIComponent(game.id)}`;
-    } else if (game.embedUrl) {
-      if (game.embedUrl.startsWith('/arcade/')) {
-        playerUrl = `/api/proxy/?game=${encodeURIComponent(game.id)}`;
-      } else {
-        playerUrl = game.embedUrl;
-      }
-    } else {
-      playerUrl = `/api/proxy/?game=${encodeURIComponent(game.id)}`;
-    }
+    const playerUrl = resolvePlayerUrl(game);
 
     // 2. Resolve on-site URL for "Open in Tab" button (strictly remains on onlinegames.stream)
     const onSiteTabUrl = STANDALONE_PAGE_MAP[game.id] || `/arcade/${game.id}/`;
@@ -500,7 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (theaterReloadBtn) {
     theaterReloadBtn.addEventListener('click', () => {
       if (currentGamePlaying) {
-        const playerUrl = currentGamePlaying.embedUrl || (currentGamePlaying.id ? `/arcade/${currentGamePlaying.id}/` : '#');
+        const playerUrl = resolvePlayerUrl(currentGamePlaying);
         theaterIframe.src = 'about:blank';
         setTimeout(() => {
           theaterIframe.referrerPolicy = 'no-referrer';

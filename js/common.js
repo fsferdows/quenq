@@ -16,13 +16,33 @@ document.addEventListener('click', function (e) {
 }, true);
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Hide global loader smoothly
+  // Hide global loader immediately without delay
   const loader = document.getElementById('global-loader');
   if (loader) {
-    setTimeout(function () {
-      loader.classList.add('loader-hidden');
-    }, 250);
+    loader.style.display = 'none';
+    loader.classList.add('loader-hidden');
   }
+
+  // Instant Link Prefetching on Hover/Touch for zero latency navigation
+  const prefetchedUrls = new Set();
+  function prefetchLink(url) {
+    if (!url || !url.startsWith('/') || url.startsWith('//') || prefetchedUrls.has(url)) return;
+    prefetchedUrls.add(url);
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = url;
+    document.head.appendChild(link);
+  }
+
+  document.addEventListener('mouseover', function (e) {
+    const a = e.target.closest('a[href^="/"]');
+    if (a) prefetchLink(a.getAttribute('href'));
+  }, { passive: true });
+
+  document.addEventListener('touchstart', function (e) {
+    const a = e.target.closest('a[href^="/"]');
+    if (a) prefetchLink(a.getAttribute('href'));
+  }, { passive: true });
 
   // Fullscreen & Pseudo-Fullscreen Handler
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||

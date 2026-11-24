@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Internal direct playable engine mappings (prevents 404s, CORS, CSP frame-ancestors blocks)
   const STANDALONE_PLAYABLE_MAP = {
-    'flappy-bird': '/apps/flappy-bird/app.html',
+    'flappy-bird': '/apps/flappy-bird/app/',
     'crossy-road': '/apps/crossy-road/',
     'slope': '/apps/slope/',
     'bad-ice-cream': '/apps/bad-ice-cream/',

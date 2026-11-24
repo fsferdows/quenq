@@ -108,6 +108,9 @@ module.exports = async (req, res) => {
   const cgKey = (query.cg || query.crazygames || '').toLowerCase();
   const customUrl = query.url || '';
 
+  const isViceCity = appKey === 'vice-city' || appKey === 'gta-vice-city';
+  const isGTA3 = appKey === 'gta-3' || appKey === 'gta-iii';
+
   if (appKey && APP_MAP[appKey]) {
     targetUrl = APP_MAP[appKey].target;
     baseUrl = APP_MAP[appKey].base;
